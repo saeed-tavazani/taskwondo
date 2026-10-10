@@ -1071,7 +1071,7 @@ func workItemTestSetupParts(t *testing.T) (*WorkItemHandler, *model.AuthInfo, st
 		service.WithSLA(slaRepo, slaSvc),
 		service.WithStorage(store, 50*1024*1024),
 	)
-	h := NewWorkItemHandler(svc, slaSvc, 50*1024*1024, "https://taskwondo.test")
+	h := NewWorkItemHandler(svc, slaSvc, 50*1024*1024, "https://montask.test")
 
 	info := &model.AuthInfo{
 		UserID:     uuid.New(),
@@ -1156,7 +1156,7 @@ func workItemTestSetupWithSLA(t *testing.T) *workItemSLASetup {
 		service.WithSLA(slaRepo, slaSvc),
 		service.WithStorage(store, 50*1024*1024),
 	)
-	h := NewWorkItemHandler(svc, slaSvc, 50*1024*1024, "https://taskwondo.test")
+	h := NewWorkItemHandler(svc, slaSvc, 50*1024*1024, "https://montask.test")
 
 	info := &model.AuthInfo{
 		UserID:     uuid.New(),
@@ -1469,12 +1469,12 @@ func TestGetWorkItem_Handler_ReturnsURL(t *testing.T) {
 		{
 			name:      "default namespace maps to d segment",
 			namespace: "default",
-			wantURL:   "https://taskwondo.test/d/projects/TEST/items/1",
+			wantURL:   "https://montask.test/d/projects/TEST/items/1",
 		},
 		{
 			name:      "custom namespace uses slug verbatim",
 			namespace: "acme",
-			wantURL:   "https://taskwondo.test/acme/projects/TEST/items/1",
+			wantURL:   "https://montask.test/acme/projects/TEST/items/1",
 		},
 	}
 	for _, tt := range tests {

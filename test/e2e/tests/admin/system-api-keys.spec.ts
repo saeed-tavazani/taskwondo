@@ -14,7 +14,7 @@ const test = base.extend({
       origins: [
         {
           origin: BASE_URL,
-          localStorage: [{ name: 'taskwondo_token', value: adminToken }],
+          localStorage: [{ name: 'montask_token', value: adminToken }],
         },
       ],
     };

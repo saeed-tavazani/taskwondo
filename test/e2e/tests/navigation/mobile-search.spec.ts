@@ -195,7 +195,7 @@ test.describe('Mobile search icon and top bar layout', () => {
 
     // Brand name should be visible on desktop
     const nav = page.locator('nav');
-    await expect(nav.getByText('Taskwondo').first()).toBeVisible({ timeout: 5000 });
+    await expect(nav.getByText('Montask').first()).toBeVisible({ timeout: 5000 });
 
     // Project name should be visible (desktop shows key + name)
     await expect(nav.getByText(testProject.name)).toBeVisible();

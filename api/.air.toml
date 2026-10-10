@@ -1,8 +1,8 @@
 root = "."
 
 [build]
-  cmd = "go build -o ./tmp/taskwondo ./cmd/server"
-  entrypoint = "./tmp/taskwondo"
+  cmd = "go build -o ./tmp/montask ./cmd/server"
+  entrypoint = "./tmp/montask"
   delay = 1000
   exclude_dir = ["tmp", "vendor"]
   exclude_regex = ["_test\\.go$"]

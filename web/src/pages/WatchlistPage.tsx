@@ -99,7 +99,7 @@ export default function WatchlistPage() {
   const [search, setSearch] = useState('')
   const [showCreate, setShowCreate] = useState(false)
   const [activeRow, setActiveRow] = useState(-1)
-  const activeRowStorageKey = 'taskwondo_activeRow_watchlist'
+  const activeRowStorageKey = 'montask_activeRow_watchlist'
   const restoredRef = useRef(false)
   const [projectModalOpen, setProjectModalOpen] = useState(false)
   const [projectSearch, setProjectSearch] = useState('')

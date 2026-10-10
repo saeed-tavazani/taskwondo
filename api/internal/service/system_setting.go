@@ -193,7 +193,7 @@ func (s *SystemSettingService) SeedDefaultLimits(ctx context.Context) error {
 // lists if they do not already exist.
 func (s *SystemSettingService) SeedDefaultDenyLists(ctx context.Context) error {
 	defaults := map[string][]string{
-		model.SettingReservedNamespaceSlugs: {"admin", "taskwondo"},
+		model.SettingReservedNamespaceSlugs: {"admin", "montask"},
 		model.SettingReservedProjectKeys:   {},
 	}
 	for key, value := range defaults {

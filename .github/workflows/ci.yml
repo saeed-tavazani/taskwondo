@@ -174,11 +174,11 @@ jobs:
           > **This is an automated pre-release.** For stable versions, see tagged releases.
 
           ### Assets
-          - \`taskwondo-server-dev.tar.gz\` — Server bundle (API + Worker + Web) for manual installation
-          - \`taskwondo-mcp-linux-amd64\` — MCP server (Linux/amd64)
-          - \`taskwondo-mcp-darwin-arm64\` — MCP server (macOS/arm64)
-          - \`taskwondo-mcp-windows-amd64.exe\` — MCP server (Windows/amd64)
-          - \`taskwondo.mcpb\` — MCP bundle for Claude Desktop (Windows + macOS)"
+          - \`montask-server-dev.tar.gz\` — Server bundle (API + Worker + Web) for manual installation
+          - \`montask-mcp-linux-amd64\` — MCP server (Linux/amd64)
+          - \`montask-mcp-darwin-arm64\` — MCP server (macOS/arm64)
+          - \`montask-mcp-windows-amd64.exe\` — MCP server (Windows/amd64)
+          - \`montask.mcpb\` — MCP bundle for Claude Desktop (Windows + macOS)"
 
           if gh release view dev > /dev/null 2>&1; then
             gh release edit dev --title "Dev Build" --notes "$NOTES" --prerelease
@@ -187,11 +187,11 @@ jobs:
           fi
 
           gh release upload dev --clobber \
-            build/release/taskwondo-server-dev.tar.gz \
-            build/mcp/taskwondo-mcp-linux-amd64 \
-            build/mcp/taskwondo-mcp-darwin-arm64 \
-            build/mcp/taskwondo-mcp-windows-amd64.exe \
-            build/mcpb/taskwondo.mcpb
+            build/release/montask-server-dev.tar.gz \
+            build/mcp/montask-mcp-linux-amd64 \
+            build/mcp/montask-mcp-darwin-arm64 \
+            build/mcp/montask-mcp-windows-amd64.exe \
+            build/mcpb/montask.mcpb
 
   release:
     name: Release
@@ -233,8 +233,8 @@ jobs:
             --title "$VERSION" \
             --generate-notes \
             --draft \
-            build/release/taskwondo-server-${VERSION#v}.tar.gz \
-            build/mcp/taskwondo-mcp-linux-amd64 \
-            build/mcp/taskwondo-mcp-darwin-arm64 \
-            build/mcp/taskwondo-mcp-windows-amd64.exe \
-            build/mcpb/taskwondo-v${VERSION#v}.mcpb
+            build/release/montask-server-${VERSION#v}.tar.gz \
+            build/mcp/montask-mcp-linux-amd64 \
+            build/mcp/montask-mcp-darwin-arm64 \
+            build/mcp/montask-mcp-windows-amd64.exe \
+            build/mcpb/montask-v${VERSION#v}.mcpb

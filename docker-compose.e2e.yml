@@ -34,7 +34,7 @@ services:
     entrypoint: >
       /bin/sh -c "
       mc alias set local http://minio:9000 e2eminioaccess e2eminiosecret;
-      mc mb --ignore-existing local/taskwondo-attachments;
+      mc mb --ignore-existing local/montask-attachments;
       exit 0;
       "
     restart: "no"
@@ -76,7 +76,7 @@ services:
       STORAGE_ENDPOINT: "minio:9000"
       STORAGE_ACCESS_KEY: "e2eminioaccess"
       STORAGE_SECRET_KEY: "e2eminiosecret"
-      STORAGE_BUCKET: "taskwondo-attachments"
+      STORAGE_BUCKET: "montask-attachments"
       STORAGE_USE_SSL: "false"
       ADMIN_EMAIL: "admin@e2e.test"
       ADMIN_PASSWORD: "E2eAdminPass123!"
@@ -109,7 +109,7 @@ services:
       STORAGE_ENDPOINT: "minio:9000"
       STORAGE_ACCESS_KEY: "e2eminioaccess"
       STORAGE_SECRET_KEY: "e2eminiosecret"
-      STORAGE_BUCKET: "taskwondo-attachments"
+      STORAGE_BUCKET: "montask-attachments"
       NATS_URL: "nats://nats:4222"
       SLA_MONITOR_INTERVAL: "3s"
       LOG_LEVEL: "info"

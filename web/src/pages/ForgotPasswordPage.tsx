@@ -1,33 +1,32 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { PoweredByFooter } from '@/components/PoweredByFooter'
-import * as authApi from '@/api/auth'
-import { getLocalizedError } from '@/utils/apiError'
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import * as authApi from '@/api/auth';
+import { getLocalizedError } from '@/utils/apiError';
 
 export function ForgotPasswordPage() {
-  const { t } = useTranslation()
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const { t } = useTranslation();
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError('');
+    setLoading(true);
     try {
-      await authApi.forgotPassword(email)
-      setSuccess(true)
+      await authApi.forgotPassword(email);
+      setSuccess(true);
     } catch (err) {
-      setError(getLocalizedError(err, t, 'forgotPassword.error'))
+      setError(getLocalizedError(err, t, 'forgotPassword.error'));
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
@@ -48,9 +47,9 @@ export function ForgotPasswordPage() {
             </Link>
           </div>
         </div>
-        <PoweredByFooter />
+        {/* <PoweredByFooter /> */}
       </div>
-    )
+    );
   }
 
   return (
@@ -68,13 +67,11 @@ export function ForgotPasswordPage() {
               label={t('forgotPassword.email')}
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               autoComplete="email"
             />
-            {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? t('forgotPassword.submitting') : t('forgotPassword.submit')}
             </Button>
@@ -89,7 +86,7 @@ export function ForgotPasswordPage() {
           </p>
         </div>
       </div>
-      <PoweredByFooter />
+      {/* <PoweredByFooter /> */}
     </div>
-  )
+  );
 }

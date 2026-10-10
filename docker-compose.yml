@@ -18,12 +18,12 @@ services:
       # Always listen on port 8080 inside the container
       - API_PORT=8080
       # Always connect to postgres on port :5432 as it connectes directly through docker network, not the mapped port
-      - DATABASE_URL=postgres://${POSTGRES_USER:?required}:${POSTGRES_PASSWORD:?required}@postgres:5432/${POSTGRES_DB:-taskwondo}?sslmode=disable
+      - DATABASE_URL=postgres://${POSTGRES_USER:?required}:${POSTGRES_PASSWORD:?required}@postgres:5432/${POSTGRES_DB:-montask}?sslmode=disable
       - JWT_SECRET=${JWT_SECRET:?required — generate a random string of at least 32 chars}
       - STORAGE_ENDPOINT=minio:9000
       - STORAGE_ACCESS_KEY=${MINIO_ROOT_USER:?required}
       - STORAGE_SECRET_KEY=${MINIO_ROOT_PASSWORD:?required}
-      - STORAGE_BUCKET=${MINIO_BUCKET:-taskwondo-attachments}
+      - STORAGE_BUCKET=${MINIO_BUCKET:-montask-attachments}
       - NATS_URL=nats://nats:4222
       - OLLAMA_URL=http://ollama:11434
     restart: unless-stopped
@@ -54,7 +54,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?required}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
-      POSTGRES_DB: ${POSTGRES_DB:-taskwondo}
+      POSTGRES_DB: ${POSTGRES_DB:-montask}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:?required}"]
       interval: 5s
@@ -81,12 +81,12 @@ services:
         condition: service_healthy
     env_file: .env
     environment:
-      - DATABASE_URL=postgres://${POSTGRES_USER:?required}:${POSTGRES_PASSWORD:?required}@postgres:5432/${POSTGRES_DB:-taskwondo}?sslmode=disable
+      - DATABASE_URL=postgres://${POSTGRES_USER:?required}:${POSTGRES_PASSWORD:?required}@postgres:5432/${POSTGRES_DB:-montask}?sslmode=disable
       - JWT_SECRET=${JWT_SECRET:?required — generate a random string of at least 32 chars}
       - STORAGE_ENDPOINT=minio:9000
       - STORAGE_ACCESS_KEY=${MINIO_ROOT_USER:?required}
       - STORAGE_SECRET_KEY=${MINIO_ROOT_PASSWORD:?required}
-      - STORAGE_BUCKET=${MINIO_BUCKET:-taskwondo-attachments}
+      - STORAGE_BUCKET=${MINIO_BUCKET:-montask-attachments}
       - NATS_URL=nats://nats:4222
       - OLLAMA_URL=http://ollama:11434
     restart: unless-stopped
@@ -122,13 +122,13 @@ services:
     entrypoint: >
       /bin/sh -c "
       mc alias set local http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD};
-      mc mb --ignore-existing local/$${MINIO_BUCKET:-taskwondo-attachments};
+      mc mb --ignore-existing local/$${MINIO_BUCKET:-montask-attachments};
       exit 0;
       "
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:?required}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?required}
-      MINIO_BUCKET: ${MINIO_BUCKET:-taskwondo-attachments}
+      MINIO_BUCKET: ${MINIO_BUCKET:-montask-attachments}
 
   nats:
     image: nats:2-alpine

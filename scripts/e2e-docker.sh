@@ -5,7 +5,7 @@ set -euo pipefail
 # runs Playwright tests inside a container, and tears everything down.
 
 COMPOSE_FILE="docker-compose.e2e.yml"
-PROJECT_NAME="taskwondo-e2e"
+PROJECT_NAME="montask-e2e"
 COMPOSE="docker compose -f $COMPOSE_FILE -p $PROJECT_NAME"
 
 cleanup() {

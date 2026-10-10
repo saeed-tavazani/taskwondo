@@ -438,7 +438,7 @@ function InboxListPage() {
   const [removedId, setRemovedId] = useState<string | null>(null)
   const [reorderedId, setReorderedId] = useState<string | null>(null)
   const [activeRow, setActiveRow] = useState(-1)
-  const activeRowStorageKey = 'taskwondo_activeRow_inbox'
+  const activeRowStorageKey = 'montask_activeRow_inbox'
   const restoredRef = useRef(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [removeConfirmItem, setRemoveConfirmItem] = useState<InboxItem | null>(null)

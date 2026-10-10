@@ -30,7 +30,7 @@ type WorkItemHandler struct {
 }
 
 // NewWorkItemHandler creates a new WorkItemHandler. baseURL is the public web
-// base (e.g. https://taskwondo.org), used to build absolute work item links.
+// base (e.g. https://montask.org), used to build absolute work item links.
 func NewWorkItemHandler(items *service.WorkItemService, sla *service.SLAService, maxUploadSize int64, baseURL string) *WorkItemHandler {
 	return &WorkItemHandler{items: items, sla: sla, maxUploadSize: maxUploadSize, baseURL: baseURL}
 }

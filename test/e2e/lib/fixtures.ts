@@ -91,7 +91,7 @@ export const test = base.extend<{ testUser: TestUser; testProject: TestProject }
         {
           origin: process.env.BASE_URL || 'http://localhost:5173',
           localStorage: [
-            { name: 'taskwondo_token', value: testUser.token },
+            { name: 'montask_token', value: testUser.token },
           ],
         },
       ],

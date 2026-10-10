@@ -1,4 +1,4 @@
-# Taskwondo — Development Setup
+# Montask — Development Setup
 
 ## Prerequisites
 
@@ -102,10 +102,10 @@ It renders nothing itself, so it composes with starship or any other prompt.
 `make setup` ends by **offering** to set that up, and `make setup-shell` does the same
 thing on its own. Both call `scripts/setup-shell.sh`, which is the only part of setup
 that writes outside the repository — so it asks first, backs the file up as
-`<rc>.taskwondo.bak`, and appends a marked block guarded by `command -v mise`:
+`<rc>.montask.bak`, and appends a marked block guarded by `command -v mise`:
 
 ```bash
-# >>> mise (added by taskwondo scripts/setup-shell.sh) >>>
+# >>> mise (added by montask scripts/setup-shell.sh) >>>
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 # <<< mise <<<
 ```

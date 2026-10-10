@@ -1,52 +1,51 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { Link, Navigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/contexts/AuthContext'
-import { useBrand } from '@/contexts/BrandContext'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { PoweredByFooter } from '@/components/PoweredByFooter'
-import * as authApi from '@/api/auth'
-import { getLocalizedError } from '@/utils/apiError'
-import { usePublicSettings } from '@/hooks/useSystemSettings'
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { useBrand } from '@/contexts/BrandContext';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import * as authApi from '@/api/auth';
+import { getLocalizedError } from '@/utils/apiError';
+import { usePublicSettings } from '@/hooks/useSystemSettings';
 
 export function RegisterPage() {
-  const { t } = useTranslation()
-  const { brandName } = useBrand()
-  const { user } = useAuth()
-  const { data: publicSettings } = usePublicSettings()
-  const [displayName, setDisplayName] = useState('')
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const { t } = useTranslation();
+  const { brandName } = useBrand();
+  const { user } = useAuth();
+  const { data: publicSettings } = usePublicSettings();
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // Check if registration is enabled
-  const registrationEnabled = publicSettings?.auth_email_registration_enabled === true
+  const registrationEnabled = publicSettings?.auth_email_registration_enabled === true;
 
   if (user) {
-    return <Navigate to="/d/projects" replace />
+    return <Navigate to="/d/projects" replace />;
   }
 
   if (publicSettings && !registrationEnabled) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError('');
+    setLoading(true);
     try {
-      const pendingInvite = localStorage.getItem('taskwondo_pending_invite') || undefined
-      await authApi.register(email, displayName, pendingInvite)
-      setSuccess(true)
+      const pendingInvite = localStorage.getItem('montask_pending_invite') || undefined;
+      await authApi.register(email, displayName, pendingInvite);
+      setSuccess(true);
     } catch (err) {
-      setError(getLocalizedError(err, t, 'register.error'))
+      setError(getLocalizedError(err, t, 'register.error'));
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
@@ -67,9 +66,9 @@ export function RegisterPage() {
             </Link>
           </div>
         </div>
-        <PoweredByFooter />
+        {/* <PoweredByFooter /> */}
       </div>
-    )
+    );
   }
 
   return (
@@ -83,7 +82,7 @@ export function RegisterPage() {
             <Input
               label={t('register.displayName')}
               value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
+              onChange={e => setDisplayName(e.target.value)}
               required
               autoComplete="name"
             />
@@ -91,13 +90,11 @@ export function RegisterPage() {
               label={t('register.email')}
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               autoComplete="email"
             />
-            {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? t('register.submitting') : t('register.submit')}
             </Button>
@@ -113,7 +110,7 @@ export function RegisterPage() {
           </p>
         </div>
       </div>
-      <PoweredByFooter />
+      {/* <PoweredByFooter /> */}
     </div>
-  )
+  );
 }

@@ -18,10 +18,12 @@ import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage'
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage'
 import UserPage from '@/pages/InboxPage'
 import { NamespaceSettingsPage } from '@/pages/NamespaceSettingsPage'
+import { TimeTrackingPage } from '@/pages/TimeTrackingPage'
+import { TimeReportsPage } from '@/pages/TimeReportsPage'
 
 /** Redirect to stored namespace or default */
 function DefaultRedirect() {
-  const stored = localStorage.getItem('taskwondo_namespace') || 'default'
+  const stored = localStorage.getItem('montask_namespace') || 'default'
   const segment = stored === 'default' ? 'd' : stored
   return <Navigate to={`/${segment}/projects`} state={{ autoRedirect: true }} replace />
 }
@@ -50,6 +52,8 @@ export default function App() {
             <Route path="projects" element={<ProjectListPage />} />
             <Route path="projects/:projectKey/*" element={<ProjectDetailPage />} />
             <Route path="settings" element={<NamespaceSettingsPage />} />
+            <Route path="time-tracking" element={<TimeTrackingPage />} />
+            <Route path="time-reports" element={<TimeReportsPage />} />
           </Route>
           <Route path="/user/*" element={<UserPage />} />
           <Route path="/preferences/*" element={<PreferencesPage />} />

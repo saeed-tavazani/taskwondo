@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// Client is an HTTP client for the Taskwondo REST API.
+// Client is an HTTP client for the Montask REST API.
 type Client struct {
 	baseURL    string
 	apiKey     string
@@ -22,7 +22,7 @@ type Client struct {
 	httpClient *http.Client
 }
 
-// NewClient creates a new Taskwondo API client.
+// NewClient creates a new Montask API client.
 func NewClient(baseURL, apiKey, namespace string) *Client {
 	return &Client{
 		baseURL:   strings.TrimRight(baseURL, "/"),

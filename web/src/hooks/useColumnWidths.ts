@@ -12,7 +12,7 @@ function loadFromLocalStorage(lsKey: string): Record<string, number> {
 
 export function useColumnWidths(scope: string = 'workItems') {
   const prefKey = `columnWidths_${scope}`
-  const lsKey = `taskwondo_${prefKey}`
+  const lsKey = `montask_${prefKey}`
 
   const [widths, setWidths] = useState<Record<string, number>>(() => loadFromLocalStorage(lsKey))
 

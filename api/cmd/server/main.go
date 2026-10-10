@@ -51,7 +51,7 @@ func main() {
 	ctx, stop := signal.NotifyContext(baseCtx, syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
-	log.Info().Msg("starting taskwondo")
+	log.Info().Msg("starting montask")
 
 	// Connect to database
 	db, err := database.Connect(ctx, cfg.DatabaseURL)
@@ -321,6 +321,7 @@ func main() {
 	escalations := handler.NewEscalationHandler(escalationService)
 	inbox := handler.NewInboxHandler(inboxService, slaService)
 	stats := handler.NewStatsHandler(statsService)
+	timeTracking := handler.NewTimeTrackingHandler(service.NewTimeTrackingService(repository.NewTimeTrackingRepository(db), projectRepo, projectMemberRepo, workItemRepo))
 	search := handler.NewSearchHandler(searchService)
 	namespaces := handler.NewNamespaceHandler(namespaceService, cfg.BaseURL)
 	invites := handler.NewInviteHandler(projectService, namespaceService)
@@ -420,6 +421,13 @@ func main() {
 			})
 
 			// User watchlist
+			r.Get("/user/time-timer", timeTracking.Active)
+			r.Post("/user/time-timers/{timerId}/stop", timeTracking.Stop)
+			r.Route("/{namespace}/time-tracking", func(r chi.Router) {
+				r.Use(middleware.Namespace(namespaceService))
+				timeTracking.Routes(r)
+			})
+
 			r.Get("/user/watchlist", items.ListWatchedItemIDs)
 
 			// User search (scoped to co-project members)

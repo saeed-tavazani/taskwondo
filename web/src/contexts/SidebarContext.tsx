@@ -20,8 +20,8 @@ interface SidebarContextValue {
 }
 
 const STORAGE_KEYS: Record<SidebarType, string> = {
-  app: 'taskwondo_sidebar_app_collapsed',
-  settings: 'taskwondo_sidebar_settings_collapsed',
+  app: 'montask_sidebar_app_collapsed',
+  settings: 'montask_sidebar_settings_collapsed',
 }
 
 const PREF_KEYS: Record<SidebarType, string> = {
@@ -29,7 +29,7 @@ const PREF_KEYS: Record<SidebarType, string> = {
   settings: 'sidebarSettingsCollapsed',
 }
 
-const OLD_STORAGE_KEY = 'taskwondo_sidebar_collapsed'
+const OLD_STORAGE_KEY = 'montask_sidebar_collapsed'
 const OLD_PREF_KEY = 'sidebarCollapsed'
 
 const SidebarContext = createContext<SidebarContextValue | null>(null)
@@ -47,20 +47,20 @@ function migrateOldStorage(): void {
   }
 
   // Migrate per-type keys (project/user) to unified app key
-  const oldProject = localStorage.getItem('taskwondo_sidebar_project_collapsed')
-  const oldUser = localStorage.getItem('taskwondo_sidebar_user_collapsed')
+  const oldProject = localStorage.getItem('montask_sidebar_project_collapsed')
+  const oldUser = localStorage.getItem('montask_sidebar_user_collapsed')
   if (oldProject !== null || oldUser !== null) {
     if (localStorage.getItem(STORAGE_KEYS.app) === null) {
       // Prefer project sidebar's state since it was more commonly used
       localStorage.setItem(STORAGE_KEYS.app, oldProject ?? oldUser ?? 'false')
     }
     // Migrate settings key if it used the old name
-    const oldSettings = localStorage.getItem('taskwondo_sidebar_settings_collapsed')
+    const oldSettings = localStorage.getItem('montask_sidebar_settings_collapsed')
     if (oldSettings !== null && localStorage.getItem(STORAGE_KEYS.settings) === null) {
       localStorage.setItem(STORAGE_KEYS.settings, oldSettings)
     }
-    localStorage.removeItem('taskwondo_sidebar_project_collapsed')
-    localStorage.removeItem('taskwondo_sidebar_user_collapsed')
+    localStorage.removeItem('montask_sidebar_project_collapsed')
+    localStorage.removeItem('montask_sidebar_user_collapsed')
   }
 }
 

@@ -1,9 +1,9 @@
 .PHONY: build build-linux build-darwin build-windows clean install
 
 BUILD_DIR := ../build/mcp
-BIN_LINUX := $(BUILD_DIR)/taskwondo-mcp-linux-amd64
-BIN_DARWIN := $(BUILD_DIR)/taskwondo-mcp-darwin-arm64
-BIN_WINDOWS := $(BUILD_DIR)/taskwondo-mcp-windows-amd64.exe
+BIN_LINUX := $(BUILD_DIR)/montask-mcp-linux-amd64
+BIN_DARWIN := $(BUILD_DIR)/montask-mcp-darwin-arm64
+BIN_WINDOWS := $(BUILD_DIR)/montask-mcp-windows-amd64.exe
 
 build: build-linux build-darwin build-windows
 

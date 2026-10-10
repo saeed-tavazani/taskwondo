@@ -790,7 +790,7 @@ export async function configureMailpitSMTP(
     password: 'unused',
     encryption: 'none',
     from_address: 'noreply@e2e.local',
-    from_name: 'Taskwondo E2E',
+    from_name: 'Montask E2E',
   });
 }
 

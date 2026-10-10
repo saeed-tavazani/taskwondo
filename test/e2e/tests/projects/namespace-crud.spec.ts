@@ -167,7 +167,7 @@ test.describe('Namespace Members', () => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:5173';
 
     // Get admin user id
-    const loginData = await api.login(request, process.env.ADMIN_EMAIL || 'admin@taskwondo.test', process.env.ADMIN_PASSWORD || 'admin');
+    const loginData = await api.login(request, process.env.ADMIN_EMAIL || 'admin@montask.test', process.env.ADMIN_PASSWORD || 'admin');
 
     await api.createNamespace(request, adminToken, slug, 'Owner Test NS');
 

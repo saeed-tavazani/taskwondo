@@ -23,8 +23,8 @@ func NewTimeEntryRepository(db *sql.DB) *TimeEntryRepository {
 // Create inserts a new time entry.
 func (r *TimeEntryRepository) Create(ctx context.Context, entry *model.TimeEntry) error {
 	_, err := r.db.ExecContext(ctx,
-		`INSERT INTO time_entries (id, work_item_id, user_id, started_at, duration_seconds, description)
-		 VALUES ($1, $2, $3, $4, $5, $6)`,
+		`INSERT INTO time_entries (id, work_item_id, user_id, started_at, duration_seconds, description, project_id)
+		 VALUES ($1, $2, $3, $4, $5, $6, (SELECT project_id FROM work_items WHERE id=$2))`,
 		entry.ID, entry.WorkItemID, entry.UserID, entry.StartedAt, entry.DurationSeconds, entry.Description)
 	if err != nil {
 		return fmt.Errorf("inserting time entry: %w", err)
@@ -93,7 +93,19 @@ func (r *TimeEntryRepository) ListByWorkItem(ctx context.Context, workItemID uui
 
 // Update modifies a time entry's mutable fields.
 func (r *TimeEntryRepository) Update(ctx context.Context, entry *model.TimeEntry) error {
-	result, err := r.db.ExecContext(ctx,
+	tx, err := r.db.BeginTx(ctx, nil)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	actor := entry.UserID
+	if info := model.AuthInfoFromContext(ctx); info != nil {
+		actor = info.UserID
+	}
+	if err = setTimeActor(ctx, tx, actor); err != nil {
+		return err
+	}
+	result, err := tx.ExecContext(ctx,
 		`UPDATE time_entries SET started_at = $1, duration_seconds = $2, description = $3, updated_at = now()
 		 WHERE id = $4 AND deleted_at IS NULL`,
 		entry.StartedAt, entry.DurationSeconds, entry.Description, entry.ID)
@@ -109,12 +121,22 @@ func (r *TimeEntryRepository) Update(ctx context.Context, entry *model.TimeEntry
 		return model.ErrNotFound
 	}
 
-	return nil
+	return tx.Commit()
 }
 
 // Delete soft-deletes a time entry.
 func (r *TimeEntryRepository) Delete(ctx context.Context, id uuid.UUID) error {
-	result, err := r.db.ExecContext(ctx,
+	tx, err := r.db.BeginTx(ctx, nil)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	if info := model.AuthInfoFromContext(ctx); info != nil {
+		if err = setTimeActor(ctx, tx, info.UserID); err != nil {
+			return err
+		}
+	}
+	result, err := tx.ExecContext(ctx,
 		`UPDATE time_entries SET deleted_at = now(), updated_at = now()
 		 WHERE id = $1 AND deleted_at IS NULL`, id)
 	if err != nil {
@@ -129,7 +151,7 @@ func (r *TimeEntryRepository) Delete(ctx context.Context, id uuid.UUID) error {
 		return model.ErrNotFound
 	}
 
-	return nil
+	return tx.Commit()
 }
 
 // SumByWorkItem returns the total duration_seconds for all non-deleted time entries on a work item.

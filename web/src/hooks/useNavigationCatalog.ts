@@ -7,6 +7,7 @@ import { useLastProjectKey } from '@/hooks/useLastProjectKey'
 import { toUrlSegment } from '@/utils/namespaceUrl'
 import { buildNavigationCatalog } from '@/utils/navigationCatalog'
 import type { NavigationEntry } from '@/utils/navigationCatalog'
+import { useTimeProjects } from '@/hooks/useTimeTracking'
 
 /**
  * The command palette's navigation catalog for the current user: gated,
@@ -21,6 +22,7 @@ import type { NavigationEntry } from '@/utils/navigationCatalog'
  */
 export function useNavigationCatalog(projectKey?: string): NavigationEntry[] {
   const { t } = useTranslation()
+  const { canTrackTime } = useTimeProjects()
   const { p } = useNamespacePath()
   const { user } = useAuth()
   const { namespaces } = useNamespaceContext()
@@ -37,7 +39,8 @@ export function useNavigationCatalog(projectKey?: string): NavigationEntry[] {
         user,
         activeProjectKey,
         namespaces,
+        canTrackTime,
       }),
-    [t, p, user, activeProjectKey, namespaces],
+    [t, p, user, activeProjectKey, namespaces, canTrackTime],
   )
 }

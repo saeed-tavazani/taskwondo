@@ -259,33 +259,33 @@ _release:
 	@echo ""
 	@printf "$(CYAN)## Building release v$(VERSION)...$(RESET)\n"
 	rm -rf build/release
-	mkdir -p build/release/taskwondo-server-$(VERSION)/bin build/release/taskwondo-server-$(VERSION)/html
+	mkdir -p build/release/montask-server-$(VERSION)/bin build/release/montask-server-$(VERSION)/html
 	@printf "$(CYAN)## Building API binary (Docker)...$(RESET)\n"
-	docker build -f docker/Dockerfile.api --target builder --build-arg GOPROXY -t taskwondo-api-builder api
-	docker create --name taskwondo-api-extract taskwondo-api-builder true
-	docker cp taskwondo-api-extract:/bin/taskwondo build/release/taskwondo-server-$(VERSION)/bin/taskwondo-api
-	docker rm taskwondo-api-extract
+	docker build -f docker/Dockerfile.api --target builder --build-arg GOPROXY -t montask-api-builder api
+	docker create --name montask-api-extract montask-api-builder true
+	docker cp montask-api-extract:/bin/montask build/release/montask-server-$(VERSION)/bin/montask-api
+	docker rm montask-api-extract
 	@printf "$(CYAN)## Building Worker binary (Docker)...$(RESET)\n"
-	docker build -f docker/Dockerfile.worker --target builder --build-arg GOPROXY -t taskwondo-worker-builder api
-	docker create --name taskwondo-worker-extract taskwondo-worker-builder true
-	docker cp taskwondo-worker-extract:/bin/taskwondo-worker build/release/taskwondo-server-$(VERSION)/bin/taskwondo-worker
-	docker rm taskwondo-worker-extract
+	docker build -f docker/Dockerfile.worker --target builder --build-arg GOPROXY -t montask-worker-builder api
+	docker create --name montask-worker-extract montask-worker-builder true
+	docker cp montask-worker-extract:/bin/montask-worker build/release/montask-server-$(VERSION)/bin/montask-worker
+	docker rm montask-worker-extract
 	@printf "$(CYAN)## Building Web bundle (Docker)...$(RESET)\n"
-	docker build -f docker/Dockerfile.web --target builder -t taskwondo-web-builder .
-	docker create --name taskwondo-web-extract taskwondo-web-builder true
-	docker cp taskwondo-web-extract:/src/dist/. build/release/taskwondo-server-$(VERSION)/html/
-	docker rm taskwondo-web-extract
-	cp .env.template build/release/taskwondo-server-$(VERSION)/.env.template
-	cp docker/nginx.conf build/release/taskwondo-server-$(VERSION)/nginx.conf
-	cp MANUAL_INSTALL.md build/release/taskwondo-server-$(VERSION)/README.md
+	docker build -f docker/Dockerfile.web --target builder -t montask-web-builder .
+	docker create --name montask-web-extract montask-web-builder true
+	docker cp montask-web-extract:/src/dist/. build/release/montask-server-$(VERSION)/html/
+	docker rm montask-web-extract
+	cp .env.template build/release/montask-server-$(VERSION)/.env.template
+	cp docker/nginx.conf build/release/montask-server-$(VERSION)/nginx.conf
+	cp MANUAL_INSTALL.md build/release/montask-server-$(VERSION)/README.md
 	@printf "$(CYAN)## Packaging tarball...$(RESET)\n"
-	tar -czf build/release/taskwondo-server-$(VERSION).tar.gz -C build/release taskwondo-server-$(VERSION)
+	tar -czf build/release/montask-server-$(VERSION).tar.gz -C build/release montask-server-$(VERSION)
 	@echo ""
 	@echo "Release artifact:"
-	@ls -lh build/release/taskwondo-server-$(VERSION).tar.gz
+	@ls -lh build/release/montask-server-$(VERSION).tar.gz
 	@echo ""
 	@echo "Contents:"
-	@tar -tzf build/release/taskwondo-server-$(VERSION).tar.gz | head -20
+	@tar -tzf build/release/montask-server-$(VERSION).tar.gz | head -20
 	@printf "$(GREEN)## Release v$(VERSION) built successfully$(RESET)\n"
 
 # --- Worker ---
@@ -293,7 +293,7 @@ _release:
 build-worker: check-tools-api ## Build the worker binary
 	@echo ""
 	@printf "$(CYAN)## Building worker...$(RESET)\n"
-	cd api && go build -o ../build/taskwondo-worker ./cmd/worker
+	cd api && go build -o ../build/montask-worker ./cmd/worker
 	@printf "$(GREEN)## Worker built successfully$(RESET)\n"
 
 # --- MCP Server ---
@@ -370,11 +370,11 @@ test: test-api test-mcp test-web lint-ci ## Run all tests (API + MCP + frontend 
 test-api: check-tools-api ## Run Go API tests
 	@echo ""
 	@printf "$(CYAN)## Running Go tests...$(RESET)\n"
-	cd api && go test ./... -v -race -cover 2>&1 | tee /tmp/taskwondo-test-output.txt
+	cd api && go test ./... -v -race -cover 2>&1 | tee /tmp/montask-test-output.txt
 	@echo ""
 	@printf "$(LIGHT_BLUE)## Coverage by package:$(RESET)\n"
-	@grep -E '^ok\s' /tmp/taskwondo-test-output.txt | sed 's|github.com/marcoshack/taskwondo/||' | awk '{pkg=$$2; for(i=1;i<=NF;i++) if($$i ~ /^coverage:/) {pct=$$(i+1); gsub(/%/,"",pct); printf "$(LIGHT_BLUE)   %-40s %s%%$(RESET)\n", pkg, pct}}' | sort
-	@total=$$(sed -n 's/.*coverage: \([0-9.]*\)%.*/\1/p' /tmp/taskwondo-test-output.txt | awk '{s+=$$1; n++} END {if(n>0) printf "%.1f", s/n; else print "0"}'); \
+	@grep -E '^ok\s' /tmp/montask-test-output.txt | sed 's|github.com/marcoshack/taskwondo/||' | awk '{pkg=$$2; for(i=1;i<=NF;i++) if($$i ~ /^coverage:/) {pct=$$(i+1); gsub(/%/,"",pct); printf "$(LIGHT_BLUE)   %-40s %s%%$(RESET)\n", pkg, pct}}' | sort
+	@total=$$(sed -n 's/.*coverage: \([0-9.]*\)%.*/\1/p' /tmp/montask-test-output.txt | awk '{s+=$$1; n++} END {if(n>0) printf "%.1f", s/n; else print "0"}'); \
 	printf "$(LIGHT_BLUE)   %-40s %s%%$(RESET)\n" "TOTAL (avg)" "$$total"
 	@printf "$(GREEN)## Go tests passed$(RESET)\n"
 

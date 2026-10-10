@@ -30,7 +30,7 @@ test.describe('Theme Preferences', () => {
     await attach(page, testInfo, '01-preferences-light');
 
     // Projects page in light mode
-    await page.getByRole('button', { name: 'Taskwondo' }).click();
+    await page.getByRole('button', { name: 'Montask' }).click();
     await expect(page).toHaveURL(/projects/);
     await dismissWelcomeModal(page);
     await attach(page, testInfo, '02-projects-light');
@@ -48,7 +48,7 @@ test.describe('Theme Preferences', () => {
     await attach(page, testInfo, '04-preferences-dark');
 
     // Projects page in dark mode
-    await page.getByRole('button', { name: 'Taskwondo' }).click();
+    await page.getByRole('button', { name: 'Montask' }).click();
     await expect(page).toHaveURL(/projects/);
     await dismissWelcomeModal(page);
     await attach(page, testInfo, '05-projects-dark');

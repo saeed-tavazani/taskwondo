@@ -293,6 +293,8 @@ export function useCreateTimeEntry(projectKey: string, itemNumber: number) {
     mutationFn: (input: CreateTimeEntryInput) =>
       createTimeEntry(projectKey, itemNumber, input),
     onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['tracked-time'] })
+      qc.invalidateQueries({ queryKey: ['time-report'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'timeEntries'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'events'] })
     },
@@ -305,6 +307,8 @@ export function useUpdateTimeEntry(projectKey: string, itemNumber: number) {
     mutationFn: ({ entryId, input }: { entryId: string; input: UpdateTimeEntryInput }) =>
       updateTimeEntry(projectKey, itemNumber, entryId, input),
     onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['tracked-time'] })
+      qc.invalidateQueries({ queryKey: ['time-report'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'timeEntries'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'events'] })
     },
@@ -317,6 +321,8 @@ export function useDeleteTimeEntry(projectKey: string, itemNumber: number) {
     mutationFn: (entryId: string) =>
       deleteTimeEntry(projectKey, itemNumber, entryId),
     onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['tracked-time'] })
+      qc.invalidateQueries({ queryKey: ['time-report'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'timeEntries'] })
       qc.invalidateQueries({ queryKey: ['projects', projectKey, 'items', itemNumber, 'events'] })
     },

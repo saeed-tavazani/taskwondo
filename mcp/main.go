@@ -9,7 +9,7 @@ import (
 
 func main() {
 	s := server.NewMCPServer(
-		"taskwondo",
+		"montask",
 		"0.1.0",
 		server.WithToolCapabilities(false),
 	)

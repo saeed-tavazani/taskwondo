@@ -1,10 +1,11 @@
+import '@/utils/migrateBrandStorage'
 import axios from 'axios'
 
-const TOKEN_KEY = 'taskwondo_token'
+const TOKEN_KEY = 'montask_token'
 
 // Active namespace slug (defaults to 'default')
 // Initialize from localStorage so the first request after refresh uses the correct namespace
-const NAMESPACE_KEY = 'taskwondo_namespace'
+const NAMESPACE_KEY = 'montask_namespace'
 const storedNs = localStorage.getItem(NAMESPACE_KEY)
 let activeNamespaceSlug: string | null = storedNs && storedNs !== 'default' ? storedNs : null
 

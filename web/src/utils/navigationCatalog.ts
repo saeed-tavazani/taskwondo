@@ -26,6 +26,7 @@ import {
   projectNavItems,
   systemSettingsNavItems,
   userNavItems,
+  timeNavItems,
 } from '@/utils/sidebarNav'
 import type { NavUser, SidebarNavItem, Translate } from '@/utils/sidebarNav'
 
@@ -67,6 +68,7 @@ export interface CatalogNamespace {
 }
 
 export interface NavigationCatalogInput {
+  canTrackTime?: boolean
   t: Translate
   /** `p` from `useNamespacePath` — prefixes a path with the active namespace segment. */
   p: (path: string) => string
@@ -121,6 +123,9 @@ export function buildNavigationCatalog(input: NavigationCatalogInput): Navigatio
   // matching what AppSidebar does.
   if (!isCustomerOnly(user)) {
     entries.push(...fromSidebar('user', userNavItems(t)))
+  }
+  if (input.canTrackTime ?? !isCustomerOnly(user)) {
+    entries.push(...fromSidebar('user', timeNavItems(t, p(''))))
   }
 
   entries.push(...fromSidebar('preferences', preferencesNavItems(t)))

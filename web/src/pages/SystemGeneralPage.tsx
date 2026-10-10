@@ -68,7 +68,7 @@ export function SystemGeneralPage() {
               setBrandName(e.target.value)
               setBrandSaved(false)
             }}
-            placeholder="Taskwondo"
+            placeholder={t('brand.name')}
           />
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {t('admin.general.brand.nameHelp')}

@@ -1,59 +1,58 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/contexts/AuthContext'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import * as authApi from '@/api/auth'
-import { getLocalizedError } from '@/utils/apiError'
-import { useBrand } from '@/contexts/BrandContext'
-import { PoweredByFooter } from '@/components/PoweredByFooter'
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import * as authApi from '@/api/auth';
+import { getLocalizedError } from '@/utils/apiError';
+import { useBrand } from '@/contexts/BrandContext';
 
 export function ChangePasswordPage() {
-  const { t } = useTranslation()
-  const { brandName } = useBrand()
-  const { user, forcePasswordChange, clearForcePasswordChange } = useAuth()
-  const navigate = useNavigate()
-  const [oldPassword, setOldPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { t } = useTranslation();
+  const { brandName } = useBrand();
+  const { user, forcePasswordChange, clearForcePasswordChange } = useAuth();
+  const navigate = useNavigate();
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   if (!user) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
   if (!forcePasswordChange) {
-    return <Navigate to="/d/projects" replace />
+    return <Navigate to="/d/projects" replace />;
   }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
     if (newPassword.length < 8) {
-      setError(t('changePassword.tooShort'))
-      return
+      setError(t('changePassword.tooShort'));
+      return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError(t('changePassword.mismatch'))
-      return
+      setError(t('changePassword.mismatch'));
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
-      const { token } = await authApi.changePassword(oldPassword, newPassword)
-      clearForcePasswordChange(token)
-      navigate('/d/projects', { replace: true })
+      const { token } = await authApi.changePassword(oldPassword, newPassword);
+      clearForcePasswordChange(token);
+      navigate('/d/projects', { replace: true });
     } catch (err) {
-      setError(getLocalizedError(err, t, 'changePassword.error'))
+      setError(getLocalizedError(err, t, 'changePassword.error'));
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
@@ -70,7 +69,7 @@ export function ChangePasswordPage() {
               label={t('changePassword.oldPassword')}
               type="password"
               value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
+              onChange={e => setOldPassword(e.target.value)}
               required
               autoComplete="current-password"
             />
@@ -78,7 +77,7 @@ export function ChangePasswordPage() {
               label={t('changePassword.newPassword')}
               type="password"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={e => setNewPassword(e.target.value)}
               required
               autoComplete="new-password"
             />
@@ -86,20 +85,18 @@ export function ChangePasswordPage() {
               label={t('changePassword.confirmPassword')}
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={e => setConfirmPassword(e.target.value)}
               required
               autoComplete="new-password"
             />
-            {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? t('changePassword.submitting') : t('changePassword.submit')}
             </Button>
           </form>
         </div>
       </div>
-      <PoweredByFooter />
+      {/* <PoweredByFooter /> */}
     </div>
-  )
+  );
 }

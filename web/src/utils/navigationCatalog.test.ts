@@ -8,6 +8,7 @@ import {
   projectNavItems,
   systemSettingsNavItems,
   userNavItems,
+  timeNavItems,
 } from './sidebarNav'
 import type { NavUser, SidebarNavItem } from './sidebarNav'
 
@@ -123,12 +124,19 @@ describe('buildNavigationCatalog — active project', () => {
 })
 
 describe('buildNavigationCatalog — user pages', () => {
+  it('gates time pages using the same workspace capability as the sidebar', () => {
+    expect(labels(build({ canTrackTime: false }))).not.toContain('timeTracking.title')
+    const entries = build({ canTrackTime: true })
+    expect(entries.find(e => e.label === 'timeTracking.reports')?.target).toEqual({ kind: 'route', to: '/d/time-reports' })
+  })
   it('lists Projects, Inbox, Watchlist and Feed', () => {
     expect(labels(inGroup(build(), 'user'))).toEqual([
       'sidebar.projects',
       'user.sidebar.inbox',
       'user.sidebar.watchlist',
       'user.sidebar.feed',
+      'timeTracking.title',
+      'timeTracking.reports',
     ])
   })
 
@@ -278,6 +286,7 @@ describe('every shared sidebar builder is wired into the catalog', () => {
   const builderCalls: Record<string, () => SidebarNavItem[]> = {
     projectNavItems: () => projectNavItems(keyEcho, '/d/projects/TF', false),
     userNavItems: () => userNavItems(keyEcho),
+    timeNavItems: () => timeNavItems(keyEcho, '/d'),
     preferencesNavItems: () => preferencesNavItems(keyEcho),
     systemSettingsNavItems: () => systemSettingsNavItems(keyEcho),
   }

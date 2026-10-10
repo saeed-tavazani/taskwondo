@@ -74,12 +74,12 @@ func (s *Sender) Send(ctx context.Context, to, subject, htmlBody string) error {
 // SendTest sends a test email to the given address.
 func (s *Sender) SendTest(ctx context.Context, to string) error {
 	log.Ctx(ctx).Info().Str("to", to).Msg("sending test email")
-	return s.Send(ctx, to, "Taskwondo Test Email", testEmailHTML(to))
+	return s.Send(ctx, to, "Montask Test Email", testEmailHTML(to))
 }
 
 func testEmailHTML(to string) string {
 	return fmt.Sprintf(`<html><body>
-<h2>Taskwondo SMTP Test</h2>
+<h2>Montask SMTP Test</h2>
 <p>This is a test email sent to <strong>%s</strong> to verify your SMTP configuration.</p>
 <p>If you received this email, your SMTP settings are working correctly.</p>
 </body></html>`, to)

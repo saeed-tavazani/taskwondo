@@ -12,7 +12,7 @@ const test = base.extend({
         {
           origin: process.env.BASE_URL || 'http://localhost:5173',
           localStorage: [
-            { name: 'taskwondo_token', value: adminToken },
+            { name: 'montask_token', value: adminToken },
           ],
         },
       ],
@@ -88,7 +88,7 @@ test.describe('SMTP Configuration', () => {
     await page.getByLabel('Username').fill('testuser@example.com');
     await page.getByLabel('Password').fill('secret-password');
     await page.getByLabel('From Address').fill('noreply@example.com');
-    await page.getByLabel('From Name').fill('Taskwondo Test');
+    await page.getByLabel('From Name').fill('Montask Test');
 
     // Select encryption via the select element
     await page.locator('select').selectOption('tls');
@@ -120,7 +120,7 @@ test.describe('SMTP Configuration', () => {
       password: 'my-secret-pass',
       encryption: 'starttls',
       from_address: 'noreply@example.com',
-      from_name: 'Taskwondo',
+      from_name: 'Montask',
     });
 
     await gotoIntegrations(page);
@@ -132,7 +132,7 @@ test.describe('SMTP Configuration', () => {
     await expect(page.getByLabel('SMTP Host')).toHaveValue('smtp.example.com');
     await expect(page.getByLabel('Username')).toHaveValue('user@example.com');
     await expect(page.getByLabel('From Address')).toHaveValue('noreply@example.com');
-    await expect(page.getByLabel('From Name')).toHaveValue('Taskwondo');
+    await expect(page.getByLabel('From Name')).toHaveValue('Montask');
 
     // Toggle should be on
     await expect(page.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
@@ -253,7 +253,7 @@ test.describe('SMTP Configuration', () => {
 
     // Inject regular user token
     await page.evaluate((token: string) => {
-      localStorage.setItem('taskwondo_token', token);
+      localStorage.setItem('montask_token', token);
     }, testUser.token);
 
     // Try to access admin page

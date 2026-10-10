@@ -1,56 +1,55 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { Navigate, useSearchParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/contexts/AuthContext'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { PoweredByFooter } from '@/components/PoweredByFooter'
-import * as authApi from '@/api/auth'
-import { getLocalizedError } from '@/utils/apiError'
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import { Navigate, useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import * as authApi from '@/api/auth';
+import { getLocalizedError } from '@/utils/apiError';
 
 export function ResetPasswordPage() {
-  const { t } = useTranslation()
-  const { user, loginWithToken } = useAuth()
-  const [searchParams] = useSearchParams()
-  const token = searchParams.get('token')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { t } = useTranslation();
+  const { user, loginWithToken } = useAuth();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   if (user) {
-    return <Navigate to="/d/projects" replace />
+    return <Navigate to="/d/projects" replace />;
   }
 
   if (!token) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
     if (password !== confirmPassword) {
-      setError(t('resetPassword.mismatch'))
-      return
+      setError(t('resetPassword.mismatch'));
+      return;
     }
 
     if (password.length < 8) {
-      setError(t('resetPassword.tooShort'))
-      return
+      setError(t('resetPassword.tooShort'));
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
-      const result = await authApi.resetPassword(token, password)
-      loginWithToken(result.token, result.user)
+      const result = await authApi.resetPassword(token, password);
+      loginWithToken(result.token, result.user);
     } catch (err) {
-      setError(getLocalizedError(err, t, 'resetPassword.error'))
+      setError(getLocalizedError(err, t, 'resetPassword.error'));
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
@@ -67,7 +66,7 @@ export function ResetPasswordPage() {
               label={t('resetPassword.password')}
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               autoComplete="new-password"
             />
@@ -75,13 +74,11 @@ export function ResetPasswordPage() {
               label={t('resetPassword.confirmPassword')}
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={e => setConfirmPassword(e.target.value)}
               required
               autoComplete="new-password"
             />
-            {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? t('resetPassword.submitting') : t('resetPassword.submit')}
             </Button>
@@ -96,7 +93,7 @@ export function ResetPasswordPage() {
           </p>
         </div>
       </div>
-      <PoweredByFooter />
+      {/* <PoweredByFooter /> */}
     </div>
-  )
+  );
 }

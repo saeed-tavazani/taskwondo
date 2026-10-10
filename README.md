@@ -1,28 +1,30 @@
-# Taskwondo — Self-Hosted Task & Project Management [![CI](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml/badge.svg)](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml)
+# Montask — Self-Hosted Task & Project Management [![CI](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml/badge.svg)](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml)
 
 A self-hosted, open-source project management and issue tracking platform. Namespaces, kanban boards, customizable workflows, semantic search, email notifications, AI integration via MCP, and 9 languages — all included out of the box. Deploy with a single Docker Compose command. No paid tiers, no strings attached. Your backlog doesn't stand a chance! 🥋
 
-Try it out at https://taskwondo.org/
+Deploy your own Montask instance using the Quick Start below.
+
+Upgrading an existing installation? See [the Montask upgrade notes](docs/montask-upgrade.md).
 
 Join our Discord server: https://discord.gg/mUAag4CtBH
 
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/taskwondo-project-overview.png" width="46%" />
-  <img src="docs/screenshots/taskwondo-workitems.png" width="46%" />
-  <img src="docs/screenshots/taskwondo-milestone-dashboard.png" width="46%" />
-  <img src="docs/screenshots/taskwondo-systemsettings-authentication.png" width="46%" />
+  <img src="docs/screenshots/montask-project-overview.png" width="46%" />
+  <img src="docs/screenshots/montask-workitems.png" width="46%" />
+  <img src="docs/screenshots/montask-milestone-dashboard.png" width="46%" />
+  <img src="docs/screenshots/montask-systemsettings-authentication.png" width="46%" />
 </p>
 
 
 <p align="center">
-  <img src="docs/screenshots/taskwondo-mobile-project_overview.png" width="15%" />
-  <img src="docs/screenshots/taskwondo-mobile-items.png" width="15%" />
-  <img src="docs/screenshots/taskwondo-mobile-item-activities.png" width="15%" />
-  <img src="docs/screenshots/taskwondo-mobile-milestones.png" width="15%" />
-  <img src="docs/screenshots/taskwondo-mobile-milestones-details.png" width="15%" />
-  <img src="docs/screenshots/taskwondo-mobile-workflows.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-project_overview.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-items.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-item-activities.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-milestones.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-milestones-details.png" width="15%" />
+  <img src="docs/screenshots/montask-mobile-workflows.png" width="15%" />
 </p>
 
 See [more screenshots](docs/overview.md) for a full walkthrough of features.
@@ -108,54 +110,54 @@ See [more screenshots](docs/overview.md) for a full walkthrough of features.
 ## Quick Start
 
 ```bash
-git clone https://github.com/marcoshack/taskwondo.git
-cd taskwondo
+git clone https://github.com/marcoshack/taskwondo.git montask
+cd montask
 ./install.sh --docker    # generates .env, pulls images, starts services
 ```
 
 Then open [http://localhost:3000](http://localhost:3000) and log in with the admin credentials printed by the installer.
 
-To start Taskwondo automatically on boot, install the included systemd service:
+To start Montask automatically on boot, install the included systemd service:
 
 ```bash
-sudo cp docker/taskwondo.service /etc/systemd/system/
-sudo sed -i "s|/path/to/your/taskwondo|$(pwd)|" /etc/systemd/system/taskwondo.service
+sudo cp docker/montask.service /etc/systemd/system/
+sudo sed -i "s|/path/to/your/montask|$(pwd)|" /etc/systemd/system/montask.service
 sudo systemctl daemon-reload
-sudo systemctl enable --now taskwondo
+sudo systemctl enable --now montask
 ```
 
 For manual installation without Docker, see [MANUAL_INSTALL.md](MANUAL_INSTALL.md).
 
 ## MCP Server
 
-Taskwondo includes an [MCP server](https://modelcontextprotocol.io/) with 50+ tools for AI/LLM integration — manage work items, comments, relations, attachments, time entries, inbox, milestones, and more from any MCP-compatible client.
+Montask includes an [MCP server](https://modelcontextprotocol.io/) with 50+ tools for AI/LLM integration — manage work items, comments, relations, attachments, time entries, inbox, milestones, and more from any MCP-compatible client.
 
 **Downloads** — available on the [Releases](https://github.com/marcoshack/taskwondo/releases) page:
 
-- `taskwondo-mcp-linux-amd64` — MCP server binary (Linux/amd64)
-- `taskwondo-mcp-darwin-arm64` — MCP server binary (macOS/arm64, Apple Silicon)
-- `taskwondo-mcp-windows-amd64.exe` — MCP server binary (Windows/amd64)
-- `taskwondo.mcpb` — MCP bundle for [Claude Desktop](https://claude.ai/download) (Windows + macOS)
+- `montask-mcp-linux-amd64` — MCP server binary (Linux/amd64)
+- `montask-mcp-darwin-arm64` — MCP server binary (macOS/arm64, Apple Silicon)
+- `montask-mcp-windows-amd64.exe` — MCP server binary (Windows/amd64)
+- `montask.mcpb` — MCP bundle for [Claude Desktop](https://claude.ai/download) (Windows + macOS)
 
-The MCP server connects to a running Taskwondo instance via API key. Set the `TASKWONDO_URL` and `TASKWONDO_API_KEY` environment variables, then run the binary as a stdio transport.
+The MCP server connects to a running Montask instance via API key. Set the `MONTASK_URL` and `MONTASK_API_KEY` environment variables, then run the binary as a stdio transport.
 
 ### Configuring Claude Code
 
-After downloading the MCP binary for your platform (e.g. `taskwondo-mcp-darwin-arm64` on Apple Silicon), make it executable and register it with Claude Code at user scope so it's available across all your projects:
+After downloading the MCP binary for your platform (e.g. `montask-mcp-darwin-arm64` on Apple Silicon), make it executable and register it with Claude Code at user scope so it's available across all your projects:
 
 ```bash
 # 1. Move the binary somewhere on your PATH and make it executable
-chmod +x ~/Downloads/taskwondo-mcp-darwin-arm64
-mv ~/Downloads/taskwondo-mcp-darwin-arm64 /usr/local/bin/taskwondo-mcp
+chmod +x ~/Downloads/montask-mcp-darwin-arm64
+mv ~/Downloads/montask-mcp-darwin-arm64 /usr/local/bin/montask-mcp
 
-# 2. Generate an API key from Taskwondo: User Menu → Preferences → Authentication → API Keys
+# 2. Generate an API key from Montask: User Menu → Preferences → Authentication → API Keys
 
 # 3. Register the server with Claude Code at user scope
-claude mcp add taskwondo \
+claude mcp add montask \
   --scope user \
-  --env TASKWONDO_URL=https://your-instance.example.com \
-  --env TASKWONDO_API_KEY=twk_your_api_key_here \
-  -- taskwondo-mcp
+  --env MONTASK_URL=https://your-instance.example.com \
+  --env MONTASK_API_KEY=twk_your_api_key_here \
+  -- montask-mcp
 ```
 
 Verify the server is registered and reachable:
@@ -164,7 +166,7 @@ Verify the server is registered and reachable:
 claude mcp list
 ```
 
-For Claude Desktop, download the `taskwondo.mcpb` bundle from the [Releases](https://github.com/marcoshack/taskwondo/releases) page and open it — Claude Desktop will prompt for the URL and API key during install.
+For Claude Desktop, download the `montask.mcpb` bundle from the [Releases](https://github.com/marcoshack/taskwondo/releases) page and open it — Claude Desktop will prompt for the URL and API key during install.
 
 ## Development
 

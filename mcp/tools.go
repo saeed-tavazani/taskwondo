@@ -35,10 +35,10 @@ func getClient() (*Client, error) {
 		return nil, fmt.Errorf("authentication error: %w", err)
 	}
 	if baseURL == "" {
-		return nil, fmt.Errorf("TASKWONDO_URL not set. Set the environment variable or run the login tool first")
+		return nil, fmt.Errorf("MONTASK_URL not set. Set the environment variable or run the login tool first")
 	}
 	if apiKey == "" {
-		return nil, fmt.Errorf("not authenticated. Set TASKWONDO_API_KEY environment variable or run the login tool")
+		return nil, fmt.Errorf("not authenticated. Set MONTASK_API_KEY environment variable or run the login tool")
 	}
 	// Session-level override takes precedence
 	ns := namespace
@@ -101,19 +101,19 @@ func getClientForDisplayID(displayID string) (client *Client, projectKey string,
 
 func whoamiTool() mcp.Tool {
 	return mcp.NewTool("whoami",
-		mcp.WithDescription("Show the currently authenticated Taskwondo user and instance URL"),
+		mcp.WithDescription("Show the currently authenticated Montask user and instance URL"),
 	)
 }
 
 func loginTool() mcp.Tool {
 	return mcp.NewTool("login",
-		mcp.WithDescription("Log in to Taskwondo via browser-based authorization flow. Opens a browser window for the user to authorize access."),
+		mcp.WithDescription("Log in to Montask via browser-based authorization flow. Opens a browser window for the user to authorize access."),
 	)
 }
 
 func logoutTool() mcp.Tool {
 	return mcp.NewTool("logout",
-		mcp.WithDescription("Log out from Taskwondo by clearing stored credentials"),
+		mcp.WithDescription("Log out from Montask by clearing stored credentials"),
 	)
 }
 
@@ -305,7 +305,7 @@ func handleWhoami(_ context.Context, request mcp.CallToolRequest) (*mcp.CallTool
 func handleLogin(_ context.Context, _ mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 	baseURL, _, _, _ := ResolveAuth()
 	if baseURL == "" {
-		return mcp.NewToolResultError("TASKWONDO_URL environment variable is required for login"), nil
+		return mcp.NewToolResultError("MONTASK_URL environment variable is required for login"), nil
 	}
 
 	creds, err := BrowserLogin(baseURL)

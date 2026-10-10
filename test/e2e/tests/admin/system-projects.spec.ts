@@ -14,7 +14,7 @@ const test = base.extend({
       origins: [
         {
           origin: BASE_URL,
-          localStorage: [{ name: 'taskwondo_token', value: adminToken }],
+          localStorage: [{ name: 'montask_token', value: adminToken }],
         },
       ],
     };
@@ -304,7 +304,7 @@ test.describe('Admin Deny Lists — API', () => {
     const adminToken = getAdminToken();
 
     // Set a deny list containing a test slug
-    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'taskwondo', 'blocked']);
+    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'montask', 'blocked']);
 
     // Enable namespaces
     await api.enableNamespaces(request, adminToken);
@@ -322,7 +322,7 @@ test.describe('Admin Deny Lists — API', () => {
     expect(body.error.params).toEqual({ slug: 'blocked' });
 
     // Clean up: remove the extra test entry
-    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'taskwondo']);
+    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'montask']);
   });
 
   test('reserved project key blocks project creation', async ({ request }) => {
@@ -382,7 +382,7 @@ test.describe('Admin Deny Lists — UI', () => {
     const adminToken = getAdminToken();
 
     // Seed deny lists to known state
-    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'taskwondo']);
+    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'montask']);
     await api.setSystemSetting(request, adminToken, 'reserved_project_keys', []);
 
     await page.goto('/admin/directory?tab=projects');
@@ -398,7 +398,7 @@ test.describe('Admin Deny Lists — UI', () => {
 
     // Verify the seeded slugs appear as tags
     await expect(page.getByText('admin', { exact: true })).toBeVisible();
-    await expect(page.getByText('taskwondo', { exact: true })).toBeVisible();
+    await expect(page.getByText('montask', { exact: true })).toBeVisible();
 
     await attach(page, testInfo, '01-settings-tab');
   });
@@ -407,7 +407,7 @@ test.describe('Admin Deny Lists — UI', () => {
     const adminToken = getAdminToken();
 
     // Reset deny list to clean state via API before navigating
-    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'taskwondo']);
+    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'montask']);
 
     await page.goto('/admin/directory?tab=projects');
     await page.waitForLoadState('networkidle');
@@ -415,9 +415,9 @@ test.describe('Admin Deny Lists — UI', () => {
     await page.getByRole('button', { name: 'Settings' }).click();
     await expect(page.getByText('Reserved Namespace Slugs')).toBeVisible({ timeout: 10000 });
 
-    // Wait for the deny list to be fully loaded (admin and taskwondo visible, no stale items)
+    // Wait for the deny list to be fully loaded (admin and montask visible, no stale items)
     await expect(page.getByText('admin', { exact: true })).toBeVisible({ timeout: 5000 });
-    await expect(page.getByText('taskwondo', { exact: true })).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText('montask', { exact: true })).toBeVisible({ timeout: 5000 });
 
     // Use a unique slug name to avoid collisions with leftover state
     const uniqueSlug = `test${randomUUID().slice(0, 4)}`;
@@ -437,7 +437,7 @@ test.describe('Admin Deny Lists — UI', () => {
     await expect(page.getByText(uniqueSlug, { exact: true })).not.toBeVisible({ timeout: 5000 });
 
     // Clean up via API to ensure pristine state
-    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'taskwondo']);
+    await api.setSystemSetting(request, adminToken, 'reserved_namespace_slugs', ['admin', 'montask']);
 
     await attach(page, testInfo, '02-add-remove-slug');
   });

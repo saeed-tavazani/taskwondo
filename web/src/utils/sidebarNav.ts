@@ -32,6 +32,8 @@ import {
   Key,
   Plug,
   ToggleRight,
+  Clock,
+  BarChart3,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -58,7 +60,7 @@ export interface NavUser {
   total_project_count?: number
 }
 
-/** True when the user is a Taskwondo system administrator. */
+/** True when the user is a Montask system administrator. */
 export function isSystemAdmin(user: NavUser | null | undefined): boolean {
   return user?.global_role === 'admin'
 }
@@ -88,6 +90,15 @@ export function userNavItems(t: Translate): SidebarNavItem[] {
     { to: '/user/inbox', label: t('user.sidebar.inbox'), icon: Inbox, end: true },
     { to: '/user/watchlist', label: t('user.sidebar.watchlist'), icon: Bookmark, end: false },
     { to: '/user/feed', label: t('user.sidebar.feed'), icon: Rss, end: false },
+  ]
+}
+
+/** Namespace-wide time pages, shared by sidebar and command palette. */
+export function timeNavItems(t: Translate, base: string): SidebarNavItem[] {
+  base = base.replace(/\/$/, '')
+  return [
+    { to: `${base}/time-tracking`, label: t('timeTracking.title'), icon: Clock, end: true },
+    { to: `${base}/time-reports`, label: t('timeTracking.reports'), icon: BarChart3, end: true },
   ]
 }
 

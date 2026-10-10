@@ -14,23 +14,38 @@ import (
 	"time"
 )
 
-// Credentials stores the Taskwondo connection info.
+// Credentials stores the Montask connection info.
 type Credentials struct {
 	URL       string `json:"url"`
 	APIKey    string `json:"api_key"`
 	Namespace string `json:"namespace,omitempty"`
 }
 
+// brandEnv accepts the previous environment names for existing MCP clients.
+func brandEnv(suffix string) string {
+	if value := os.Getenv("MONTASK_" + suffix); value != "" {
+		return value
+	}
+	return os.Getenv("TASKWONDO_" + suffix)
+}
+
 // ConfigDir returns the configuration directory path.
 func ConfigDir() string {
-	if dir := os.Getenv("TASKWONDO_CONFIG_DIR"); dir != "" {
+	if dir := brandEnv("CONFIG_DIR"); dir != "" {
 		return dir
 	}
 	home, err := os.UserHomeDir()
 	if err != nil {
-		return filepath.Join(".", ".config", "taskwondo")
+		return filepath.Join(".", ".config", "montask")
 	}
-	return filepath.Join(home, ".config", "taskwondo")
+	dir := filepath.Join(home, ".config", "montask")
+	legacy := filepath.Join(home, ".config", "taskwondo")
+	if _, err := os.Stat(filepath.Join(dir, "credentials.json")); os.IsNotExist(err) {
+		if _, err := os.Stat(filepath.Join(legacy, "credentials.json")); err == nil {
+			return legacy
+		}
+	}
+	return dir
 }
 
 // LoadCredentials reads credentials from the config file.
@@ -79,9 +94,9 @@ func DeleteCredentials() error {
 
 // ResolveAuth determines the API key, base URL, and namespace from env vars or credentials file.
 func ResolveAuth() (baseURL, apiKey, namespace string, err error) {
-	baseURL = os.Getenv("TASKWONDO_URL")
-	apiKey = os.Getenv("TASKWONDO_API_KEY")
-	namespace = os.Getenv("TASKWONDO_NAMESPACE")
+	baseURL = brandEnv("URL")
+	apiKey = brandEnv("API_KEY")
+	namespace = brandEnv("NAMESPACE")
 
 	if apiKey == "" {
 		creds, loadErr := LoadCredentials()
@@ -105,7 +120,7 @@ func ResolveAuth() (baseURL, apiKey, namespace string, err error) {
 }
 
 // BrowserLogin starts the browser-based login flow.
-// It starts a temporary HTTP server, opens the browser to the Taskwondo authorize page,
+// It starts a temporary HTTP server, opens the browser to the Montask authorize page,
 // and waits for the callback with the API key.
 func BrowserLogin(baseURL string) (*Credentials, error) {
 	// Find a free port
@@ -123,7 +138,7 @@ func BrowserLogin(baseURL string) (*Credentials, error) {
 		theme := q.Get("theme")
 		brand := q.Get("brand")
 		if brand == "" {
-			brand = "Taskwondo"
+			brand = "Montask"
 		}
 
 		if errMsg := q.Get("error"); errMsg != "" {
@@ -228,7 +243,7 @@ func searchString(s, substr string) bool {
 	return false
 }
 
-// renderCallbackPage returns a self-contained HTML page styled to match the Taskwondo app.
+// renderCallbackPage returns a self-contained HTML page styled to match the Montask app.
 // status is "success" or "error". For errors, msg contains the error description.
 func renderCallbackPage(theme, brand, status, msg string) string {
 	brand = html.EscapeString(brand)
@@ -238,16 +253,16 @@ func renderCallbackPage(theme, brand, status, msg string) string {
 	// Colors matching the app's Tailwind theme
 	var bgColor, cardBg, cardBorder, titleColor, subtitleColor, iconColor, iconBg string
 	if isDark {
-		bgColor = "#111827"    // gray-900
-		cardBg = "#1f2937"     // gray-800
-		cardBorder = "#374151" // gray-700
-		titleColor = "#f3f4f6" // gray-100
+		bgColor = "#111827"       // gray-900
+		cardBg = "#1f2937"        // gray-800
+		cardBorder = "#374151"    // gray-700
+		titleColor = "#f3f4f6"    // gray-100
 		subtitleColor = "#9ca3af" // gray-400
 	} else {
-		bgColor = "#f9fafb"    // gray-50
+		bgColor = "#f9fafb" // gray-50
 		cardBg = "#ffffff"
-		cardBorder = "#e5e7eb" // gray-200
-		titleColor = "#111827" // gray-900
+		cardBorder = "#e5e7eb"    // gray-200
+		titleColor = "#111827"    // gray-900
 		subtitleColor = "#6b7280" // gray-500
 	}
 

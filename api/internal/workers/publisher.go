@@ -15,7 +15,7 @@ type EventPublisher struct {
 }
 
 // NewEventPublisher creates a publisher backed by a NATS connection.
-// It ensures the TASKWONDO stream exists.
+// It ensures the MONTASK stream exists.
 func NewEventPublisher(nc *nats.Conn, logger zerolog.Logger) (*EventPublisher, error) {
 	js, err := nc.JetStream()
 	if err != nil {

@@ -137,9 +137,9 @@ export function WorkItemDetailPage() {
   // Update browser tab title with work item display ID
   useEffect(() => {
     if (item) {
-      document.title = `${currentDisplayId} ${item.title} - Taskwondo`
+      document.title = `${currentDisplayId} ${item.title} - Montask`
     }
-    return () => { document.title = 'Taskwondo' }
+    return () => { document.title = 'Montask' }
   }, [item, currentDisplayId])
 
   // Clean up deep-link search params after reading them
@@ -159,7 +159,7 @@ export function WorkItemDetailPage() {
     if (fromPage === 'watchlist') return '/user/watchlist'
     if (fromPage === 'milestone' && navState?.backUrl) return navState.backUrl
     const base = p(`/projects/${projectKey}/items`)
-    const stored = sessionStorage.getItem(`taskwondo_listParams_${projectKey}`)
+    const stored = sessionStorage.getItem(`montask_listParams_${projectKey}`)
     return stored ? `${base}?${stored}` : base
   }, [projectKey, fromPage, navState?.backUrl, p])
   const backLabelKey = fromPage === 'inbox' ? 'workitems.backToInbox'

@@ -11,7 +11,7 @@ interface LayoutContextValue {
   containerClass: (expandable?: boolean) => string
 }
 
-const LAYOUT_KEY = 'taskwondo_layout'
+const LAYOUT_KEY = 'montask_layout'
 const LayoutContext = createContext<LayoutContextValue | null>(null)
 
 function isValidLayout(v: unknown): v is Layout {

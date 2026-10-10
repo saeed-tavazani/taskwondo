@@ -88,7 +88,7 @@ if [ "$mise_dir" = "$HOME/.local/bin" ]; then
   [ "$shell_name" = "fish" ] && path_line='fish_add_path "$HOME/.local/bin"'
 fi
 
-BEGIN_MARKER="# >>> mise (added by taskwondo scripts/setup-shell.sh) >>>"
+BEGIN_MARKER="# >>> mise (added by montask scripts/setup-shell.sh) >>>"
 END_MARKER="# <<< mise <<<"
 
 block() {
@@ -151,7 +151,7 @@ fi
 
 mkdir -p "$(dirname "$rc")"
 if [ -f "$rc" ]; then
-  backup="$rc.taskwondo.bak"
+  backup="$rc.montask.bak"
   cp "$rc" "$backup"
   printf "${CYAN}## Backed up %s -> %s${RESET}\n" "$rc" "$backup"
   # An rc file that does not end in a newline would swallow the first marker.

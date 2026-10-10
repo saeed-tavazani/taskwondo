@@ -30,19 +30,19 @@ func TestWorkItem(t *testing.T) {
 	}{
 		{
 			name:          "default namespace maps to d segment",
-			baseURL:       "https://taskwondo.org",
+			baseURL:       "https://montask.org",
 			namespaceSlug: "default",
 			projectKey:    "TF",
 			itemNumber:    389,
-			want:          "https://taskwondo.org/d/projects/TF/items/389",
+			want:          "https://montask.org/d/projects/TF/items/389",
 		},
 		{
 			name:          "non-default namespace uses slug verbatim",
-			baseURL:       "https://taskwondo.org",
+			baseURL:       "https://montask.org",
 			namespaceSlug: "acme",
 			projectKey:    "TF",
 			itemNumber:    141,
-			want:          "https://taskwondo.org/acme/projects/TF/items/141",
+			want:          "https://montask.org/acme/projects/TF/items/141",
 		},
 		{
 			name:          "empty slug falls back to default segment",

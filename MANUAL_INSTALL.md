@@ -1,6 +1,6 @@
-# Taskwondo Manual Installation
+# Montask Manual Installation
 
-This guide covers installing Taskwondo without Docker Compose. You'll need to provide your own PostgreSQL, NATS, and S3-compatible storage (MinIO, AWS S3, etc.) and a reverse proxy for the web frontend.
+This guide covers installing Montask without Docker Compose. You'll need to provide your own PostgreSQL, NATS, and S3-compatible storage (MinIO, AWS S3, etc.) and a reverse proxy for the web frontend.
 
 ## Prerequisites
 
@@ -11,14 +11,14 @@ This guide covers installing Taskwondo without Docker Compose. You'll need to pr
 
 ## Download
 
-Download the server bundle (`taskwondo-server-*.tar.gz`) from the [Releases](https://github.com/marcoshack/taskwondo/releases) page. The [Dev Build](https://github.com/marcoshack/taskwondo/releases/tag/dev) release always has the latest build from `main`.
+Download the server bundle (`montask-server-*.tar.gz`) from the [Releases](https://github.com/marcoshack/taskwondo/releases) page. The [Dev Build](https://github.com/marcoshack/taskwondo/releases/tag/dev) release always has the latest build from `main`.
 
 ## Archive Contents
 
 ```
-taskwondo-server-<version>/
-  bin/taskwondo-api          # API server (static Linux binary)
-  bin/taskwondo-worker             # Background worker (static Linux binary)
+montask-server-<version>/
+  bin/montask-api          # API server (static Linux binary)
+  bin/montask-worker             # Background worker (static Linux binary)
   html/                  # Web frontend (static files)
   nginx.conf             # Nginx site configuration (reference)
   .env.template          # Configuration template
@@ -62,14 +62,14 @@ openssl rand -base64 24
 Create the database and user in PostgreSQL:
 
 ```sql
-CREATE USER taskwondo WITH PASSWORD 'your-password';
-CREATE DATABASE taskwondo OWNER taskwondo;
+CREATE USER montask WITH PASSWORD 'your-password';
+CREATE DATABASE montask OWNER montask;
 ```
 
 Migrations run automatically on startup. To run them without starting the server:
 
 ```sh
-bin/taskwondo-api -migrate-only
+bin/montask-api -migrate-only
 ```
 
 ## 3. Object Storage
@@ -77,7 +77,7 @@ bin/taskwondo-api -migrate-only
 Create a bucket in your S3-compatible storage matching the `STORAGE_BUCKET` value. For MinIO:
 
 ```sh
-mc mb myminio/taskwondo-attachments
+mc mb myminio/montask-attachments
 ```
 
 ## 4. Running the API
@@ -86,26 +86,26 @@ Source the environment and start the binary:
 
 ```sh
 set -a && source .env && set +a
-bin/taskwondo-api
+bin/montask-api
 ```
 
 The API listens on `API_HOST:API_PORT` (default `0.0.0.0:8080`). On first start it runs migrations and seeds the admin user.
 
-To run as a systemd service, create `/etc/systemd/system/taskwondo-api.service`:
+To run as a systemd service, create `/etc/systemd/system/montask-api.service`:
 
 ```ini
 [Unit]
-Description=Taskwondo API
+Description=Montask API
 After=network.target postgresql.service
-Requires=taskwondo-worker.service
+Requires=montask-worker.service
 
 [Service]
 Type=simple
-EnvironmentFile=/opt/taskwondo/.env
-ExecStart=/opt/taskwondo/bin/taskwondo-api
+EnvironmentFile=/opt/montask/.env
+ExecStart=/opt/montask/bin/montask-api
 Restart=on-failure
-User=taskwondo
-WorkingDirectory=/opt/taskwondo
+User=montask
+WorkingDirectory=/opt/montask
 
 [Install]
 WantedBy=multi-user.target
@@ -117,23 +117,23 @@ The worker processes background jobs (email notifications, stats aggregation). I
 
 ```sh
 set -a && source .env && set +a
-bin/taskwondo-worker
+bin/montask-worker
 ```
 
-To run as a systemd service, create `/etc/systemd/system/taskwondo-worker.service`:
+To run as a systemd service, create `/etc/systemd/system/montask-worker.service`:
 
 ```ini
 [Unit]
-Description=Taskwondo Worker
+Description=Montask Worker
 After=network.target postgresql.service
 
 [Service]
 Type=simple
-EnvironmentFile=/opt/taskwondo/.env
-ExecStart=/opt/taskwondo/bin/taskwondo-worker
+EnvironmentFile=/opt/montask/.env
+ExecStart=/opt/montask/bin/montask-worker
 Restart=on-failure
-User=taskwondo
-WorkingDirectory=/opt/taskwondo
+User=montask
+WorkingDirectory=/opt/montask
 
 [Install]
 WantedBy=multi-user.target
@@ -156,8 +156,8 @@ Adjust `proxy_pass http://api:8080` to match your API address (e.g. `http://127.
 Example Nginx setup:
 
 ```sh
-cp nginx.conf /etc/nginx/sites-available/taskwondo
-ln -s /etc/nginx/sites-available/taskwondo /etc/nginx/sites-enabled/
+cp nginx.conf /etc/nginx/sites-available/montask
+ln -s /etc/nginx/sites-available/montask /etc/nginx/sites-enabled/
 # Edit the file: update root path, proxy_pass address, server_name
 nginx -t && systemctl reload nginx
 ```

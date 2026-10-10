@@ -10,7 +10,7 @@ import { toUrlSegment } from '@/hooks/useNamespacePath'
 import { clearLastProjectKey } from '@/hooks/useLastProjectKey'
 import type { Namespace } from '@/api/namespaces'
 
-const NAMESPACE_KEY = 'taskwondo_namespace'
+const NAMESPACE_KEY = 'montask_namespace'
 
 interface NamespaceContextValue {
   namespaces: Namespace[]

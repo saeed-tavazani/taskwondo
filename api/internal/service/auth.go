@@ -1169,7 +1169,7 @@ func (s *AuthService) generateJWT(user *model.User) (string, error) {
 			Subject:   user.ID.String(),
 			IssuedAt:  jwt.NewNumericDate(now),
 			ExpiresAt: jwt.NewNumericDate(now.Add(s.jwtExpiry)),
-			Issuer:    "taskwondo",
+			Issuer:    "montask",
 		},
 		Email:               user.Email,
 		GlobalRole:          user.GlobalRole,

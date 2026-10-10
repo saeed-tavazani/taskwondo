@@ -15,8 +15,10 @@ import {
   isCustomerProject as isCustomerInProject,
   projectNavItems,
   userNavItems,
+  timeNavItems,
 } from '@/utils/sidebarNav'
 import type { SidebarNavItem } from '@/utils/sidebarNav'
+import { useTimeProjects } from '@/hooks/useTimeTracking'
 import {
   FolderKanban,
   Settings,
@@ -40,6 +42,7 @@ interface NavItem extends SidebarNavItem {
 export function AppSidebar({ projectKey, customerProject, mobileOnly }: AppSidebarProps) {
   const { t } = useTranslation()
   const { p } = useNamespacePath()
+  const { canTrackTime } = useTimeProjects()
   const { collapsed, toggleCollapsed, mobileOpen, closeMobile } = useSidebar('app')
   const { guardRef, guardedNavigate } = useNavigationGuard()
   const location = useLocation()
@@ -362,6 +365,9 @@ export function AppSidebar({ projectKey, customerProject, mobileOnly }: AppSideb
             {projectNav.map((item) => renderNavItem(item, showLabels))}
           </ul>
         )}
+        {canTrackTime && <ul className="mt-3 space-y-1 border-t border-gray-200 pt-3 dark:border-gray-700">
+          {timeNavItems(t, p('')).map(item => renderNavItem(item, showLabels))}
+        </ul>}
       </>
     )
   }

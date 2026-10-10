@@ -83,8 +83,8 @@ func writeData(t *testing.T, w http.ResponseWriter, payload any) {
 // resolves without a search round trip.
 func useServer(t *testing.T, srv *relationServer) {
 	t.Helper()
-	t.Setenv("TASKWONDO_URL", srv.URL)
-	t.Setenv("TASKWONDO_API_KEY", "twk_test")
+	t.Setenv("MONTASK_URL", srv.URL)
+	t.Setenv("MONTASK_API_KEY", "twk_test")
 	previous := activeNamespace
 	activeNamespace = "default"
 	t.Cleanup(func() { activeNamespace = previous })

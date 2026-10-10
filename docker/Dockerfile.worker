@@ -8,16 +8,16 @@ ARG GOPROXY
 ENV GOPROXY=${GOPROXY}
 
 COPY go.mod go.sum ./
-RUN go mod download
+RUN GODEBUG=http2client=0 go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -o /bin/taskwondo-worker ./cmd/worker
+RUN CGO_ENABLED=0 go build -o /bin/montask-worker ./cmd/worker
 
 FROM alpine:3.20
 
 RUN apk add --no-cache ca-certificates tzdata
 
-COPY --from=builder /bin/taskwondo-worker /bin/taskwondo-worker
+COPY --from=builder /bin/montask-worker /bin/montask-worker
 
-ENTRYPOINT ["/bin/taskwondo-worker"]
+ENTRYPOINT ["/bin/montask-worker"]

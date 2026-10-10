@@ -617,7 +617,7 @@ function WorkItemsTable({
   const [expanded, setExpanded] = useState(false)
   const [activeItemNumber, setActiveItemNumber] = useState(-1)
   const restoredRef = useRef(false)
-  const activeRowStorageKey = `taskwondo_activeRow_milestone_${milestoneId}`
+  const activeRowStorageKey = `montask_activeRow_milestone_${milestoneId}`
 
   // Strikethrough completed items preference (default: enabled)
   const { data: strikethroughPref } = usePreference<boolean>('strikethrough_completed')

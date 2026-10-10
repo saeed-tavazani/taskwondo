@@ -2,45 +2,45 @@
   "email.assignment.subject": "[{{projectKey}}] آیتم کاری #{{itemNumber}} به شما اختصاص داده شد: {{title}}",
   "email.assignment.intro": "<strong>{{assignerName}}</strong> یک آیتم کاری در پروژهٔ <strong>{{projectName}}</strong> به شما اختصاص داد:",
   "email.assignment.cta": "مشاهدهٔ آیتم کاری",
-  "email.assignment.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های تخصیص آیتم کاری در این پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.assignment.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های تخصیص آیتم کاری در این پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.watcher.subject": "[{{projectKey}}] آیتم کاری #{{itemNumber}} به‌روزرسانی شد: {{title}}",
   "email.watcher.intro": "<strong>{{actorName}}</strong> آیتم کاری‌ای را که دنبال می‌کنید، به‌روزرسانی کرد:",
   "email.watcher.field_changed": "{{fieldName}} از <strong>{{oldValue}}</strong> به <strong>{{newValue}}</strong> تغییر کرد",
   "email.watcher.field_set": "{{fieldName}} روی <strong>{{newValue}}</strong> تنظیم شد",
   "email.watcher.cta": "مشاهدهٔ آیتم کاری",
-  "email.watcher.footer": "این ایمیل را دریافت کرده‌اید، زیرا این آیتم کاری را دنبال می‌کنید و اعلان‌های پیگیری فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.watcher.footer": "این ایمیل را دریافت کرده‌اید، زیرا این آیتم کاری را دنبال می‌کنید و اعلان‌های پیگیری فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.new_item.subject": "[{{projectKey}}] {{type}} جدید ایجاد شد: {{displayId}} {{title}}",
   "email.new_item.intro": "یک <strong>{{type}}</strong> جدید در پروژهٔ شما ایجاد شد:",
   "email.new_item.cta": "مشاهدهٔ آیتم کاری",
-  "email.new_item.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های آیتم‌های کاری جدید در این پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.new_item.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های آیتم‌های کاری جدید در این پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.status_change.subject": "[{{projectKey}}] وضعیت آیتم کاری #{{itemNumber}} به {{newStatus}} تغییر کرد: {{title}}",
   "email.status_change.intro": "<strong>{{actorName}}</strong> وضعیت آیتم کاری اختصاص‌یافته به شما را تغییر داد:",
   "email.status_change.status": "وضعیت: <strong>{{oldStatus}}</strong> → <strong>{{newStatus}}</strong>",
   "email.status_change.cta": "مشاهدهٔ آیتم کاری",
-  "email.status_change.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های تغییر وضعیت برای آیتم‌های کاری اختصاص‌یافته به شما فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.status_change.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های تغییر وضعیت برای آیتم‌های کاری اختصاص‌یافته به شما فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.comment_assigned.subject": "[{{projectKey}}] دیدگاه جدید برای آیتم کاری #{{itemNumber}}: {{title}}",
   "email.comment_assigned.intro": "<strong>{{commenterName}}</strong> برای آیتم کاری اختصاص‌یافته به شما دیدگاهی ثبت کرد:",
   "email.comment_assigned.cta": "مشاهدهٔ آیتم کاری",
-  "email.comment_assigned.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های دیدگاه‌ها برای آیتم‌های کاری اختصاص‌یافته به شما فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.comment_assigned.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های دیدگاه‌ها برای آیتم‌های کاری اختصاص‌یافته به شما فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.member_added.subject": "به پروژهٔ {{projectName}} اضافه شدید",
   "email.member_added.intro": "<strong>{{addedByName}}</strong> شما را با نقش <strong>{{role}}</strong> به پروژهٔ <strong>{{projectName}}</strong> اضافه کرد.",
   "email.member_added.cta": "مشاهدهٔ پروژه",
-  "email.member_added.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های عضویت در پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.member_added.footer": "این ایمیل را دریافت کرده‌اید، زیرا اعلان‌های عضویت در پروژه فعال هستند. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.invite.subject": "به پروژهٔ {{projectName}} دعوت شده‌اید",
   "email.invite.intro": "<strong>{{inviterName}}</strong> از شما دعوت کرده است با نقش <strong>{{role}}</strong> به پروژهٔ <strong>{{projectName}}</strong> بپیوندید.",
   "email.invite.cta": "پذیرش دعوت‌نامه",
-  "email.invite.footer": "این ایمیل را دریافت کرده‌اید، زیرا فردی شما را به پروژه‌ای در Taskwondo دعوت کرده است. اگر این دعوت‌نامه برایتان آشنا نیست، می‌توانید ایمیل را نادیده بگیرید.",
+  "email.invite.footer": "این ایمیل را دریافت کرده‌اید، زیرا فردی شما را به پروژه‌ای در Montask دعوت کرده است. اگر این دعوت‌نامه برایتان آشنا نیست، می‌توانید ایمیل را نادیده بگیرید.",
 
   "email.namespace_invite.subject": "به فضای کاری {{namespaceName}} دعوت شده‌اید",
   "email.namespace_invite.intro": "<strong>{{inviterName}}</strong> از شما دعوت کرده است با نقش <strong>{{role}}</strong> به فضای کاری <strong>{{namespaceName}}</strong> بپیوندید.",
   "email.namespace_invite.cta": "پذیرش دعوت‌نامه",
-  "email.namespace_invite.footer": "این ایمیل را دریافت کرده‌اید، زیرا فردی شما را به فضای کاری Taskwondo دعوت کرده است. اگر این دعوت‌نامه برایتان آشنا نیست، می‌توانید ایمیل را نادیده بگیرید.",
+  "email.namespace_invite.footer": "این ایمیل را دریافت کرده‌اید، زیرا فردی شما را به فضای کاری Montask دعوت کرده است. اگر این دعوت‌نامه برایتان آشنا نیست، می‌توانید ایمیل را نادیده بگیرید.",
 
   "email.sla_breach.subject": "[{{projectKey}}] هشدار SLA: #{{itemNumber}} — «{{title}}» (سطح {{level}})",
   "email.sla_breach.intro": "زمان هدف SLA برای یک آیتم کاری رو به پایان است یا از آن گذشته است:",
@@ -49,7 +49,7 @@
   "email.sla_breach.level": "سطح ارجاع: <strong>{{level}}</strong>",
   "email.sla_breach.status": "وضعیت: <strong>{{statusName}}</strong>",
   "email.sla_breach.cta": "مشاهدهٔ آیتم کاری",
-  "email.sla_breach.footer": "این ایمیل را دریافت کرده‌اید، زیرا در فهرست ارجاع این پروژه هستید. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Taskwondo تغییر دهید.",
+  "email.sla_breach.footer": "این ایمیل را دریافت کرده‌اید، زیرا در فهرست ارجاع این پروژه هستید. می‌توانید ترجیحات اعلان‌ها را در تنظیمات Montask تغییر دهید.",
 
   "email.oncall.incoming.subject": "[{{projectKey}}] اکنون مسئول کشیک {{teamName}} هستید",
   "email.oncall.outgoing.subject": "[{{projectKey}}] نوبت کشیک شما برای {{teamName}} پایان یافت",
@@ -57,6 +57,6 @@
   "email.oncall.override.covered.subject": "[{{projectKey}}] نوبت کشیک شما برای {{teamName}} پوشش داده شد",
   "email.oncall.override.cancelled.subject": "[{{projectKey}}] کشیک جایگزین {{teamName}} لغو شد",
   "email.oncall.cta": "مشاهدهٔ برنامهٔ کشیک",
-  "email.oncall.rotation.footer": "این اعلان خودکارِ چرخش نوبت کشیک از Taskwondo است.",
-  "email.oncall.override.footer": "این اعلان خودکارِ کشیک جایگزین از Taskwondo است."
+  "email.oncall.rotation.footer": "این اعلان خودکارِ چرخش نوبت کشیک از Montask است.",
+  "email.oncall.override.footer": "این اعلان خودکارِ کشیک جایگزین از Montask است."
 }

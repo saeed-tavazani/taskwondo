@@ -5,6 +5,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/collectors"
 )
 
+// Preserve metric names so existing Prometheus dashboards keep working.
 const namespace = "taskwondo"
 
 // Registry is the custom Prometheus registry used by the application.

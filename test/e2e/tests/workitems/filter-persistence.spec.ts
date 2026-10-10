@@ -300,7 +300,7 @@ test.describe('Filter Persistence', () => {
     await waitForSave(page);
 
     // Logout: clear the token from localStorage and navigate to login
-    await page.evaluate(() => localStorage.removeItem('taskwondo_token'));
+    await page.evaluate(() => localStorage.removeItem('montask_token'));
     await page.goto('/login');
     await expect(page).toHaveURL(/login/, { timeout: 10000 });
 

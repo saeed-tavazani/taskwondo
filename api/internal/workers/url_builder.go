@@ -17,7 +17,7 @@ type namespaceResolver interface {
 }
 
 // URLBuilder is the single source of truth for constructing absolute URLs to
-// Taskwondo resources in notifications and emails. It resolves the correct
+// Montask resources in notifications and emails. It resolves the correct
 // namespace URL segment for each project so that links point to the right
 // tenant (e.g. /mhack/projects/... rather than /d/projects/...).
 type URLBuilder struct {

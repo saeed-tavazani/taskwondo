@@ -94,7 +94,6 @@ describe('i18n completeness', () => {
         const untranslated = Object.entries(data)
           .filter(([k, v]) =>
             (en as Record<string, string>)[k] === v &&
-            !SAME_VALUE_ALLOWED.has(k) &&
             !SAME_VALUE_ALLOWED_BY_LANGUAGE[lang]?.has(k),
           )
           .map(([k]) => k)

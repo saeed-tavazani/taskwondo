@@ -1,5 +1,16 @@
 @import "tailwindcss";
+@import "@fontsource/geist";
+@import "@fontsource/geist-mono";
+
 @plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/font/Vazirmatn-VariableFont_wght.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 100 900;
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -7,6 +18,7 @@ html {
   scrollbar-gutter: stable;
   scrollbar-color: #d1d5db #f9fafb;
   background-color: #f9fafb;
+  font-family: "Vazirmatn", "Geist", "Roboto", sans-serif;
 }
 
 html:where(.dark) {
@@ -24,10 +36,20 @@ html:where(.dark) {
 }
 
 @keyframes confirm-fade {
-  0% { opacity: 0; transform: scale(0.8); }
-  15% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .animate-confirm {
@@ -35,22 +57,54 @@ html:where(.dark) {
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(0.5rem); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes inbox-highlight {
-  0% { background-color: transparent; }
-  20% { background-color: var(--inbox-highlight-color); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: transparent;
+  }
+  20% {
+    background-color: var(--inbox-highlight-color);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
-html { --inbox-highlight-color: rgb(199 210 254 / 0.5); }
-html:where(.dark) { --inbox-highlight-color: rgb(67 56 202 / 0.2); }
-
+html {
+  --inbox-highlight-color: rgb(199 210 254 / 0.5);
+}
+html:where(.dark) {
+  --inbox-highlight-color: rgb(67 56 202 / 0.2);
+}
 
 /* TF-350: highlight the description text an open inline-comment thread refers to */
 ::highlight(inline-comment-anchor) {
   background-color: rgb(99 102 241 / 0.28);
   color: inherit;
+}
+
+.typeset-docs {
+  --typeset-font-body: var(--font-geist-sans);
+  --typeset-font-heading: var(--font-geist-sans);
+  --typeset-font-mono: var(--font-geist-mono);
+  --typeset-size: 15px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
 }

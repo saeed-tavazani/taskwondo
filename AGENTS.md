@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project
 
-Taskwondo — a self-hosted task and ticket management system. Monorepo with a Go REST API (`api/`), React frontend (`web/`), MCP server (`mcp/`), and Playwright E2E tests (`test/e2e/`).
+Montask — a self-hosted task and ticket management system. Monorepo with a Go REST API (`api/`), React frontend (`web/`), MCP server (`mcp/`), and Playwright E2E tests (`test/e2e/`).
 
 ## Commands
 
@@ -32,7 +32,7 @@ cd web && npm run lint
 cd web && npm run typecheck
 
 # Migrations also run automatically on API startup.
-# Use `./taskwondo --migrate-only` to run migrations and exit (useful for init containers / CI).
+# Use `./montask --migrate-only` to run migrations and exit (useful for init containers / CI).
 ```
 
 ## Architecture
@@ -128,7 +128,7 @@ Health: `GET /healthz` (liveness), `GET /readyz` (readiness + DB ping)
 In-package mocks (mock structs implementing repository interfaces) and `httptest` for handler tests. Chi router is wired up in tests when URL params are needed. Tests live alongside source files.
 
 ### MCP server (`mcp/`)
-`make test-mcp` (also part of `make test`). Tool handlers are tested at their own entry point: an `httptest` server standing in for the API, `TASKWONDO_URL`/`TASKWONDO_API_KEY` set with `t.Setenv`, and `activeNamespace` pinned so `getClientForDisplayID` resolves without a search round trip. See `mcp/tools_test.go`.
+`make test-mcp` (also part of `make test`). Tool handlers are tested at their own entry point: an `httptest` server standing in for the API, `MONTASK_URL`/`MONTASK_API_KEY` set with `t.Setenv`, and `activeNamespace` pinned so `getClientForDisplayID` resolves without a search round trip. See `mcp/tools_test.go`.
 
 ### Frontend (`web/`)
 Vitest for unit tests. Tests use `*.test.ts` naming and live alongside source files. Covers i18n validation (missing keys, extra keys, placeholder consistency, untranslated values) and the pure helpers under `web/src/utils/` (navigation catalog, palette matching, key sequences). No component tests — functional coverage comes from E2E.

@@ -10,17 +10,19 @@ interface ProjectPickerProps {
   value: string
   onChange: (projectKey: string) => void
   disabled?: boolean
+  ariaLabel?: string
   /** Validation message; also turns the control's border red. */
   error?: string
 }
 
-export function ProjectPicker({ projects, value, onChange, disabled, error }: ProjectPickerProps) {
+export function ProjectPicker({ projects, value, onChange, disabled, error, ariaLabel }: ProjectPickerProps) {
   const { t } = useTranslation()
   const { showSwitcher: showNamespaces } = useNamespaceContext()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const selected = projects.find((p) => p.key === value)
 
@@ -44,12 +46,22 @@ export function ProjectPicker({ projects, value, onChange, disabled, error }: Pr
   }, [open])
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative" onKeyDown={e => {
+      if (e.key === 'Escape' && open) {
+        e.stopPropagation()
+        setOpen(false)
+        setSearch('')
+        buttonRef.current?.focus()
+      }
+    }}>
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-        {t('workitems.form.project')} <span className="text-red-500">*</span>
+        {t('workitems.form.project')} <span className="text-red-500" aria-hidden="true">*</span>
       </label>
       <button
+        ref={buttonRef}
         type="button"
+        aria-label={ariaLabel}
+        aria-expanded={open}
         className={`block w-full rounded-md border px-3 py-2 text-sm text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-800 ${
           error ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}

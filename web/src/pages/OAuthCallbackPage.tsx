@@ -29,15 +29,15 @@ export function OAuthCallbackPage() {
     oauthCallback(provider, code, state)
       .then(({ token, user }) => {
         loginWithToken(token, user)
-        const next = sessionStorage.getItem('taskwondo_oauth_next')
-        sessionStorage.removeItem('taskwondo_oauth_next')
+        const next = sessionStorage.getItem('montask_oauth_next')
+        sessionStorage.removeItem('montask_oauth_next')
         if (next && next.startsWith('/') && !next.startsWith('//')) {
           navigate(next, { replace: true })
           return
         }
-        const pendingInvite = localStorage.getItem('taskwondo_pending_invite')
+        const pendingInvite = localStorage.getItem('montask_pending_invite')
         if (pendingInvite) {
-          localStorage.removeItem('taskwondo_pending_invite')
+          localStorage.removeItem('montask_pending_invite')
           navigate(`/invite/${pendingInvite}`, { replace: true })
         } else {
           navigate('/d/projects', { replace: true })

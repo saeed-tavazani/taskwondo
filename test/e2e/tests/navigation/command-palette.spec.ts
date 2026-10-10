@@ -209,7 +209,7 @@ const adminTest = base.extend({
       origins: [
         {
           origin: process.env.BASE_URL || 'http://localhost:5173',
-          localStorage: [{ name: 'taskwondo_token', value: getAdminToken() }],
+          localStorage: [{ name: 'montask_token', value: getAdminToken() }],
         },
       ],
     };

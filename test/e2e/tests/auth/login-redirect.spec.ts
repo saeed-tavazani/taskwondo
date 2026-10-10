@@ -55,7 +55,7 @@ test.describe('Login redirect', () => {
     // before redirecting to the provider. We pre-populate it here so the
     // OAuth callback page can consume it.
     await page.addInitScript((path) => {
-      window.sessionStorage.setItem('taskwondo_oauth_next', path);
+      window.sessionStorage.setItem('montask_oauth_next', path);
     }, targetPath);
 
     // Stub the provider callback to issue a real test-user session, so we

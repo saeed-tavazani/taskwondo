@@ -104,10 +104,10 @@ func TestSendReturnsErrorWhenDisabled(t *testing.T) {
 }
 
 func TestBuildMessage(t *testing.T) {
-	msg := buildMessage("Taskwondo", "noreply@example.com", "user@test.com", "Test Subject", "<p>Hello</p>", "<test-id@example.com>")
+	msg := buildMessage("Montask", "noreply@example.com", "user@test.com", "Test Subject", "<p>Hello</p>", "<test-id@example.com>")
 	s := string(msg)
 
-	if !contains(s, "From: Taskwondo <noreply@example.com>") {
+	if !contains(s, "From: Montask <noreply@example.com>") {
 		t.Error("missing or incorrect From header")
 	}
 	if !contains(s, "To: user@test.com") {

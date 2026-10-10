@@ -10,7 +10,7 @@ import { Spinner } from '@/components/ui/Spinner'
 import { toUrlSegment } from '@/hooks/useNamespacePath'
 import type { AcceptInviteResult, InviteInfo } from '@/api/projects'
 
-const PENDING_INVITE_KEY = 'taskwondo_pending_invite'
+const PENDING_INVITE_KEY = 'montask_pending_invite'
 
 function getDisplayName(info: InviteInfo): string {
   return info.type === 'namespace' ? (info.namespace_display_name ?? '') : (info.project_name ?? '')

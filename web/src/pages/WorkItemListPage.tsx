@@ -337,8 +337,8 @@ export function WorkItemListPage() {
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [bulkError, setBulkError] = useState<string | null>(null)
   const [activeRow, setActiveRow] = useState(-1)
-  const activeRowStorageKey = `taskwondo_activeRow_${projectKey}`
-  const filterStorageKey = `taskwondo_listParams_${projectKey}`
+  const activeRowStorageKey = `montask_activeRow_${projectKey}`
+  const filterStorageKey = `montask_listParams_${projectKey}`
   /** Build current params from state (avoids stale searchParams from useSearchParams). */
   const currentParamsString = useCallback(
     () => buildUrlParams(filter, search, viewMode, sort, order).toString(),

@@ -36,7 +36,7 @@ func emailHTML(lang, ctaKey, ctaURL, footerKey string, contentHTML string) strin
 <head><meta charset="UTF-8"></head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="border-bottom: 3px solid #2563eb; padding-bottom: 16px; margin-bottom: 24px;">
-    <h2 style="margin: 0; color: #2563eb;">Taskwondo</h2>
+    <h2 style="margin: 0; color: #2563eb;">Montask</h2>
   </div>
   %s
   <p>

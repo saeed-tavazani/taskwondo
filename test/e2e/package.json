@@ -1,5 +1,5 @@
 {
-  "name": "taskwondo-e2e",
+  "name": "montask-e2e",
   "private": true,
   "scripts": {
     "test": "playwright test",

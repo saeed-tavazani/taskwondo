@@ -15,7 +15,7 @@ const test = base.extend({
       origins: [
         {
           origin: process.env.BASE_URL || 'http://localhost:5173',
-          localStorage: [{ name: 'taskwondo_token', value: adminToken }],
+          localStorage: [{ name: 'montask_token', value: adminToken }],
         },
       ],
     };
@@ -157,7 +157,7 @@ test.describe('CreateWorkItemModal — cross-namespace project picker', () => {
 
     await api.setPreference(request, adminToken, 'welcome_dismissed', true);
     // Clear any remembered last project so the picker shows "Select project"
-    await api.setPreference(request, adminToken, 'taskwondo_last_project_key', '');
+    await api.setPreference(request, adminToken, 'montask_last_project_key', '');
   });
 
   test.afterAll(async ({ request }) => {

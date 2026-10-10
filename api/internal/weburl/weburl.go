@@ -1,5 +1,5 @@
 // Package weburl is the single source of truth for constructing absolute URLs
-// to Taskwondo web resources (work items, projects, ...). Both API responses
+// to Montask web resources (work items, projects, ...). Both API responses
 // and background notifications build links through here so that no client ever
 // has to infer the URL format.
 package weburl
@@ -23,7 +23,7 @@ func Segment(namespaceSlug string) string {
 
 // WorkItem returns the absolute URL to a work item detail page for the given
 // namespace slug, project key, and item number. baseURL is the public web base
-// (e.g. https://taskwondo.org) with no trailing slash.
+// (e.g. https://montask.org) with no trailing slash.
 func WorkItem(baseURL, namespaceSlug, projectKey string, itemNumber int) string {
 	return fmt.Sprintf("%s/%s/projects/%s/items/%d", baseURL, Segment(namespaceSlug), projectKey, itemNumber)
 }

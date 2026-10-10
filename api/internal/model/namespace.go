@@ -17,7 +17,7 @@ const (
 const DefaultNamespaceSlug = "default"
 
 // DefaultBrandName is the fallback display name for the default namespace when no brand is configured.
-const DefaultBrandName = "Taskwondo"
+const DefaultBrandName = "Montask"
 
 // Valid namespace icons.
 var ValidNamespaceIcons = map[string]bool{

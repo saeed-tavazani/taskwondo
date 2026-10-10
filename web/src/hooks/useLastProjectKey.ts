@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react'
 
-const LAST_PROJECT_KEY = 'taskwondo_last_project_key'
+const LAST_PROJECT_KEY = 'montask_last_project_key'
 
 const listeners = new Set<() => void>()
 
