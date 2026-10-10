@@ -16,16 +16,16 @@ function keyEcho(key: string, params?: Record<string, unknown>): string {
   return params && 'name' in params ? `${key}(${String(params.name)})` : key
 }
 
-/** Stand-in locale, to prove labels really come from `t`. */
-const FRENCH: Record<string, string> = {
-  'sidebar.overview': "Vue d'ensemble",
-  'sidebar.items': 'Éléments',
-  'preferences.sidebar.profile': 'Profil',
-  'user.sidebar.inbox': 'Boîte de réception',
+/** Stand-in Persian locale, to prove labels really come from `t`. */
+const PERSIAN: Record<string, string> = {
+  'sidebar.overview': 'نمای کلی',
+  'sidebar.items': 'آیتم‌ها',
+  'preferences.sidebar.profile': 'پروفایل',
+  'user.sidebar.inbox': 'صندوق ورودی',
 }
 
-function frenchT(key: string, params?: Record<string, unknown>): string {
-  return FRENCH[key] ?? keyEcho(key, params)
+function persianT(key: string, params?: Record<string, unknown>): string {
+  return PERSIAN[key] ?? keyEcho(key, params)
 }
 
 const DEFAULT_NS: CatalogNamespace = {
@@ -242,21 +242,21 @@ describe('buildNavigationCatalog — namespaces', () => {
 describe('buildNavigationCatalog — translation', () => {
   it('takes labels from t, so a locale switch changes what matches', () => {
     const english = build({ activeProjectKey: 'TF' })
-    const french = build({ t: frenchT, activeProjectKey: 'TF' })
+    const persian = build({ t: persianT, activeProjectKey: 'TF' })
 
-    expect(labels(french)).toContain("Vue d'ensemble")
-    expect(labels(french)).toContain('Éléments')
-    expect(labels(french)).toContain('Profil')
+    expect(labels(persian)).toContain('نمای کلی')
+    expect(labels(persian)).toContain('آیتم‌ها')
+    expect(labels(persian)).toContain('پروفایل')
 
-    // "Éléments" is only reachable in French; "sidebar.items" only in English.
-    expect(matchNavigationItems(french, 'elem')).toHaveLength(1)
-    expect(matchNavigationItems(english, 'elem')).toHaveLength(0)
+    // The translated Persian label and the translation key are searchable.
+    expect(matchNavigationItems(persian, 'آیتم')).toHaveLength(1)
+    expect(matchNavigationItems(english, 'آیتم')).toHaveLength(0)
     expect(matchNavigationItems(english, 'sidebar.items')).toHaveLength(1)
   })
 
-  it('matches accented translated labels without the accents', () => {
-    const french = build({ t: frenchT })
-    expect(labels(matchNavigationItems(french, 'boite'))).toEqual(['Boîte de réception'])
+  it('matches Persian translated labels', () => {
+    const persian = build({ t: persianT })
+    expect(labels(matchNavigationItems(persian, 'صندوق'))).toEqual(['صندوق ورودی'])
   })
 })
 

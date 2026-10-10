@@ -246,13 +246,13 @@ func TestUserSetting_GetGlobal_Success(t *testing.T) {
 	svc, _, _, _ := newTestUserSettingService()
 	info := userAuthInfo()
 
-	svc.SetGlobal(context.Background(), info, "language", json.RawMessage(`"pt"`))
+	svc.SetGlobal(context.Background(), info, "language", json.RawMessage(`"fa"`))
 
 	setting, err := svc.GetGlobal(context.Background(), info, "language")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if string(setting.Value) != `"pt"` {
+	if string(setting.Value) != `"fa"` {
 		t.Fatalf("expected value '\"pt\"', got %s", string(setting.Value))
 	}
 }

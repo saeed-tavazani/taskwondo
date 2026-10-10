@@ -49,7 +49,7 @@ async function waitForMailTo(
 }
 
 test.describe('Localized notification emails', () => {
-  test('assignment email is sent in the user preferred language (Portuguese)', async ({
+  test('assignment email is sent in the user preferred language (Persian)', async ({
     request,
     testUser,
     testProject,
@@ -57,8 +57,8 @@ test.describe('Localized notification emails', () => {
     // Create user B and add to project
     const userB = await createSecondUser(request, testProject.key, testUser.token);
 
-    // Set user B language preference to Portuguese
-    await api.setPreference(request, userB.token, 'language', 'pt');
+    // Set user B language preference to Persian
+    await api.setPreference(request, userB.token, 'language', 'fa');
 
     // Create work item assigned to user B
     const item = await api.createWorkItem(request, testUser.token, testProject.key, {
@@ -70,14 +70,14 @@ test.describe('Localized notification emails', () => {
     // Wait for notification email
     const msg = await waitForMailTo(request, userB.email);
 
-    // Subject should be in Portuguese
-    expect(msg.Subject).toContain('atribuído a você');
+    // Subject should be in Persian
+    expect(msg.Subject).toContain('به شما اختصاص داده شد');
     expect(msg.Subject).toContain(testProject.key);
     expect(msg.Subject).toContain(`#${item.item_number}`);
 
-    // Body should contain Portuguese CTA and footer
+    // Body should contain Persian CTA and footer
     const detail = await api.getMailpitMessage(request, msg.ID);
-    expect(detail.HTML).toContain('Ver Item de Trabalho');
+    expect(detail.HTML).toContain('مشاهدهٔ آیتم کاری');
     expect(detail.HTML).toContain('Localized assignment test');
     expect(detail.HTML).toContain(`/d/projects/${testProject.key}/items/${item.item_number}`);
 

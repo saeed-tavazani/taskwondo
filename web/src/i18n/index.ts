@@ -1,17 +1,10 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import en from './en.json'
-import pt from './pt.json'
-import es from './es.json'
-import fr from './fr.json'
-import de from './de.json'
-import ja from './ja.json'
-import ko from './ko.json'
-import zh from './zh.json'
-import ar from './ar.json'
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import en from './en.json';
+import fa from './fa.json';
 
-export const LANGUAGE_KEY = 'taskwondo_language'
+export const LANGUAGE_KEY = 'taskwondo_language';
 
 i18n
   .use(LanguageDetector)
@@ -19,16 +12,9 @@ i18n
   .init({
     resources: {
       en: { translation: en },
-      pt: { translation: pt },
-      es: { translation: es },
-      fr: { translation: fr },
-      de: { translation: de },
-      ja: { translation: ja },
-      ko: { translation: ko },
-      zh: { translation: zh },
-      ar: { translation: ar },
+      fa: { translation: fa },
     },
-    fallbackLng: 'en',
+    fallbackLng: 'fa',
     interpolation: {
       escapeValue: false,
     },
@@ -37,6 +23,6 @@ i18n
       lookupLocalStorage: LANGUAGE_KEY,
       caches: ['localStorage'],
     },
-  })
+  });
 
-export default i18n
+export default i18n;

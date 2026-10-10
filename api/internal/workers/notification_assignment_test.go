@@ -198,8 +198,8 @@ func TestNotificationAssignment_LanguagePreference(t *testing.T) {
 		projectID: {ID: projectID, Name: "Test Project", Key: "TP"},
 	}}
 
-	// Set language to Portuguese
-	langJSON, _ := json.Marshal("pt")
+	// Set language to Persian
+	langJSON, _ := json.Marshal("fa")
 	settings := &mockUserSettingRepo{settings: map[string]*model.UserSetting{
 		languageKey(assigneeID): {
 			UserID: assigneeID,
@@ -229,13 +229,13 @@ func TestNotificationAssignment_LanguagePreference(t *testing.T) {
 	if len(sender.sent) != 1 {
 		t.Fatalf("expected 1 email, got %d", len(sender.sent))
 	}
-	// Subject should be in Portuguese
-	if !strings.Contains(sender.sent[0].subject, "atribuído a você") {
-		t.Errorf("expected Portuguese subject, got %s", sender.sent[0].subject)
+	// Subject should be in Persian
+	if !strings.Contains(sender.sent[0].subject, "به شما اختصاص داده شد") {
+		t.Errorf("expected Persian subject, got %s", sender.sent[0].subject)
 	}
-	// Body should contain Portuguese CTA
-	if !strings.Contains(sender.sent[0].body, "Ver Item de Trabalho") {
-		t.Errorf("expected Portuguese CTA in body, got %s", sender.sent[0].body)
+	// Body should contain Persian CTA
+	if !strings.Contains(sender.sent[0].body, "مشاهدهٔ آیتم کاری") {
+		t.Errorf("expected Persian CTA in body, got %s", sender.sent[0].body)
 	}
 }
 
