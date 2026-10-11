@@ -20,20 +20,20 @@ test.describe('Activity Graph Range Selector', () => {
 
     await attach(page, testInfo, '01-presets-visible');
 
-    // 7d should be active by default (has indigo background)
-    await expect(btn7d).toHaveClass(/bg-indigo/);
+    // 7d should be active by default (has the selected state)
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'true');
 
     // Click 24h and verify it becomes active
     await btn24h.click();
-    await expect(btn24h).toHaveClass(/bg-indigo/);
-    await expect(btn7d).not.toHaveClass(/bg-indigo/);
+    await expect(btn24h).toHaveAttribute('aria-pressed', 'true');
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'false');
 
     await attach(page, testInfo, '02-24h-selected');
 
     // Click 3d and verify
     await btn3d.click();
-    await expect(btn3d).toHaveClass(/bg-indigo/);
-    await expect(btn24h).not.toHaveClass(/bg-indigo/);
+    await expect(btn3d).toHaveAttribute('aria-pressed', 'true');
+    await expect(btn24h).toHaveAttribute('aria-pressed', 'false');
 
     await attach(page, testInfo, '03-3d-selected');
   });
@@ -59,7 +59,7 @@ test.describe('Activity Graph Range Selector', () => {
 
     // Preset buttons should not have active style when custom is active
     const btn7d = page.getByRole('button', { name: '7d', exact: true });
-    await expect(btn7d).not.toHaveClass(/bg-indigo/);
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'false');
 
     await attach(page, testInfo, '02-custom-14d-active');
   });
@@ -78,7 +78,7 @@ test.describe('Activity Graph Range Selector', () => {
     // Click a preset — it should become active
     const btn7d = page.getByRole('button', { name: '7d', exact: true });
     await btn7d.click();
-    await expect(btn7d).toHaveClass(/bg-indigo/);
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'true');
 
     await attach(page, testInfo, '01-preset-clears-custom');
   });
@@ -90,11 +90,11 @@ test.describe('Activity Graph Range Selector', () => {
     // Default should be 7d
     const btn7d = page.getByRole('button', { name: '7d', exact: true });
     const btn24h = page.getByRole('button', { name: '24h', exact: true });
-    await expect(btn7d).toHaveClass(/bg-indigo/);
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'true');
 
     // Select 24h
     await btn24h.click();
-    await expect(btn24h).toHaveClass(/bg-indigo/);
+    await expect(btn24h).toHaveAttribute('aria-pressed', 'true');
     await attach(page, testInfo, '01-24h-selected');
 
     // Navigate away to a different page
@@ -106,8 +106,8 @@ test.describe('Activity Graph Range Selector', () => {
     await page.waitForLoadState('networkidle');
 
     // 24h should still be selected (persisted via user preference)
-    await expect(btn24h).toHaveClass(/bg-indigo/);
-    await expect(btn7d).not.toHaveClass(/bg-indigo/);
+    await expect(btn24h).toHaveAttribute('aria-pressed', 'true');
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'false');
     await attach(page, testInfo, '02-24h-persisted');
   });
 
@@ -125,7 +125,7 @@ test.describe('Activity Graph Range Selector', () => {
 
     // Preset buttons should not have active style
     const btn7d = page.getByRole('button', { name: '7d', exact: true });
-    await expect(btn7d).not.toHaveClass(/bg-indigo/);
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'false');
     await attach(page, testInfo, '01-custom-14d');
 
     // Navigate away and back
@@ -137,7 +137,7 @@ test.describe('Activity Graph Range Selector', () => {
     // Custom input should show 14 and days, no preset should be active
     await expect(customInput).toHaveValue('14');
     await expect(customUnit).toHaveValue('d');
-    await expect(btn7d).not.toHaveClass(/bg-indigo/);
+    await expect(btn7d).toHaveAttribute('aria-pressed', 'false');
     await attach(page, testInfo, '02-custom-14d-persisted');
   });
 

@@ -2,7 +2,6 @@ import { useParams, Routes, Route, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useProject } from '@/hooks/useProjects'
 import { useAuth } from '@/contexts/AuthContext'
-import { AppSidebar } from '@/components/AppSidebar'
 import { useSidebar } from '@/contexts/SidebarContext'
 import { useLayout } from '@/contexts/LayoutContext'
 import { Spinner } from '@/components/ui/Spinner'
@@ -45,7 +44,6 @@ export function ProjectDetailPage() {
     return (
       <div className={`${containerClass(true)} py-6`}>
         <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-          <AppSidebar projectKey={projectKey} customerProject />
           <div className="flex-1 min-w-0">
             <Routes>
               <Route index element={<Navigate to={supportHome} replace />} />
@@ -76,10 +74,9 @@ export function ProjectDetailPage() {
   }
 
   return (
-    <div className={`${containerClass(true)} py-6`}>
-      <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-        <AppSidebar projectKey={project.key} />
-        <div className="flex-1 min-w-0">
+    <div className={`${containerClass(true)} py-6 flex flex-1 flex-col`}>
+      <div className={`flex flex-1 transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
+        <div className="flex flex-1 min-w-0 flex-col">
           <Routes>
             <Route index element={<ProjectOverviewPage />} />
             <Route path="items" element={<WorkItemListPage />} />

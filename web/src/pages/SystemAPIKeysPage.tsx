@@ -167,10 +167,10 @@ export function SystemAPIKeysPage() {
   return (
     <div className="max-w-3xl">
       <div className="mb-6">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <h1 className="text-xl font-semibold text-foreground dark:text-foreground">
           {t('admin.apiKeys.title')}
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-muted-foreground dark:text-muted-foreground mt-1">
           {t('admin.apiKeys.description')}
         </p>
       </div>
@@ -187,8 +187,8 @@ export function SystemAPIKeysPage() {
               <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
                 {t('admin.apiKeys.keyWarning')}
               </p>
-              <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-md border border-amber-300 dark:border-amber-700 px-3 py-2">
-                <code className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all flex-1">
+              <div className="flex items-center gap-2 bg-surface dark:bg-card rounded-md border border-amber-300 dark:border-amber-700 px-3 py-2">
+                <code className="text-sm font-mono text-foreground dark:text-foreground break-all flex-1">
                   {createdKey.key}
                 </code>
                 <CopyButton text={createdKey.key} />
@@ -204,14 +204,14 @@ export function SystemAPIKeysPage() {
       )}
 
       {/* Create Form */}
-      <div className="mb-8 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-        <h2 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4">
+      <div className="mb-8 rounded-lg border border-border dark:border-border bg-surface dark:bg-card p-4">
+        <h2 className="text-sm font-medium text-foreground dark:text-foreground mb-4">
           {t('admin.apiKeys.createNew')}
         </h2>
         <form onSubmit={handleCreate} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+              <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-1">
                 {t('admin.apiKeys.name')}
               </label>
               <Input
@@ -221,13 +221,13 @@ export function SystemAPIKeysPage() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+              <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-1">
                 {t('admin.apiKeys.expiration')}
               </label>
               <select
                 value={expiration}
                 onChange={(e) => setExpiration(e.target.value)}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="w-full rounded-md border border-border dark:border-border bg-surface dark:bg-muted px-3 py-2 text-sm text-foreground dark:text-foreground"
               >
                 {EXPIRATION_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -240,7 +240,7 @@ export function SystemAPIKeysPage() {
 
           {/* Resource Permission Checkboxes */}
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-2">
               {t('admin.apiKeys.permissions')}
             </label>
             <div className="space-y-3">
@@ -248,9 +248,9 @@ export function SystemAPIKeysPage() {
                 <div
                   key={rp.resource}
                   data-testid={`resource-${rp.resource}`}
-                  className="flex items-center gap-4 rounded-md border border-gray-200 dark:border-gray-700 px-3 py-2"
+                  className="flex items-center gap-4 rounded-md border border-border dark:border-border px-3 py-2"
                 >
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 w-28">
+                  <span className="text-sm font-medium text-foreground dark:text-foreground w-28">
                     {t(rp.labelKey)}
                   </span>
                   <div className="flex gap-2">
@@ -263,8 +263,8 @@ export function SystemAPIKeysPage() {
                           onClick={() => toggleResourcePerm(rp.resource, opt.value)}
                           className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
                             isSelected
-                              ? 'bg-indigo-100 text-indigo-700 ring-1 ring-indigo-500 dark:bg-indigo-900/40 dark:text-indigo-300 dark:ring-indigo-400'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+                              ? 'bg-accent text-foreground ring-1 ring-ring dark:bg-accent dark:text-foreground dark:ring-ring'
+                              : 'bg-muted text-muted-foreground hover:bg-muted-strong dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted'
                           }`}
                         >
                           {t(opt.labelKey)}
@@ -294,19 +294,19 @@ export function SystemAPIKeysPage() {
           <Spinner />
         </div>
       ) : !keys || keys.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+        <div className="text-center py-8 text-muted-foreground dark:text-muted-foreground">
           <Key className="h-8 w-8 mx-auto mb-2 opacity-40" />
           <p>{t('admin.apiKeys.empty')}</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="rounded-lg border border-border dark:border-border divide-y divide-border dark:divide-border">
           {keys.map((key) => {
             const exp = formatExpiration(key)
             const isEditing = editingKeyId === key.id
             return (
               <div
                 key={key.id}
-                className="p-4 bg-white dark:bg-gray-800 first:rounded-t-lg last:rounded-b-lg"
+                className="p-4 bg-surface dark:bg-card first:rounded-t-lg last:rounded-b-lg"
               >
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
@@ -333,14 +333,14 @@ export function SystemAPIKeysPage() {
                           />
                           <button
                             type="submit"
-                            className="p-1 text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                            className="p-1 text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors"
                             disabled={renameMutation.isPending}
                           >
                             <Check className="h-4 w-4" />
                           </button>
                           <button
                             type="button"
-                            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                            className="p-1 text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground transition-colors"
                             onClick={() => {
                               setEditingKeyId(null)
                               setEditingName('')
@@ -351,7 +351,7 @@ export function SystemAPIKeysPage() {
                         </form>
                       ) : (
                         <>
-                          <span className="font-medium text-gray-900 dark:text-gray-100">
+                          <span className="font-medium text-foreground dark:text-foreground">
                             {key.name}
                           </span>
                           {savedId === key.id && <Check className="h-4 w-4 text-green-500" />}
@@ -360,7 +360,7 @@ export function SystemAPIKeysPage() {
                       <Badge color="blue">{permissionLabels(key.permissions)}</Badge>
                       {exp.expired && <Badge color="red">{exp.text}</Badge>}
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground dark:text-muted-foreground">
                       <span>
                         <code>{key.key_prefix}...</code>
                       </span>
@@ -390,7 +390,7 @@ export function SystemAPIKeysPage() {
                     {!isEditing && (
                       <button
                         type="button"
-                        className="p-1.5 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        className="p-1.5 text-muted-foreground hover:text-foreground dark:hover:text-foreground transition-colors"
                         onClick={() => {
                           setEditingKeyId(key.id)
                           setEditingName(key.name)
@@ -402,7 +402,7 @@ export function SystemAPIKeysPage() {
                     )}
                     <button
                       type="button"
-                      className="p-1.5 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                      className="p-1.5 text-muted-foreground hover:text-red-600 dark:hover:text-red-400 transition-colors"
                       onClick={() => setDeleteTarget(key)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -422,13 +422,13 @@ export function SystemAPIKeysPage() {
         title={t('admin.apiKeys.deleteConfirmTitle')}
       >
         <div className="p-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-4">
             <Trans
               i18nKey="admin.apiKeys.deleteConfirmBody"
               values={{ name: deleteTarget?.name }}
               components={{
                 bold: (
-                  <strong className="font-semibold text-gray-900 dark:text-gray-100" />
+                  <strong className="font-semibold text-foreground dark:text-foreground" />
                 ),
               }}
             />

@@ -2,13 +2,11 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Check } from 'lucide-react'
 import { useTheme, type Theme, type FontSize } from '@/contexts/ThemeContext'
-import { useLayout, type Layout } from '@/contexts/LayoutContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { usePreference, useSetPreference } from '@/hooks/usePreferences'
 export function AppearancePage({ hideCompletedItems = false }: { hideCompletedItems?: boolean } = {}) {
   const { t } = useTranslation()
   const { theme, setTheme, fontSize, setFontSize } = useTheme()
-  const { layout, setLayout } = useLayout()
   const { language, setLanguage, availableLanguages } = useLanguage()
   const { data: strikethroughPref } = usePreference<boolean>('strikethrough_completed')
   const setPreferenceMutation = useSetPreference()
@@ -22,18 +20,18 @@ export function AppearancePage({ hideCompletedItems = false }: { hideCompletedIt
   ]
 
   const fontSizes: { value: FontSize; label: string; description: string; previewSize: string }[] = [
-    { value: 'small', label: t('preferences.fontSizes.smaller'), description: t('preferences.fontSizes.smallerDesc'), previewSize: '14px' },
-    { value: 'normal', label: t('preferences.fontSizes.normal'), description: t('preferences.fontSizes.normalDesc'), previewSize: '15.4px' },
-    { value: 'large', label: t('preferences.fontSizes.larger'), description: t('preferences.fontSizes.largerDesc'), previewSize: '17px' },
+    { value: 'small', label: t('preferences.fontSizes.smaller'), description: t('preferences.fontSizes.smallerDesc'), previewSize: '12.6px' },
+    { value: 'normal', label: t('preferences.fontSizes.normal'), description: t('preferences.fontSizes.normalDesc'), previewSize: '14px' },
+    { value: 'large', label: t('preferences.fontSizes.larger'), description: t('preferences.fontSizes.largerDesc'), previewSize: '15.4px' },
   ]
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">{t('preferences.appearance')}</h1>
+      <h1 className="text-xl font-semibold text-foreground dark:text-foreground mb-6">{t('preferences.appearance')}</h1>
 
       <div className="space-y-8">
         <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.theme')}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -41,94 +39,58 @@ export function AppearancePage({ hideCompletedItems = false }: { hideCompletedIt
               <button
                 key={th.value}
                 onClick={() => setTheme(th.value)}
-                className={`rounded-lg border-2 p-4 text-left transition-colors ${
+                className={`rounded-lg border p-4 text-start transition-colors ${
                   theme === th.value
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-ring bg-accent dark:bg-accent'
+                    : 'border-border dark:border-border bg-surface dark:bg-card hover:border-input dark:hover:border-input'
                 }`}
               >
                 {th.value === 'system' ? (
-                  <div className="mb-3 rounded-md border border-gray-300 overflow-hidden flex">
+                  <div className="mb-3 rounded-md border border-neutral-300 overflow-hidden flex">
                     <div className="w-1/2">
-                      <div className="h-3 bg-white border-b border-gray-200" />
-                      <div className="h-12 flex gap-1 p-1.5 bg-gray-50">
-                        <div className="w-6 rounded bg-gray-200" />
+                      <div className="h-3 bg-white border-b border-neutral-200" />
+                      <div className="h-12 flex gap-1 p-1.5 bg-neutral-50">
+                        <div className="w-6 rounded bg-neutral-200" />
                         <div className="flex-1 space-y-1 pt-0.5">
-                          <div className="h-1.5 rounded bg-gray-300 w-3/4" />
-                          <div className="h-1.5 rounded bg-gray-200 w-1/2" />
+                          <div className="h-1.5 rounded bg-neutral-300 w-3/4" />
+                          <div className="h-1.5 rounded bg-neutral-200 w-1/2" />
                         </div>
                       </div>
                     </div>
                     <div className="w-1/2">
-                      <div className="h-3 bg-gray-900 border-b border-gray-700" />
-                      <div className="h-12 flex gap-1 p-1.5 bg-gray-900">
-                        <div className="w-6 rounded bg-gray-700" />
+                      <div className="h-3 bg-neutral-900 border-b border-neutral-700" />
+                      <div className="h-12 flex gap-1 p-1.5 bg-neutral-900">
+                        <div className="w-6 rounded bg-neutral-700" />
                         <div className="flex-1 space-y-1 pt-0.5">
-                          <div className="h-1.5 rounded bg-gray-600 w-3/4" />
-                          <div className="h-1.5 rounded bg-gray-700 w-1/2" />
+                          <div className="h-1.5 rounded bg-neutral-600 w-3/4" />
+                          <div className="h-1.5 rounded bg-neutral-700 w-1/2" />
                         </div>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className={`mb-3 rounded-md border overflow-hidden ${
-                    th.value === 'light' ? 'border-gray-200' : 'border-gray-700'
+                    th.value === 'light' ? 'border-neutral-200' : 'border-neutral-700'
                   }`}>
-                    <div className={`h-3 ${th.value === 'light' ? 'bg-white border-b border-gray-200' : 'bg-gray-900 border-b border-gray-700'}`} />
-                    <div className={`h-12 flex gap-1 p-1.5 ${th.value === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}>
-                      <div className={`w-8 rounded ${th.value === 'light' ? 'bg-gray-200' : 'bg-gray-700'}`} />
+                    <div className={`h-3 ${th.value === 'light' ? 'bg-white border-b border-neutral-200' : 'bg-neutral-900 border-b border-neutral-700'}`} />
+                    <div className={`h-12 flex gap-1 p-1.5 ${th.value === 'light' ? 'bg-neutral-50' : 'bg-neutral-900'}`}>
+                      <div className={`w-8 rounded ${th.value === 'light' ? 'bg-neutral-200' : 'bg-neutral-700'}`} />
                       <div className="flex-1 space-y-1 pt-0.5">
-                        <div className={`h-1.5 rounded ${th.value === 'light' ? 'bg-gray-300' : 'bg-gray-600'} w-3/4`} />
-                        <div className={`h-1.5 rounded ${th.value === 'light' ? 'bg-gray-200' : 'bg-gray-700'} w-1/2`} />
+                        <div className={`h-1.5 rounded ${th.value === 'light' ? 'bg-neutral-300' : 'bg-neutral-600'} w-3/4`} />
+                        <div className={`h-1.5 rounded ${th.value === 'light' ? 'bg-neutral-200' : 'bg-neutral-700'} w-1/2`} />
                       </div>
                     </div>
                   </div>
                 )}
-                <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{th.label}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{th.description}</p>
+                <p className="text-sm font-medium text-foreground dark:text-foreground">{th.label}</p>
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground">{th.description}</p>
               </button>
             ))}
           </div>
         </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
-            {t('preferences.layout')}
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {([
-              { value: 'centered' as Layout, label: t('preferences.layouts.centered'), description: t('preferences.layouts.centeredDesc') },
-              { value: 'expanded' as Layout, label: t('preferences.layouts.expanded'), description: t('preferences.layouts.expandedDesc') },
-            ]).map((lo) => (
-              <button
-                key={lo.value}
-                onClick={() => setLayout(lo.value)}
-                className={`rounded-lg border-2 p-4 text-left transition-colors ${
-                  layout === lo.value
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
-                }`}
-              >
-                <div className="mb-3 rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden">
-                  <div className="h-3 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600" />
-                  <div className={`h-12 bg-white dark:bg-gray-800 flex items-start pt-1.5 ${
-                    lo.value === 'centered' ? 'px-4' : 'px-1.5'
-                  }`}>
-                    <div className="flex-1 space-y-1">
-                      <div className="h-1.5 rounded bg-gray-300 dark:bg-gray-600 w-3/4" />
-                      <div className="h-1.5 rounded bg-gray-200 dark:bg-gray-700 w-1/2" />
-                    </div>
-                  </div>
-                </div>
-                <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{lo.label}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{lo.description}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.fontSize')}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -136,21 +98,21 @@ export function AppearancePage({ hideCompletedItems = false }: { hideCompletedIt
               <button
                 key={fs.value}
                 onClick={() => setFontSize(fs.value)}
-                className={`rounded-lg border-2 p-4 text-left transition-colors ${
+                className={`rounded-lg border p-4 text-start transition-colors ${
                   fontSize === fs.value
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-ring bg-accent dark:bg-accent'
+                    : 'border-border dark:border-border bg-surface dark:bg-card hover:border-input dark:hover:border-input'
                 }`}
               >
-                <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{fs.label}</p>
-                <p className="text-gray-500 dark:text-gray-400 mt-1" style={{ fontSize: fs.previewSize }}>{fs.description}</p>
+                <p className="text-sm font-medium text-foreground dark:text-foreground">{fs.label}</p>
+                <p className="text-muted-foreground dark:text-muted-foreground mt-1" style={{ fontSize: fs.previewSize }}>{fs.description}</p>
               </button>
             ))}
           </div>
         </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.language')}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -158,24 +120,24 @@ export function AppearancePage({ hideCompletedItems = false }: { hideCompletedIt
               <button
                 key={lang.value}
                 onClick={() => setLanguage(lang.value)}
-                className={`rounded-lg border-2 p-4 text-left transition-colors ${
+                className={`rounded-lg border p-4 text-start transition-colors ${
                   language === lang.value
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-ring bg-accent dark:bg-accent'
+                    : 'border-border dark:border-border bg-surface dark:bg-card hover:border-input dark:hover:border-input'
                 }`}
               >
-                <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{lang.nativeLabel}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{lang.label}</p>
+                <p className="text-sm font-medium text-foreground dark:text-foreground">{lang.nativeLabel}</p>
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground">{lang.label}</p>
               </button>
             ))}
           </div>
         </div>
 
         {!hideCompletedItems && <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.completedItems')}
           </h2>
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-3">
+          <div className="rounded-lg border border-border dark:border-border px-4 py-3">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -191,18 +153,18 @@ export function AppearancePage({ hideCompletedItems = false }: { hideCompletedIt
                     },
                   )
                 }}
-                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800"
+                className="mt-0.5 h-4 w-4 rounded border-border text-foreground focus:ring-ring dark:border-border dark:bg-card"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  <span className="text-sm font-medium text-foreground dark:text-foreground">
                     {t('preferences.strikethroughCompleted')}
                   </span>
                   {savedId === 'strikethrough' && (
                     <Check className="h-4 w-4 text-green-500" />
                   )}
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground">
                   {t('preferences.strikethroughCompletedDesc')}
                 </p>
               </div>

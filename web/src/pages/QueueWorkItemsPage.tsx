@@ -287,7 +287,7 @@ export function QueueWorkItemsPage() {
           isItemCompleted(row.status, allStatuses ?? statuses);
         return (
           <span
-            className={`font-mono ${done ? "text-gray-400 dark:text-gray-500" : "text-gray-500 dark:text-gray-400"}`}
+            className={`font-mono ${done ? "text-muted-foreground dark:text-muted-foreground" : "text-muted-foreground dark:text-muted-foreground"}`}
           >
             {row.display_id}
           </span>
@@ -327,13 +327,13 @@ export function QueueWorkItemsPage() {
               className="relative block min-w-0 flex-1"
             >
               <span
-                className={`truncate block ${!done && row.description ? "text-gray-400 dark:text-gray-500" : ""}`}
+                className={`truncate block ${!done && row.description ? "text-muted-foreground dark:text-muted-foreground" : ""}`}
               >
                 <span
                   className={
                     done
-                      ? "line-through text-gray-400 dark:text-gray-500"
-                      : "font-medium text-gray-900 dark:text-gray-100"
+                      ? "line-through text-muted-foreground dark:text-muted-foreground"
+                      : "font-medium text-foreground dark:text-foreground"
                   }
                 >
                   {row.title}
@@ -404,8 +404,8 @@ export function QueueWorkItemsPage() {
           <span
             className={
               done
-                ? "text-gray-300 dark:text-gray-600"
-                : "text-gray-500 dark:text-gray-400"
+                ? "text-muted-foreground dark:text-muted-foreground"
+                : "text-muted-foreground dark:text-muted-foreground"
             }
           >
             {new Date(row.updated_at).toLocaleDateString()}
@@ -429,12 +429,12 @@ export function QueueWorkItemsPage() {
       <div className="flex items-center gap-4">
         <Link
           to={p(`/projects/${projectKey}/queues`)}
-          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 shrink-0"
+          className="text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground shrink-0"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div className="flex items-center gap-2 shrink-0">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg font-semibold text-foreground dark:text-foreground">
             {queue?.name ?? t("queues.workItems")}
           </h2>
           {queue && (
@@ -445,8 +445,8 @@ export function QueueWorkItemsPage() {
           <button
             className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-l-md border ${
               viewMode === "list"
-                ? "bg-indigo-50 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700"
-                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
+                ? "bg-accent text-foreground border-border dark:bg-accent dark:text-foreground dark:border-border"
+                : "bg-surface text-foreground border-border hover:bg-muted dark:bg-card dark:text-foreground dark:border-border dark:hover:bg-muted"
             }`}
             onClick={() => setViewMode("list")}
           >
@@ -456,8 +456,8 @@ export function QueueWorkItemsPage() {
           <button
             className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-r-md border-t border-r border-b ${
               viewMode === "board"
-                ? "bg-indigo-50 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700"
-                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
+                ? "bg-accent text-foreground border-border dark:bg-accent dark:text-foreground dark:border-border"
+                : "bg-surface text-foreground border-border hover:bg-muted dark:bg-card dark:text-foreground dark:border-border dark:hover:bg-muted"
             }`}
             onClick={() => setViewMode("board")}
           >
@@ -484,7 +484,7 @@ export function QueueWorkItemsPage() {
                     handleSearchChange("");
                     searchRef.current?.focus();
                   }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground"
                   aria-label={t("common.clear")}
                 >
                   <X className="h-4 w-4" />
@@ -513,8 +513,8 @@ export function QueueWorkItemsPage() {
 
       {/* Bulk action toolbar */}
       {!readOnly && selected.size > 0 && (
-        <div className="flex items-center gap-3 rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2">
-          <span className="text-sm font-medium text-indigo-700 dark:text-indigo-300">
+        <div className="flex items-center gap-3 rounded-md bg-accent dark:bg-accent px-4 py-2">
+          <span className="text-sm font-medium text-foreground dark:text-foreground">
             {t("workitems.selected", { count: selected.size })}
           </span>
           <div className="w-40">
@@ -567,10 +567,10 @@ export function QueueWorkItemsPage() {
       ) : viewMode === "list" ? (
         <>
           {/* Desktop: table view */}
-          <div className="hidden lg:block border dark:border-gray-700 rounded-lg overflow-hidden">
+          <div className="hidden lg:block border dark:border-border rounded-lg overflow-hidden">
             {!readOnly && (
-              <div className="bg-gray-50 dark:bg-gray-800 px-6 py-2 border-b dark:border-gray-700">
-                <label className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <div className="bg-muted dark:bg-card px-6 py-2 border-b dark:border-border">
+                <label className="flex items-center gap-2 text-xs text-muted-foreground dark:text-muted-foreground">
                   <input
                     type="checkbox"
                     checked={items.length > 0 && selected.size === items.length}
@@ -599,7 +599,7 @@ export function QueueWorkItemsPage() {
           {/* Mobile: card view */}
           <div className="lg:hidden space-y-2">
             {allItems.length === 0 ? (
-              <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-12">
+              <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground py-12">
                 {t("queues.noItems")}
               </p>
             ) : (

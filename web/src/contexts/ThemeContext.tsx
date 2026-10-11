@@ -7,9 +7,9 @@ export type Theme = 'light' | 'dark' | 'system'
 export type FontSize = 'small' | 'normal' | 'large'
 
 const fontSizePx: Record<FontSize, string> = {
-  small: '16px',
-  normal: '17.6px',
-  large: '19.4px',
+  small: '14.4px',
+  normal: '16px',
+  large: '17.6px',
 }
 
 interface ThemeContextValue {

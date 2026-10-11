@@ -47,16 +47,16 @@ export function SystemGeneralPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-xl font-semibold text-foreground dark:text-foreground">
           {t('admin.general.title')}
         </h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">
           {t('admin.general.description')}
         </p>
       </div>
 
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+      <div className="rounded-lg border border-border dark:border-border p-6">
+        <h3 className="text-lg font-medium text-foreground dark:text-foreground mb-4">
           {t('admin.general.brand.title')}
         </h3>
 
@@ -70,7 +70,7 @@ export function SystemGeneralPage() {
             }}
             placeholder={t('brand.name')}
           />
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">
             {t('admin.general.brand.nameHelp')}
           </p>
 

@@ -154,16 +154,16 @@ test.describe('Command palette — entity search', () => {
 
     // First item should be highlighted by default
     const firstItem = results.first();
-    await expect(firstItem).toHaveClass(/bg-indigo-50/);
+    await expect(firstItem).toHaveClass(/bg-accent/);
 
     // Press ArrowDown to move to second item
     await searchInput.press('ArrowDown');
     const secondItem = results.nth(1);
-    await expect(secondItem).toHaveClass(/bg-indigo-50/);
+    await expect(secondItem).toHaveClass(/bg-accent/);
 
     // Press ArrowUp to go back to first
     await searchInput.press('ArrowUp');
-    await expect(firstItem).toHaveClass(/bg-indigo-50/);
+    await expect(firstItem).toHaveClass(/bg-accent/);
   });
 
   test('Enter on a result navigates to the work item', async ({
@@ -283,7 +283,7 @@ test.describe('Command palette — entity search', () => {
 
     // Comments tab should be active
     const commentsTab = page.getByRole('button', { name: /comments/i });
-    await expect(commentsTab).toHaveClass(/border-indigo|text-indigo/, { timeout: 5000 });
+    await expect(commentsTab).toHaveAttribute('aria-pressed', 'true', { timeout: 5000 });
 
     // The comment should be visible
     await expect(page.getByText('Deep-linked comment body')).toBeVisible({ timeout: 5000 });
@@ -317,7 +317,7 @@ test.describe('Command palette — entity search', () => {
 
     // Attachments tab should be active
     const attachTab = page.getByRole('button', { name: /attachments/i });
-    await expect(attachTab).toHaveClass(/border-indigo|text-indigo/, { timeout: 5000 });
+    await expect(attachTab).toHaveAttribute('aria-pressed', 'true', { timeout: 5000 });
 
     // The attachment should be visible
     await expect(page.getByText('test-deeplink.txt')).toBeVisible({ timeout: 5000 });

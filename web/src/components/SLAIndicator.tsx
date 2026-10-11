@@ -90,7 +90,7 @@ export function SLAIndicator({ sla, compact = false }: Props) {
 
   const colorClass = STATUS_COLORS[sla.status] || STATUS_COLORS.on_track
   const remaining = sla.remaining_seconds
-  const duration = formatDuration(Math.abs(remaining))
+  const duration = formatDuration(Math.abs(remaining), t)
   const label = remaining >= 0
     ? t('sla.left', { duration })
     : t('sla.overdue', { duration })

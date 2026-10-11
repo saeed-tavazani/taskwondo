@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Clock, BarChart3, AlertTriangle } from 'lucide-react'
-import { AppSidebar } from '@/components/AppSidebar'
 import { TimeEntryForm } from '@/components/TimeEntryForm'
 import { TimeEntryActions } from '@/components/TimeEntryActions'
 import { Button } from '@/components/ui/Button'
@@ -18,7 +17,7 @@ import { useLayout } from '@/contexts/LayoutContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useNamespaceContext } from '@/contexts/NamespaceContext'
 
-const panel = 'rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+const panel = 'rounded-lg border border-border bg-surface dark:border-border dark:bg-card'
 
 export function TimeTrackingPage() {
   const { activeNamespace } = useNamespaceContext()
@@ -60,28 +59,27 @@ function TimeTrackingContent() {
   const dateLabel = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString(i18n.language === 'fa' ? 'fa-IR' : 'en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
   let lastWeek = ''
   return <div className={`${containerClass(true)} py-6`}><div className="flex gap-6">
-    <AppSidebar />
     <div className="min-w-0 flex-1 space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-100"><Clock className="h-5 w-5" aria-hidden="true" />{t('timeTracking.title')}</h1><Link to={p('/time-reports')} className="inline-flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400"><BarChart3 className="h-4 w-4" aria-hidden="true" />{t('timeTracking.reports')}</Link></div>
+      <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="flex items-center gap-2 text-xl font-semibold text-foreground dark:text-foreground"><Clock className="h-5 w-5" aria-hidden="true" />{t('timeTracking.title')}</h1><Link to={p('/time-reports')} className="inline-flex items-center gap-2 text-sm text-foreground dark:text-foreground"><BarChart3 className="h-4 w-4" aria-hidden="true" />{t('timeTracking.reports')}</Link></div>
       {projectsLoading ? <Spinner /> : projectsError ? <p role="alert">{getLocalizedError(projectsError, t, 'timeTracking.error')}</p> : !canTrackTime ? <p role="alert">{t('timeTracking.noAccess')}</p> : <>
         <div className={`${panel} p-4 sm:p-5`}><TimeEntryForm key={ns} ns={ns} projects={projects} /></div>
-        {!projects.length && <p className="text-sm text-gray-500 dark:text-gray-400">{t('timeTracking.noProjects')}</p>}
+        {!projects.length && <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('timeTracking.noProjects')}</p>}
         <div className="grid gap-3 sm:grid-cols-3"><Input label={t('timeTracking.from')} type="date" value={from} onChange={e => { setFrom(e.target.value); resetPage() }} /><Input label={t('timeTracking.to')} type="date" value={to} onChange={e => { setTo(e.target.value); resetPage() }} /><Select label={t('timeTracking.project')} value={project} onChange={e => { setProject(e.target.value); resetPage() }}><option value="">{t('timeTracking.allProjects')}</option>{projects.map(pr => <option key={pr.id} value={pr.key}>{pr.name}</option>)}</Select></div>
         {!valid && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{t('timeTracking.invalidRange')}</p>}
         {list.isPending || totals.isPending ? <Spinner /> : list.error || totals.error ? <p role="alert" className="text-sm text-red-600 dark:text-red-400">{getLocalizedError(list.error ?? totals.error, t, 'timeTracking.error')}</p> : <>
-          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400"><span>{t('timeTracking.total')}</span><span dir="ltr" className="font-mono text-lg font-semibold tabular-nums text-gray-900 dark:text-gray-100">{formatTimeDuration(totals.data?.total_seconds ?? 0)}</span></div>
-          {!ordered.length && <div className={`${panel} p-10 text-center text-gray-500 dark:text-gray-400`}>{t('timeTracking.empty')}</div>}
+          <div className="flex items-center justify-between text-sm text-muted-foreground dark:text-muted-foreground"><span>{t('timeTracking.total')}</span><span dir="ltr" className="font-mono text-lg font-semibold tabular-nums text-foreground dark:text-foreground">{formatTimeDuration(totals.data?.total_seconds ?? 0)}</span></div>
+          {!ordered.length && <div className={`${panel} p-10 text-center text-muted-foreground dark:text-muted-foreground`}>{t('timeTracking.empty')}</div>}
           {ordered.map(([day, entries]) => {
             const week = weekKey(new Date(`${day}T12:00:00`), i18n.language)
             const newWeek = week !== lastWeek; lastWeek = week
             return <section key={day} className="space-y-3">
-              {newWeek && <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-500 dark:text-gray-400"><span>{t('timeTracking.weekOf', { date: dateLabel(week) })}</span><span>{t('timeTracking.weekTotal')} <b dir="ltr" className="inline-block font-mono tabular-nums">{formatTimeDuration(weeks.get(week) ?? 0)}</b></span></div>}
-              <div className={panel}><div className="flex items-center justify-between gap-3 border-b border-gray-200 bg-gray-50 px-4 py-3 text-sm dark:border-gray-700 dark:bg-gray-900/40"><h2 className="font-medium text-gray-700 dark:text-gray-200">{dateLabel(day)}</h2><span dir="ltr" className="font-mono font-semibold tabular-nums text-gray-900 dark:text-gray-100">{formatTimeDuration(daily.get(day) ?? 0)}</span></div>
-                {!entries.length && <p className="p-4 text-sm text-gray-500 dark:text-gray-400">{t('timeTracking.carryOver')}</p>}
-                {entries.map(entry => <div key={entry.id} className="flex flex-wrap items-center gap-4 border-b border-gray-100 px-4 py-4 last:border-b-0 dark:border-gray-700/70">
-                  <div className="min-w-0 flex-1 basis-48"><p className="break-words text-sm font-medium text-gray-900 dark:text-gray-100">{entry.description || t('timeTracking.noDescription')}</p><p className="mt-1 text-xs text-indigo-600 dark:text-indigo-400">{entry.project_name}{entry.item_number ? ` · ${entry.project_key}-${entry.item_number}` : ''}</p>{entry.overlap && <span className="mt-1 inline-flex items-center gap-1 text-xs text-amber-700 dark:text-amber-300"><AlertTriangle className="h-3 w-3" aria-hidden="true" />{t('timeTracking.overlap')}</span>}</div>
-                  <div dir="ltr" className="text-xs text-gray-500 dark:text-gray-400">{new Date(entry.started_at).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit', hour12: false })} – {new Date(entry.ended_at).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit', hour12: false })}{splitTimeDays(entry.started_at, entry.ended_at).length > 1 && <span className="block">{new Date(entry.ended_at).toLocaleDateString(i18n.language)}</span>}</div>
-                  <span dir="ltr" className="font-mono font-semibold tabular-nums text-gray-900 dark:text-gray-100">{formatTimeDuration(entry.duration_seconds)}</span>
+              {newWeek && <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground dark:text-muted-foreground"><span>{t('timeTracking.weekOf', { date: dateLabel(week) })}</span><span>{t('timeTracking.weekTotal')} <b dir="ltr" className="inline-block font-mono tabular-nums">{formatTimeDuration(weeks.get(week) ?? 0)}</b></span></div>}
+              <div className={panel}><div className="flex items-center justify-between gap-3 border-b border-border bg-muted px-4 py-3 text-sm dark:border-border dark:bg-background"><h2 className="font-medium text-foreground dark:text-foreground">{dateLabel(day)}</h2><span dir="ltr" className="font-mono font-semibold tabular-nums text-foreground dark:text-foreground">{formatTimeDuration(daily.get(day) ?? 0)}</span></div>
+                {!entries.length && <p className="p-4 text-sm text-muted-foreground dark:text-muted-foreground">{t('timeTracking.carryOver')}</p>}
+                {entries.map(entry => <div key={entry.id} className="flex flex-wrap items-center gap-4 border-b border-border px-4 py-4 last:border-b-0 dark:border-border/70">
+                  <div className="min-w-0 flex-1 basis-48"><p className="break-words text-sm font-medium text-foreground dark:text-foreground">{entry.description || t('timeTracking.noDescription')}</p><p className="mt-1 text-xs text-foreground dark:text-foreground">{entry.project_name}{entry.item_number ? ` · ${entry.project_key}-${entry.item_number}` : ''}</p>{entry.overlap && <span className="mt-1 inline-flex items-center gap-1 text-xs text-amber-700 dark:text-amber-300"><AlertTriangle className="h-3 w-3" aria-hidden="true" />{t('timeTracking.overlap')}</span>}</div>
+                  <div dir="ltr" className="text-xs text-muted-foreground dark:text-muted-foreground">{new Date(entry.started_at).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit', hour12: false })} – {new Date(entry.ended_at).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit', hour12: false })}{splitTimeDays(entry.started_at, entry.ended_at).length > 1 && <span className="block">{new Date(entry.ended_at).toLocaleDateString(i18n.language)}</span>}</div>
+                  <span dir="ltr" className="font-mono font-semibold tabular-nums text-foreground dark:text-foreground">{formatTimeDuration(entry.duration_seconds)}</span>
                   <TimeEntryActions ns={ns} entry={entry} projects={projects} personal />
                 </div>)}
               </div>

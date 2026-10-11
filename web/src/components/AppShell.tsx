@@ -171,15 +171,16 @@ export function AppShell() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <div className="app-shell">
+      <div className="app-shell-main">
+        <nav className="bg-surface dark:bg-background border-b border-border dark:border-border">
         <div className={containerClass(true)}>
           <div className="flex justify-between h-14 relative">
             <div className="flex items-center gap-6 min-w-0">
               {/* Desktop: always show brand name */}
               <button
                 onClick={() => guardedNavigate(p('/projects'))}
-                className="hidden sm:block text-lg font-bold text-indigo-600 dark:text-indigo-400 shrink-0"
+                className="hidden sm:block text-lg font-bold text-foreground dark:text-foreground shrink-0"
               >
                 {brandName}
               </button>
@@ -188,7 +189,7 @@ export function AppShell() {
                 <div className="flex sm:hidden items-center gap-2 min-w-0">
                   <button
                     onClick={() => guardedNavigate(p('/projects'))}
-                    className="p-1.5 rounded-md text-indigo-600 dark:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 shrink-0"
+                    className="p-1.5 rounded-md text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-card shrink-0"
                     aria-label={t('nav.home')}
                   >
                     <Home className="h-5 w-5" />
@@ -203,22 +204,22 @@ export function AppShell() {
               ) : (
                 <button
                   onClick={() => guardedNavigate(p('/projects'))}
-                  className="sm:hidden text-lg font-bold text-indigo-600 dark:text-indigo-400 shrink-0"
+                  className="sm:hidden text-lg font-bold text-foreground dark:text-foreground shrink-0"
                 >
                   {brandName}
                 </button>
               )}
               {adminMatch ? (
                 <div className="hidden sm:flex items-center gap-2.5 min-w-0">
-                  <Settings className="h-5 w-5 text-gray-500 dark:text-gray-400 shrink-0" />
-                  <span className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                  <Settings className="h-5 w-5 text-muted-foreground dark:text-muted-foreground shrink-0" />
+                  <span className="text-base font-semibold text-foreground dark:text-foreground">
                     {t('admin.title')}
                   </span>
                 </div>
               ) : preferencesMatch ? (
                 <div className="hidden sm:flex items-center gap-2.5 min-w-0">
-                  <UserCog className="h-5 w-5 text-gray-500 dark:text-gray-400 shrink-0" />
-                  <span className="text-base font-semibold text-gray-900 dark:text-gray-100 truncate">
+                  <UserCog className="h-5 w-5 text-muted-foreground dark:text-muted-foreground shrink-0" />
+                  <span className="text-base font-semibold text-foreground dark:text-foreground truncate">
                     {t('preferences.navTitle')}
                   </span>
                 </div>
@@ -229,7 +230,7 @@ export function AppShell() {
                   data-testid="project-switcher-badge"
                 >
                   <ProjectKeyBadge size="nav">{activeProject.key}</ProjectKeyBadge>
-                  <span className="text-base font-semibold text-gray-900 dark:text-gray-100 truncate">
+                  <span className="text-base font-semibold text-foreground dark:text-foreground truncate">
                     {activeProject.name}
                   </span>
                 </button>
@@ -238,7 +239,7 @@ export function AppShell() {
             <div className="relative flex items-center gap-1.5 sm:gap-2 shrink-0" ref={menuRef}>
               <button
                 onClick={() => setSearchOpen(true)}
-                className="p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                className="p-2 rounded-md text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:bg-card"
                 aria-label={t('nav.search')}
               >
                 <Search className="h-5 w-5" />
@@ -246,12 +247,12 @@ export function AppShell() {
               {!isCustomerOnly && (
                 <button
                   onClick={() => guardedNavigate('/user/inbox')}
-                  className="relative p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                  className="relative p-2 rounded-md text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:bg-card"
                   aria-label={t('inbox.title')}
                 >
                   <Inbox className="h-5 w-5" />
                   {inboxCount != null && inboxCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white">
+                    <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
                       {inboxCount > 99 ? '99+' : inboxCount}
                     </span>
                   )}
@@ -262,7 +263,7 @@ export function AppShell() {
                 <div className="relative" ref={nsRef}>
                   <button
                     onClick={() => setNsDropdownOpen(!nsDropdownOpen)}
-                    className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="p-2 rounded-md hover:bg-muted dark:hover:bg-card"
                     aria-label={t('namespaces.switchNamespace')}
                     data-testid="namespace-switcher"
                   >
@@ -273,8 +274,8 @@ export function AppShell() {
                     />
                   </button>
                   {nsDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-1 w-64 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm rounded-md shadow-lg border border-gray-200 dark:border-gray-600 py-1 z-50">
-                      <div className="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                    <div className="absolute right-0 top-full mt-1 w-64 bg-surface dark:bg-card backdrop-blur-sm rounded-md shadow-lg border border-border dark:border-border py-1 z-50">
+                      <div className="px-3 py-1.5 text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
                         {t('namespaces.title')}
                       </div>
                       {namespaces.map(ns => (
@@ -288,8 +289,8 @@ export function AppShell() {
                           }}
                           className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2.5 ${
                             ns.slug === activeNamespace?.slug
-                              ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                              ? 'bg-accent dark:bg-accent text-foreground dark:text-foreground'
+                              : 'text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted'
                           }`}
                         >
                           <NamespaceIcon
@@ -300,13 +301,13 @@ export function AppShell() {
                           <div className="min-w-0 flex-1">
                             <div className="font-medium truncate">{ns.display_name}</div>
                             {!ns.is_default && (
-                              <div className="text-xs text-gray-400 dark:text-gray-500">
+                              <div className="text-xs text-muted-foreground dark:text-muted-foreground">
                                 {ns.slug}
                               </div>
                             )}
                           </div>
                           {ns.slug === activeNamespace?.slug && (
-                            <span className="text-xs text-indigo-600 dark:text-indigo-400 shrink-0">
+                            <span className="text-xs text-foreground dark:text-foreground shrink-0">
                               {t('common.current')}
                             </span>
                           )}
@@ -317,7 +318,7 @@ export function AppShell() {
                                 setNsDropdownOpen(false);
                                 guardedNavigate(`/${toUrlSegment(ns.slug)}/settings`);
                               }}
-                              className="p-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 shrink-0"
+                              className="p-1 rounded text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground shrink-0"
                               aria-label={t('namespaces.settings')}
                             >
                               <Settings className="h-3.5 w-3.5" />
@@ -325,13 +326,13 @@ export function AppShell() {
                           )}
                         </button>
                       ))}
-                      <div className="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
+                      <div className="border-t border-border dark:border-border mt-1 pt-1">
                         <button
                           onClick={() => {
                             setNsDropdownOpen(false);
                             setNsCreateOpen(true);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2.5"
+                          className="w-full text-left px-3 py-2 text-sm text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-2.5"
                         >
                           <Plus className="h-4 w-4" />
                           {t('namespaces.createNew')}
@@ -343,22 +344,22 @@ export function AppShell() {
               )}
               <button
                 onClick={toggleMobileOpen}
-                className="sm:hidden p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                className="sm:hidden p-2 rounded-md text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:bg-card"
                 aria-label={t('sidebar.menu')}
               >
                 <Menu className="h-5 w-5" />
               </button>
-              <div className="hidden sm:block w-px h-5 bg-gray-200 dark:bg-gray-700 mx-1" />
+              <div className="hidden sm:block w-px h-5 bg-muted-strong dark:bg-muted mx-1" />
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                className="flex items-center gap-2 text-sm text-foreground dark:text-foreground hover:text-foreground dark:hover:text-foreground"
               >
                 <Avatar name={user?.display_name ?? ''} avatarUrl={user?.avatar_url} size="sm" />
                 <span className="hidden sm:block">{user?.display_name}</span>
               </button>
               {menuOpen && (
-                <div className="absolute right-0 top-full mt-1 w-48 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm rounded-md shadow-lg border border-gray-200 dark:border-gray-600 py-1 z-50">
-                  <div className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700">
+                <div className="absolute right-0 top-full mt-1 w-48 bg-surface dark:bg-card backdrop-blur-sm rounded-md shadow-lg border border-border dark:border-border py-1 z-50">
+                  <div className="px-4 py-2 text-xs text-muted-foreground dark:text-muted-foreground border-b border-border dark:border-border">
                     {user?.email}
                   </div>
                   <button
@@ -366,9 +367,9 @@ export function AppShell() {
                       setMenuOpen(false);
                       guardedNavigate('/preferences');
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-2"
                   >
-                    <UserCog className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                    <UserCog className="h-4 w-4 text-muted-foreground dark:text-muted-foreground" />
                     {t('nav.preferences')}
                   </button>
                   {user?.global_role === 'admin' && (
@@ -377,9 +378,9 @@ export function AppShell() {
                         setMenuOpen(false);
                         guardedNavigate('/admin');
                       }}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                      className="w-full text-left px-4 py-2 text-sm text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-2"
                     >
-                      <Settings className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                      <Settings className="h-4 w-4 text-muted-foreground dark:text-muted-foreground" />
                       {t('nav.systemSettings')}
                     </button>
                   )}
@@ -388,17 +389,17 @@ export function AppShell() {
                       setMenuOpen(false);
                       setWelcomeOpen(true);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-2"
                   >
-                    <HelpCircle className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                    <HelpCircle className="h-4 w-4 text-muted-foreground dark:text-muted-foreground" />
                     {t('nav.help')}
                   </button>
-                  <div className="border-t border-gray-100 dark:border-gray-700" />
+                  <div className="border-t border-border dark:border-border" />
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-2"
                   >
-                    <LogOut className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                    <LogOut className="h-4 w-4 text-muted-foreground dark:text-muted-foreground" />
                     {t('nav.signOut')}
                   </button>
                 </div>
@@ -407,11 +408,17 @@ export function AppShell() {
           </div>
         </div>
       </nav>
-      <AppSidebar mobileOnly projectKey={activeProjectKey} />
-      <main className="flex-1">
-        <ActiveTimeTimer />
-        <Outlet />
-      </main>
+        <AppSidebar mobileOnly projectKey={activeProjectKey} />
+        <main className="flex-1 min-h-0 min-w-0 flex flex-col overflow-auto">
+          <ActiveTimeTimer />
+          <Outlet />
+        </main>
+      </div>
+      {!adminMatch && !preferencesMatch && (
+        <aside className="app-shell-rail">
+          <AppSidebar projectKey={activeProjectKey} customerProject={Boolean(customerActiveProject)} />
+        </aside>
+      )}
       {/* <PoweredByFooter /> */}
       <ProjectSwitcherModal
         open={switcherOpen}
@@ -549,14 +556,14 @@ function ProjectSwitcherModal({
         value={search}
         onChange={e => setSearch(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 mb-3"
+        className="block w-full rounded-md border border-border dark:border-border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring dark:bg-card dark:text-foreground dark:placeholder-muted-foreground mb-3"
       />
       {isLoading ? (
         <div className="flex justify-center py-6">
           <Spinner />
         </div>
       ) : filtered.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400 py-4 text-center">
+        <p className="text-sm text-muted-foreground dark:text-muted-foreground py-4 text-center">
           {t('projects.noProjectsFound')}
         </p>
       ) : (
@@ -568,22 +575,22 @@ function ProjectSwitcherModal({
                 onMouseEnter={() => setSelectedIndex(i)}
                 className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-md text-sm ${
                   i === selectedIndex
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30'
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-accent dark:bg-accent'
+                    : 'hover:bg-muted dark:hover:bg-muted'
                 }`}
               >
                 <ProjectKeyBadge>{p.key}</ProjectKeyBadge>
-                <span className="text-gray-900 dark:text-gray-100 font-medium truncate">
+                <span className="text-foreground dark:text-foreground font-medium truncate">
                   {p.name}
                 </span>
                 <span className="ml-auto flex items-center gap-2 shrink-0">
                   {isCurrent(p) && (
-                    <span className="text-xs text-indigo-600 dark:text-indigo-400">
+                    <span className="text-xs text-foreground dark:text-foreground">
                       {t('common.current')}
                     </span>
                   )}
                   {showNamespaces && p.namespace_slug && (
-                    <span className="flex items-center gap-1 text-[0.7rem] text-gray-400 dark:text-gray-500">
+                    <span className="flex items-center gap-1 text-[0.7rem] text-muted-foreground dark:text-muted-foreground">
                       <span>{p.namespace_slug}</span>
                       <NamespaceIcon
                         icon={p.namespace_icon ?? 'building2'}
@@ -599,16 +606,16 @@ function ProjectSwitcherModal({
         </ul>
       )}
       {showNamespaces && (
-        <div className="flex justify-end mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+        <div className="flex justify-end mt-2 pt-2 border-t border-border dark:border-border">
           <label
-            className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 cursor-pointer select-none"
+            className="flex items-center gap-2 text-xs text-muted-foreground dark:text-muted-foreground cursor-pointer select-none"
             data-testid="all-namespaces-toggle"
           >
             <input
               type="checkbox"
               checked={showAllNamespaces}
               onChange={handleToggleAllNamespaces}
-              className="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 h-3.5 w-3.5"
+              className="rounded border-border dark:border-border text-foreground focus:ring-ring h-3.5 w-3.5"
             />
             {t('projects.switcher.showAllNamespaces')}
           </label>

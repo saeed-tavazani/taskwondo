@@ -155,10 +155,10 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
   return (
     <div className="space-y-4">
       {!readOnly && (
-        <div ref={addCommentRef} className="space-y-2 pb-3 border-b border-gray-100 dark:border-gray-700">
+        <div ref={addCommentRef} className="space-y-2 pb-3 border-b border-border dark:border-border">
           <textarea
             ref={newCommentRef}
-            className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm"
+            className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm"
             rows={3}
             placeholder={t('comments.placeholder')}
             value={newBody}
@@ -196,12 +196,12 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
               {createMutation.isPending ? t('comments.adding') : t('comments.add')}
             </Button>
             {showVisibilityToggle && (
-              <label className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 cursor-pointer select-none">
+              <label className="flex items-center gap-1.5 text-xs text-muted-foreground dark:text-muted-foreground cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={commentVisibility === 'public'}
                   onChange={(e) => setCommentVisibility(e.target.checked ? 'public' : 'internal')}
-                  className="h-3.5 w-3.5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800"
+                  className="h-3.5 w-3.5 rounded border-border text-foreground focus:ring-ring dark:border-border dark:bg-card"
                 />
                 {t('comments.visibleToCustomer')}
               </label>
@@ -214,14 +214,14 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
         <div
           key={c.id}
           ref={c.id === highlightedCommentId ? highlightRef : undefined}
-          className={`group/comment border-b border-gray-100 dark:border-gray-700 pb-3 rounded-md transition-colors duration-700 ${
-            c.id === highlightedCommentId ? 'bg-indigo-50 dark:bg-indigo-900/30 ring-1 ring-indigo-300 dark:ring-indigo-600 px-2 py-2 -mx-2' : ''
+          className={`group/comment border-b border-border dark:border-border pb-3 rounded-md transition-colors duration-700 ${
+            c.id === highlightedCommentId ? 'bg-accent dark:bg-accent ring-1 ring-ring dark:ring-ring px-2 py-2 -mx-2' : ''
           }`}
         >
           {!addCommentVisible && (
             <div className="flex justify-end mb-1">
               <button
-                className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex items-center gap-1"
+                className="text-xs text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground flex items-center gap-1"
                 onClick={() => addCommentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               >
                 &uarr; {t('common.top')}
@@ -232,7 +232,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
             <div className="space-y-2">
               <textarea
                 ref={editCommentRef}
-                className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm"
+                className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm"
                 rows={3}
                 value={editBody}
                 onChange={(e) => setEditBody(e.target.value)}
@@ -271,12 +271,12 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                 </Button>
                 <Button size="sm" variant="ghost" onClick={() => setEditingId(null)}>{t('common.cancel')}</Button>
                 {showVisibilityToggle && (
-                  <label className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 cursor-pointer select-none">
+                  <label className="flex items-center gap-1.5 text-xs text-muted-foreground dark:text-muted-foreground cursor-pointer select-none">
                     <input
                       type="checkbox"
                       checked={editVisibility === 'public'}
                       onChange={(e) => setEditVisibility(e.target.checked ? 'public' : 'internal')}
-                      className="h-3.5 w-3.5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800"
+                      className="h-3.5 w-3.5 rounded border-border text-foreground focus:ring-ring dark:border-border dark:bg-card"
                     />
                     {t('comments.visibleToCustomer')}
                   </label>
@@ -286,8 +286,8 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
           ) : (
             <>
               {c.anchor && (
-                <div className="mb-2 ml-8 rounded-md border-l-4 border-indigo-300 dark:border-indigo-600 bg-indigo-50/40 dark:bg-indigo-900/20 px-3 py-2">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400 mb-1">
+                <div className="mb-2 ml-8 rounded-md border-l-4 border-border dark:border-border bg-accent dark:bg-accent px-3 py-2">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground dark:text-muted-foreground mb-1">
                     <span>{t('inlineComments.anchorLabel')}</span>
                     {c.anchor.status === 'outdated' && (
                       <span data-testid="inline-comment-outdated-badge" className="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-[10px] uppercase tracking-wide">
@@ -296,14 +296,14 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                     )}
                     <button
                       type="button"
-                      className="ml-auto text-indigo-600 dark:text-indigo-400 hover:underline text-xs"
+                      className="ml-auto text-foreground dark:text-foreground hover:underline text-xs"
                       data-testid="inline-comment-view"
                       onClick={() => onViewInline?.(c.parent_comment_id ?? c.id)}
                     >
                       {t('inlineComments.view')}
                     </button>
                   </div>
-                  <pre className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap break-words bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded p-2 overflow-x-auto">
+                  <pre className="text-xs text-foreground dark:text-foreground whitespace-pre-wrap break-words bg-surface dark:bg-background border border-border dark:border-border rounded p-2 overflow-x-auto">
                     {c.anchor.snippet}
                   </pre>
                 </div>
@@ -311,9 +311,9 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
               <div className="flex items-center justify-between gap-2 mb-1">
                 <div className="flex items-center gap-2 min-w-0">
                   <Avatar name={authorName(c.author_id)} avatarUrl={authorAvatarUrl(c.author_id)} size="xs" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 shrink-0">{authorName(c.author_id)}</span>
+                  <span className="text-sm font-medium text-foreground dark:text-foreground shrink-0">{authorName(c.author_id)}</span>
                   <ScrollableDate date={c.created_at} />
-                  {c.edit_count > 0 && <span className="text-xs text-gray-400 dark:text-gray-500 italic shrink-0">{t('comments.editCount', { count: c.edit_count })}</span>}
+                  {c.edit_count > 0 && <span className="text-xs text-muted-foreground dark:text-muted-foreground italic shrink-0">{t('comments.editCount', { count: c.edit_count })}</span>}
                   {c.visibility !== 'internal' && (() => {
                     // On portal items, public comments are shown with the portal badge
                     const displayAs = (itemVisibility === 'portal' && c.visibility === 'public') ? 'portal' : c.visibility
@@ -321,7 +321,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                       <span className={`inline-flex items-center gap-1 text-xs shrink-0 ${
                         displayAs === 'portal' ? 'text-yellow-500 dark:text-yellow-400' :
                         displayAs === 'public' ? 'text-red-500 dark:text-red-400' :
-                        'text-indigo-500'
+                        'text-foreground'
                       }`}>
                         {displayAs === 'portal' && <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>}
                         {displayAs === 'public' && <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /></svg>}
@@ -333,13 +333,13 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                 <div className="flex items-center shrink-0">
                   {user && c.author_id === user.id && (
                     <button
-                      className="group/edit relative inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 transition-colors sm:opacity-0 sm:group-hover/comment:opacity-100"
+                      className="group/edit relative inline-flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted transition-colors sm:opacity-0 sm:group-hover/comment:opacity-100"
                       onClick={() => { setEditingId(c.id); setEditBody(c.body); setEditVisibility(c.visibility === 'public' ? 'public' : 'internal') }}
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.5 2.5a1.5 1.5 0 012.121 2.121L6.5 11.743l-2.5.757.757-2.5L11.5 2.5z" />
                       </svg>
-                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/edit:opacity-100 transition-opacity">
+                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/edit:opacity-100 transition-opacity">
                         {t('common.edit')}
                       </span>
                     </button>
@@ -352,7 +352,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h10M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M5 4.5v8a1 1 0 001 1h4a1 1 0 001-1v-8" />
                       </svg>
-                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
+                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
                         {t('common.delete')}
                       </span>
                     </button>
@@ -360,7 +360,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
                 </div>
               </div>
               <div
-                className={`prose prose-sm dark:prose-invert max-w-none text-gray-900 dark:text-gray-100 pl-8 rounded break-words ${user && c.author_id === user.id ? 'border border-transparent hover:border-gray-300 dark:hover:border-gray-600' : ''}`}
+                className={`prose prose-sm dark:prose-invert max-w-none text-foreground dark:text-foreground pl-8 rounded break-words ${user && c.author_id === user.id ? 'border border-transparent hover:border-input dark:hover:border-input' : ''}`}
                 onDoubleClick={() => {
                   if (user && c.author_id === user.id) {
                     setEditingId(c.id)
@@ -390,7 +390,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
       />
 
       <Modal open={!!confirmAction} onClose={() => setConfirmAction(null)} title={t('comments.visibilityConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           {t('comments.visibilityConfirmBody')}
         </p>
         <div className="flex justify-end gap-3">
@@ -403,7 +403,7 @@ export function CommentList({ projectKey, itemNumber, sortOrder = 'desc', highli
 
 
       <Modal open={!!deletingId} onClose={() => setDeletingId(null)} title={t('comments.deleteConfirm')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           {t('comments.deleteBody')}
         </p>
         <div className="flex justify-end gap-3">

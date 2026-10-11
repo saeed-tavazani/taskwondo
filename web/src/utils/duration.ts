@@ -1,3 +1,5 @@
+import type { TFunction } from 'i18next'
+
 const UNITS: Record<string, number> = {
   w: 7 * 24 * 3600,
   d: 24 * 3600,
@@ -39,36 +41,36 @@ export function parseDuration(input: string): number | null {
  * Format seconds into a human-readable duration string.
  * Examples: "1d 2h", "45m", "2w 3d", "1h 30m"
  */
-export function formatDuration(seconds: number): string {
-  if (seconds <= 0) return '0m'
+export function formatDuration(seconds: number, t?: TFunction): string {
+  if (seconds <= 0) return t ? t('timeFormat.minute', { count: 0 }) : '0m'
 
   const parts: string[] = []
   let remaining = seconds
 
   const weeks = Math.floor(remaining / UNITS.w)
   if (weeks > 0) {
-    parts.push(`${weeks}w`)
+    parts.push(t ? t('timeFormat.week', { count: weeks }) : `${weeks}w`)
     remaining -= weeks * UNITS.w
   }
 
   const days = Math.floor(remaining / UNITS.d)
   if (days > 0) {
-    parts.push(`${days}d`)
+    parts.push(t ? t('timeFormat.day', { count: days }) : `${days}d`)
     remaining -= days * UNITS.d
   }
 
   const hours = Math.floor(remaining / UNITS.h)
   if (hours > 0) {
-    parts.push(`${hours}h`)
+    parts.push(t ? t('timeFormat.hour', { count: hours }) : `${hours}h`)
     remaining -= hours * UNITS.h
   }
 
   const minutes = Math.floor(remaining / UNITS.m)
   if (minutes > 0) {
-    parts.push(`${minutes}m`)
+    parts.push(t ? t('timeFormat.minute', { count: minutes }) : `${minutes}m`)
   }
 
-  return parts.length > 0 ? parts.join(' ') : '< 1m'
+  return parts.length > 0 ? parts.join(' ') : t ? t('timeFormat.underMinute') : '< 1m'
 }
 
 /**
@@ -76,7 +78,8 @@ export function formatDuration(seconds: number): string {
  * Positive: "2h 15m left"
  * Negative: "1h 30m overdue"
  */
-export function formatRemaining(seconds: number): string {
+export function formatRemaining(seconds: number, t?: TFunction): string {
+  if (t) return t(seconds >= 0 ? 'timeFormat.left' : 'timeFormat.overdue', { time: formatDuration(Math.abs(seconds), t) })
   if (seconds >= 0) {
     return `${formatDuration(seconds)} left`
   }
@@ -87,24 +90,26 @@ export function formatRemaining(seconds: number): string {
  * Format a date as relative time from now.
  * Examples: "2m ago", "3h ago", "5d ago", "2w ago", "3mo ago"
  */
-export function formatRelativeTime(date: string | Date): string {
+export function formatRelativeTime(date: string | Date, t?: TFunction): string {
   const then = typeof date === 'string' ? new Date(date) : date
   const seconds = Math.floor((Date.now() - then.getTime()) / 1000)
 
-  if (seconds < 60) return '< 1m ago'
+  const past = (unit: string, count: number, fallback: string) => t
+    ? t('timeFormat.past', { time: t(`timeFormat.${unit}`, { count }) }) : fallback
+  if (seconds < 60) return t ? t('timeFormat.past', { time: t('timeFormat.underMinute') }) : '< 1m ago'
 
   const months = Math.floor(seconds / (30 * UNITS.d))
-  if (months > 0) return `${months}mo ago`
+  if (months > 0) return past('month', months, `${months}mo ago`)
 
   const weeks = Math.floor(seconds / UNITS.w)
-  if (weeks > 0) return `${weeks}w ago`
+  if (weeks > 0) return past('week', weeks, `${weeks}w ago`)
 
   const days = Math.floor(seconds / UNITS.d)
-  if (days > 0) return `${days}d ago`
+  if (days > 0) return past('day', days, `${days}d ago`)
 
   const hours = Math.floor(seconds / UNITS.h)
-  if (hours > 0) return `${hours}h ago`
+  if (hours > 0) return past('hour', hours, `${hours}h ago`)
 
   const minutes = Math.floor(seconds / UNITS.m)
-  return `${minutes}m ago`
+  return past('minute', minutes, `${minutes}m ago`)
 }

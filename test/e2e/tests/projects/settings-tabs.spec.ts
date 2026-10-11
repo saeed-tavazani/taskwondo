@@ -12,7 +12,7 @@ test.describe('Project settings tabs', () => {
     // General tab is active by default
     const generalTab = page.getByRole('button', { name: 'General', exact: true });
     await expect(generalTab).toBeVisible();
-    await expect(generalTab).toHaveClass(/border-indigo/);
+    await expect(generalTab).toHaveAttribute('aria-pressed', 'true');
 
     // General tab content is visible: project key and name in same row
     await expect(page.getByLabel('Project key')).toBeVisible();
@@ -72,7 +72,7 @@ test.describe('Project settings tabs', () => {
     // Wait for Invites tab to appear (depends on permissions loading)
     const invitesTab = page.getByRole('button', { name: 'Invites', exact: true });
     await expect(invitesTab).toBeVisible({ timeout: 10000 });
-    await expect(invitesTab).toHaveClass(/border-indigo/);
+    await expect(invitesTab).toHaveAttribute('aria-pressed', 'true');
 
     // Invite content is visible
     await expect(page.getByRole('heading', { name: 'Create Invite Link' })).toBeVisible({ timeout: 10000 });
@@ -103,7 +103,7 @@ test.describe('Project settings tabs', () => {
 
     // Teams tab is active
     const teamsTab = page.getByRole('button', { name: 'Teams', exact: true });
-    await expect(teamsTab).toHaveClass(/border-indigo/);
+    await expect(teamsTab).toHaveAttribute('aria-pressed', 'true');
 
     // Teams content is visible
     await expect(page.getByText('No teams yet.')).toBeVisible({ timeout: 10000 });

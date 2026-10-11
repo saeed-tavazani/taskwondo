@@ -54,7 +54,7 @@ export function ProjectPicker({ projects, value, onChange, disabled, error, aria
         buttonRef.current?.focus()
       }
     }}>
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
         {t('workitems.form.project')} <span className="text-red-500" aria-hidden="true">*</span>
       </label>
       <button
@@ -62,34 +62,34 @@ export function ProjectPicker({ projects, value, onChange, disabled, error, aria
         type="button"
         aria-label={ariaLabel}
         aria-expanded={open}
-        className={`block w-full rounded-md border px-3 py-2 text-sm text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-800 ${
-          error ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+        className={`block w-full rounded-md border px-3 py-2 text-sm text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-surface dark:bg-card ${
+          error ? 'border-red-300' : 'border-border dark:border-border'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         onClick={() => { if (disabled) return; setOpen(!open); setTimeout(() => inputRef.current?.focus(), 0) }}
         disabled={disabled}
       >
         {selected ? (
-          <span className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+          <span className="flex items-center gap-2 text-foreground dark:text-foreground">
             <ProjectKeyBadge size="icon">{selected.key}</ProjectKeyBadge>
             <span className="truncate">{selected.name}</span>
             {showNamespaces && selected.namespace_slug && (
-              <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-gray-400 dark:text-gray-500 shrink-0">
+              <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-muted-foreground dark:text-muted-foreground shrink-0">
                 <span>{selected.namespace_slug}</span>
                 <NamespaceIcon icon={selected.namespace_icon ?? 'building2'} color={selected.namespace_color ?? 'slate'} className="h-3 w-3" />
               </span>
             )}
           </span>
         ) : (
-          <span className="text-gray-400 dark:text-gray-500">{t('workitems.form.projectPlaceholder')}</span>
+          <span className="text-muted-foreground dark:text-muted-foreground">{t('workitems.form.projectPlaceholder')}</span>
         )}
       </button>
 
       {open && (
-        <div className="absolute z-20 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg">
+        <div className="absolute z-20 mt-1 w-full bg-surface dark:bg-card border border-border dark:border-border rounded-md shadow-lg">
           <div className="p-2">
             <input
               ref={inputRef}
-              className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="block w-full rounded-md border border-border dark:border-border dark:bg-muted dark:text-foreground px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder={t('workitems.form.projectSearchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -100,15 +100,15 @@ export function ProjectPicker({ projects, value, onChange, disabled, error, aria
               <li key={p.key}>
                 <button
                   type="button"
-                  className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 ${
-                    p.key === value ? 'bg-indigo-50 dark:bg-indigo-900/30' : ''
+                  className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted dark:hover:bg-muted ${
+                    p.key === value ? 'bg-accent dark:bg-accent' : ''
                   }`}
                   onClick={() => { onChange(p.key); setOpen(false); setSearch('') }}
                 >
                   <ProjectKeyBadge size="icon">{p.key}</ProjectKeyBadge>
-                  <span className="text-gray-900 dark:text-gray-100 font-medium truncate">{p.name}</span>
+                  <span className="text-foreground dark:text-foreground font-medium truncate">{p.name}</span>
                   {showNamespaces && p.namespace_slug && (
-                    <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-gray-400 dark:text-gray-500 shrink-0">
+                    <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-muted-foreground dark:text-muted-foreground shrink-0">
                       <span>{p.namespace_slug}</span>
                       <NamespaceIcon icon={p.namespace_icon ?? 'building2'} color={p.namespace_color ?? 'slate'} className="h-3 w-3" />
                     </span>
@@ -117,7 +117,7 @@ export function ProjectPicker({ projects, value, onChange, disabled, error, aria
               </li>
             ))}
             {filtered.length === 0 && (
-              <li className="px-3 py-2 text-sm text-gray-400 dark:text-gray-500">{t('workitems.form.noProjectsFound')}</li>
+              <li className="px-3 py-2 text-sm text-muted-foreground dark:text-muted-foreground">{t('workitems.form.noProjectsFound')}</li>
             )}
           </ul>
         </div>

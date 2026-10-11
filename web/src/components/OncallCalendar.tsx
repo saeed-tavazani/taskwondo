@@ -246,12 +246,12 @@ export function OncallCalendar({ members, projectKey, teamId }: OncallCalendarPr
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('teams.oncall.calendar.title')}</h3>
+        <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t('teams.oncall.calendar.title')}</h3>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={prevMonth}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <span className="text-sm font-medium text-gray-900 dark:text-gray-100 min-w-[140px] text-center">
+          <span className="text-sm font-medium text-foreground dark:text-foreground min-w-[140px] text-center">
             {monthLabel}
           </span>
           <Button variant="ghost" size="sm" onClick={nextMonth}>
@@ -264,11 +264,11 @@ export function OncallCalendar({ members, projectKey, teamId }: OncallCalendarPr
       </div>
 
       {/* Grid */}
-      <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+      <div className="border border-border dark:border-border rounded-lg overflow-hidden">
         {/* Day headers */}
-        <div className="grid grid-cols-7 bg-gray-50 dark:bg-gray-800">
+        <div className="grid grid-cols-7 bg-muted dark:bg-card">
           {dayLabels.map((label) => (
-            <div key={label} className="px-1 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400">
+            <div key={label} className="px-1 py-2 text-center text-xs font-medium text-muted-foreground dark:text-muted-foreground">
               {label}
             </div>
           ))}
@@ -280,7 +280,7 @@ export function OncallCalendar({ members, projectKey, teamId }: OncallCalendarPr
           const weekSlots = calendarSlots.slice(weekStart, weekStart + 7)
 
           return (
-            <div key={wi} className="border-t border-gray-200 dark:border-gray-700">
+            <div key={wi} className="border-t border-border dark:border-border">
               {/* Day numbers */}
               <div className="grid grid-cols-7">
                 {weekSlots.map((slot, di) => {
@@ -296,8 +296,8 @@ export function OncallCalendar({ members, projectKey, teamId }: OncallCalendarPr
                       ) : (
                         <span className={`text-xs ${
                           slot.inMonth
-                            ? 'text-gray-700 dark:text-gray-300'
-                            : 'text-gray-400 dark:text-gray-600'
+                            ? 'text-foreground dark:text-foreground'
+                            : 'text-muted-foreground dark:text-muted-foreground'
                         }`}>
                           {day}
                         </span>
@@ -356,14 +356,14 @@ export function OncallCalendar({ members, projectKey, teamId }: OncallCalendarPr
           return (
             <div key={member.user_id} className="flex items-center gap-1.5">
               <span className={`h-2.5 w-2.5 rounded-full ${DOT_COLORS[colorIdx]}`} />
-              <span className="text-xs text-gray-700 dark:text-gray-300">{member.display_name}</span>
+              <span className="text-xs text-foreground dark:text-foreground">{member.display_name}</span>
             </div>
           )
         })}
         {hasOverrides && (
           <div className="flex items-center gap-1.5">
             <span className={`h-2.5 w-2.5 rounded-full ${OVERRIDE_DOT_COLOR}`} />
-            <span className="text-xs text-gray-700 dark:text-gray-300">{t('teams.oncall.override.title')}</span>
+            <span className="text-xs text-foreground dark:text-foreground">{t('teams.oncall.override.title')}</span>
           </div>
         )}
       </div>

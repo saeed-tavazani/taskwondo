@@ -65,8 +65,8 @@ export function MilestonesPage() {
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('milestones.title')}</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t('milestones.description')}</p>
+          <h2 className="text-lg font-semibold text-foreground dark:text-foreground">{t('milestones.title')}</h2>
+          <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">{t('milestones.description')}</p>
         </div>
         {canManage && (
           <Button onClick={() => setEditorOpen(true)} className="border border-transparent">
@@ -80,8 +80,8 @@ export function MilestonesPage() {
 
       {/* Open milestones */}
       {openMilestones.length === 0 && closedMilestones.length === 0 ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('milestones.noMilestones')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('milestones.noMilestones')}</p>
           {canManage && (
             <Button size="sm" variant="secondary" className="mt-3" onClick={() => setEditorOpen(true)}>
               <Plus className="h-4 w-4 mr-1" />
@@ -93,8 +93,8 @@ export function MilestonesPage() {
         <>
           {openMilestones.length > 0 && (
             <div>
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('milestones.statusOpen')} ({openMilestones.length})</h3>
-              <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+              <h3 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-2">{t('milestones.statusOpen')} ({openMilestones.length})</h3>
+              <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
                 {openMilestones.map((m) => (
                   <MilestoneCard key={m.id} milestone={m} projectKey={projectKey ?? ''} saved={savedId === m.id} />
                 ))}
@@ -105,14 +105,14 @@ export function MilestonesPage() {
           {closedMilestones.length > 0 && (
             <div>
               <button
-                className="flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 hover:text-gray-700 dark:hover:text-gray-300"
+                className="flex items-center gap-1 text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-2 hover:text-foreground dark:hover:text-foreground"
                 onClick={() => setClosedExpanded(!closedExpanded)}
               >
                 {closedExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                 {t('milestones.statusClosed')} ({closedMilestones.length})
               </button>
               {closedExpanded && (
-                <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+                <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
                   {closedMilestones.map((m) => (
                     <MilestoneCard key={m.id} milestone={m} projectKey={projectKey ?? ''} saved={savedId === m.id} />
                   ))}
@@ -157,16 +157,16 @@ function MilestoneCard({
   return (
     <Link
       to={p(`/projects/${projectKey}/milestones/${milestone.id}`)}
-      className="block p-4 group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+      className="block p-4 group hover:bg-muted dark:hover:bg-card transition-colors"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{milestone.name}</span>
+            <span className="text-lg font-semibold text-foreground dark:text-foreground group-hover:text-foreground dark:group-hover:text-foreground">{milestone.name}</span>
             {milestone.due_date && <DueDateLabel dueDate={milestone.due_date} isClosed={milestone.status === 'closed'} />}
           </div>
           {milestone.description && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{milestone.description}</p>
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{milestone.description}</p>
           )}
         </div>
         {saved && (
@@ -178,7 +178,7 @@ function MilestoneCard({
 
       {/* Progress bar */}
       <div className="mt-3">
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+        <div className="flex items-center justify-between text-sm text-muted-foreground dark:text-muted-foreground mb-1">
           <span>
             {milestone.total_count > 0
               ? t('milestones.progress', { closed: milestone.closed_count, total: milestone.total_count })
@@ -186,7 +186,7 @@ function MilestoneCard({
           </span>
           {milestone.total_count > 0 && <span>{percent}%</span>}
         </div>
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+        <div className="w-full bg-muted-strong dark:bg-muted rounded-full h-3">
           <div
             className="bg-green-500 dark:bg-green-400 h-2 rounded-full transition-all"
             style={{ width: `${percent}%` }}
@@ -196,16 +196,16 @@ function MilestoneCard({
 
       {/* Time tracking summary */}
       {(milestone.total_estimated_seconds > 0 || milestone.total_spent_seconds > 0) && (
-        <div className="mt-2 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground dark:text-muted-foreground">
           <Clock className="h-3.5 w-3.5 shrink-0" />
           {milestone.total_estimated_seconds > 0 && (
             <span>
-              {t('milestones.timeEstimated', { time: formatDuration(milestone.total_estimated_seconds) })}
+              {t('milestones.timeEstimated', { time: formatDuration(milestone.total_estimated_seconds, t) })}
             </span>
           )}
           {milestone.total_spent_seconds > 0 && (
             <span>
-              {t('milestones.timeSpent', { time: formatDuration(milestone.total_spent_seconds) })}
+              {t('milestones.timeSpent', { time: formatDuration(milestone.total_spent_seconds, t) })}
             </span>
           )}
           {milestone.total_estimated_seconds > 0 && milestone.total_spent_seconds > 0 && (
@@ -226,7 +226,7 @@ function TimeProgressBar({ estimated, spent }: { estimated: number; spent: numbe
 
   return (
     <div className="flex items-center gap-1.5 flex-1 min-w-0" title={t('milestones.timeProgress', { percent })}>
-      <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 min-w-[40px]">
+      <div className="flex-1 bg-muted-strong dark:bg-muted rounded-full h-1.5 min-w-[40px]">
         <div
           className={`h-1.5 rounded-full transition-all ${isOver ? 'bg-red-500 dark:bg-red-400' : 'bg-blue-500 dark:bg-blue-400'}`}
           style={{ width: `${percent}%` }}
@@ -251,7 +251,7 @@ function DueDateLabel({ dueDate, isClosed }: { dueDate: string; isClosed: boolea
 
   if (isClosed) {
     text = dueDate
-    colorClass = 'text-gray-400 dark:text-gray-500'
+    colorClass = 'text-muted-foreground dark:text-muted-foreground'
   } else if (diffDays < 0) {
     text = t('milestones.overdue', { days: Math.abs(diffDays) })
     colorClass = 'text-red-600 dark:text-red-400'
@@ -263,7 +263,7 @@ function DueDateLabel({ dueDate, isClosed }: { dueDate: string; isClosed: boolea
     colorClass = 'text-yellow-600 dark:text-yellow-400'
   } else {
     text = dueDate
-    colorClass = 'text-gray-400 dark:text-gray-500'
+    colorClass = 'text-muted-foreground dark:text-muted-foreground'
   }
 
   return <span className={`text-xs ${colorClass}`}>{text}</span>
@@ -316,12 +316,12 @@ function MilestoneForm({
         autoFocus
       />
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
           {t('common.description')}
         </label>
         <textarea
           rows={3}
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

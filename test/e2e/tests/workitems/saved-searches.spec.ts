@@ -533,7 +533,7 @@ test.describe('Saved Searches - Mobile', () => {
     await expect(page).toHaveURL(/type=bug/, { timeout: 10000 });
 
     // The saved search button should now have a badge indicator
-    const badge = savedSearchBtn.locator('.bg-indigo-600');
+    const badge = savedSearchBtn.locator('.bg-primary');
     await expect(badge).toBeVisible({ timeout: 3000 });
   });
 

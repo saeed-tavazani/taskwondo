@@ -1688,5 +1688,16 @@
   "errors.time_tracking_forbidden": "You do not have permission to access or change this time.",
   "errors.time_tracking_not_found": "The time entry, project or item was not found.",
   "errors.time_tracking_failed": "Unable to load or save time. Please try again.",
-  "errors.time_timer_active": "A timer is already running. Stop it before starting another."
+  "errors.time_timer_active": "A timer is already running. Stop it before starting another.",
+  "timeFormat.minute": "{{count}}m",
+  "timeFormat.hour": "{{count}}h",
+  "timeFormat.day": "{{count}}d",
+  "timeFormat.week": "{{count}}w",
+  "timeFormat.month": "{{count}}mo",
+  "timeFormat.underMinute": "< 1m",
+  "timeFormat.past": "{{time}} ago",
+  "timeFormat.left": "{{time}} left",
+  "timeFormat.overdue": "{{time}} overdue",
+  "timeFormat.today": "Today",
+  "timeFormat.yesterday": "Yesterday"
 }

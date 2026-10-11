@@ -10,7 +10,6 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useNamespaceContext } from '@/contexts/NamespaceContext'
 import { useSidebar } from '@/contexts/SidebarContext'
 import { useLayout } from '@/contexts/LayoutContext'
-import { AppSidebar } from '@/components/AppSidebar'
 import { CreateNamespaceModal } from '@/components/CreateNamespaceModal'
 import { NamespaceIcon } from '@/components/NamespaceIcon'
 import { DataTable } from '@/components/ui/DataTable'
@@ -151,7 +150,7 @@ export function ProjectListPage() {
     {
       key: 'name',
       header: t('projects.table.name'),
-      render: (p) => <span className="font-medium text-gray-900 dark:text-gray-100 truncate block">{p.name}</span>,
+      render: (p) => <span className="font-medium text-foreground dark:text-foreground truncate block">{p.name}</span>,
     },
     {
       key: 'role',
@@ -159,7 +158,7 @@ export function ProjectListPage() {
       width: '10%',
       className: 'text-right',
       render: (p) => (
-        <span className="text-gray-500 dark:text-gray-400 capitalize">
+        <span className="text-muted-foreground dark:text-muted-foreground capitalize">
           {p.member_role ? t(`projects.settings.roles.${p.member_role}`) : ''}
         </span>
       ),
@@ -170,8 +169,8 @@ export function ProjectListPage() {
       width: '12%',
       className: 'text-right',
       render: (p) => p.member_role === 'customer'
-        ? <span className="text-gray-300 dark:text-gray-600">&mdash;</span>
-        : <span className="text-gray-500 dark:text-gray-400">{p.open_count}</span>,
+        ? <span className="text-muted-foreground dark:text-muted-foreground">&mdash;</span>
+        : <span className="text-muted-foreground dark:text-muted-foreground">{p.open_count}</span>,
     },
     {
       key: 'in_progress',
@@ -179,8 +178,8 @@ export function ProjectListPage() {
       width: '12%',
       className: 'text-right',
       render: (p) => p.member_role === 'customer'
-        ? <span className="text-gray-300 dark:text-gray-600">&mdash;</span>
-        : <span className="text-gray-500 dark:text-gray-400">{p.in_progress_count}</span>,
+        ? <span className="text-muted-foreground dark:text-muted-foreground">&mdash;</span>
+        : <span className="text-muted-foreground dark:text-muted-foreground">{p.in_progress_count}</span>,
     },
     {
       key: 'total',
@@ -188,8 +187,8 @@ export function ProjectListPage() {
       width: '12%',
       className: 'text-right',
       render: (p) => p.member_role === 'customer'
-        ? <span className="text-gray-300 dark:text-gray-600">&mdash;</span>
-        : <span className="text-gray-500 dark:text-gray-400">{p.item_counter}</span>,
+        ? <span className="text-muted-foreground dark:text-muted-foreground">&mdash;</span>
+        : <span className="text-muted-foreground dark:text-muted-foreground">{p.item_counter}</span>,
     },
     {
       key: 'members',
@@ -197,8 +196,8 @@ export function ProjectListPage() {
       width: '12%',
       className: 'text-right',
       render: (p) => p.member_role === 'customer'
-        ? <span className="text-gray-300 dark:text-gray-600">&mdash;</span>
-        : <span className="text-gray-500 dark:text-gray-400">{p.member_count}</span>,
+        ? <span className="text-muted-foreground dark:text-muted-foreground">&mdash;</span>
+        : <span className="text-muted-foreground dark:text-muted-foreground">{p.member_count}</span>,
     },
   ]
 
@@ -227,7 +226,6 @@ export function ProjectListPage() {
     return (
       <div className={`${containerClass(true)} py-6`}>
         <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-          <AppSidebar />
           <div className="flex-1 min-w-0 flex items-center justify-center py-24">
             <Spinner size="lg" />
           </div>
@@ -240,7 +238,6 @@ export function ProjectListPage() {
     return (
       <div className={`${containerClass(true)} py-6`}>
         <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-          <AppSidebar />
           <div className="flex-1 min-w-0">
             <p className="text-red-600">{t('projects.loadError')}</p>
           </div>
@@ -252,16 +249,15 @@ export function ProjectListPage() {
   return (
     <div className={`${containerClass(true)} py-6`}>
       <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-        <AppSidebar />
         <div className="flex-1 min-w-0">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('projects.title')}</h1>
+        <h1 className="text-lg font-semibold text-foreground dark:text-foreground">{t('projects.title')}</h1>
         {!isCustomerOnly && <Button onClick={openCreateModal} className="border border-transparent">{t('projects.new')}</Button>}
       </div>
 
       {/* Search */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           ref={searchRef}
           value={searchInput}
@@ -275,7 +271,7 @@ export function ProjectListPage() {
       {/* Mobile card view */}
       <div className="sm:hidden space-y-3">
         {projectList.length === 0 ? (
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-12">{t('projects.empty')}</p>
+          <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground py-12">{t('projects.empty')}</p>
         ) : (
           projectList.map((proj) => {
             const isCustomer = proj.member_role === 'customer'
@@ -283,19 +279,19 @@ export function ProjectListPage() {
               <button
                 key={proj.key}
                 onClick={() => navigate(p(`/projects/${proj.key}${isCustomer ? '/support' : ''}`))}
-                className="w-full text-left bg-white dark:bg-gray-800 rounded-lg shadow p-4 active:bg-gray-50 dark:active:bg-gray-700 transition-colors"
+                className="w-full text-left bg-surface dark:bg-card rounded-lg shadow p-4 active:bg-muted dark:active:bg-muted transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <ProjectKeyBadge>{proj.key}</ProjectKeyBadge>
-                  <span className="font-medium text-gray-900 dark:text-gray-100 truncate flex-1">{proj.name}</span>
+                  <span className="font-medium text-foreground dark:text-foreground truncate flex-1">{proj.name}</span>
                   {proj.member_role && (
-                    <span className="text-xs text-gray-400 dark:text-gray-500 capitalize shrink-0">
+                    <span className="text-xs text-muted-foreground dark:text-muted-foreground capitalize shrink-0">
                       {t(`projects.settings.roles.${proj.member_role}`)}
                     </span>
                   )}
                 </div>
                 {!isCustomer && (
-                  <div className="flex items-center gap-4 mt-2.5 ml-1 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-4 mt-2.5 ml-1 text-xs text-muted-foreground dark:text-muted-foreground">
                     <Tooltip content={t('projects.table.open')}>
                       <span className="inline-flex items-center gap-1">
                         <IconOpen className="w-3.5 h-3.5" />
@@ -329,7 +325,7 @@ export function ProjectListPage() {
       </div>
 
       {/* Desktop table view */}
-      <div className="hidden sm:block bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+      <div className="hidden sm:block bg-surface dark:bg-card rounded-lg shadow overflow-hidden">
         <DataTable
           columns={columns}
           data={projectList}
@@ -346,7 +342,7 @@ export function ProjectListPage() {
           <span className="flex items-center gap-3">
             {t('projects.create.title')}
             {!isAdmin && maxProjects > 0 && (
-              <span className={`text-sm font-normal ${atLimit ? 'text-amber-500 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
+              <span className={`text-sm font-normal ${atLimit ? 'text-amber-500 dark:text-amber-400' : 'text-muted-foreground dark:text-muted-foreground'}`}>
                 {t('projects.limitCounter', { count: projectCount, limit: maxProjects })}
               </span>
             )}
@@ -374,7 +370,7 @@ export function ProjectListPage() {
             required
             disabled={atLimit}
           />
-          <p className="text-xs text-gray-400 dark:text-gray-500 -mt-3">{t('projects.create.keyHint')}</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground -mt-3">{t('projects.create.keyHint')}</p>
           <Input
             label={t('projects.create.description')}
             value={description}
@@ -384,17 +380,17 @@ export function ProjectListPage() {
           />
           {showSwitcher && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
                 {t('namespaces.namespace')}
               </label>
               <button
                 type="button"
                 onClick={() => setShowNsPicker(true)}
                 disabled={atLimit}
-                className="w-full flex items-center gap-2.5 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-3 py-2 text-sm text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="w-full flex items-center gap-2.5 rounded-md border border-border dark:border-border dark:bg-card px-3 py-2 text-sm text-left hover:bg-muted dark:hover:bg-muted transition-colors"
               >
                 <NamespaceIcon icon={selectedNs?.icon ?? 'globe'} color={selectedNs?.color} className="h-4 w-4 shrink-0" />
-                <span className="flex-1 truncate text-gray-900 dark:text-gray-100">
+                <span className="flex-1 truncate text-foreground dark:text-foreground">
                   {selectedNs?.display_name ?? t('namespaces.selectNamespace')}
                 </span>
               </button>
@@ -426,27 +422,27 @@ export function ProjectListPage() {
               }}
               className={`w-full text-left px-3 py-3 rounded-md text-sm flex items-center gap-3 ${
                 ns.slug === selectedNamespace
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-accent dark:bg-accent text-foreground dark:text-foreground'
+                  : 'text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted'
               }`}
             >
               <NamespaceIcon icon={ns.icon ?? 'globe'} color={ns.color} className="h-5 w-5 shrink-0" />
               <div className="min-w-0 flex-1">
                 <div className="font-medium">{ns.display_name}</div>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5">
                   {ns.is_default ? t('namespaces.publicHint') : t('namespaces.customHint')}
                 </p>
               </div>
               {ns.slug === selectedNamespace && (
-                <Check className="h-4 w-4 shrink-0 text-indigo-600 dark:text-indigo-400" />
+                <Check className="h-4 w-4 shrink-0 text-foreground dark:text-foreground" />
               )}
             </button>
           ))}
         </div>
-        <div className="border-t border-gray-100 dark:border-gray-700 mt-3 pt-3">
+        <div className="border-t border-border dark:border-border mt-3 pt-3">
           <button
             onClick={() => setShowNsCreate(true)}
-            className="w-full text-left px-3 py-2.5 rounded-md text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3"
+            className="w-full text-left px-3 py-2.5 rounded-md text-sm text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted flex items-center gap-3"
           >
             <Plus className="h-5 w-5" />
             {t('namespaces.createNew')}

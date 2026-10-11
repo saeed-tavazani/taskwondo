@@ -3,4 +3,4 @@ WORKDIR /e2e
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-ENTRYPOINT ["npx", "playwright", "test"]
+ENTRYPOINT ["node", "node_modules/@playwright/test/cli.js", "test"]

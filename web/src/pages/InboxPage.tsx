@@ -18,7 +18,6 @@ import { NamespaceIcon } from '@/components/NamespaceIcon'
 import { useNamespaceContext } from '@/contexts/NamespaceContext'
 import { RefreshButton, type RefreshInterval } from '@/components/ui/RefreshButton'
 import { SLAIndicator } from '@/components/SLAIndicator'
-import { AppSidebar } from '@/components/AppSidebar'
 import { useSidebar } from '@/contexts/SidebarContext'
 import { useLayout } from '@/contexts/LayoutContext'
 import { useInboxItems, useRemoveFromInbox, useReorderInboxItem, useClearCompletedInbox, useAddToInbox } from '@/hooks/useInbox'
@@ -82,10 +81,10 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
   return (
     <tr
       ref={rowRef}
-      className={`group border-b border-gray-200 dark:border-gray-700
+      className={`group border-b border-border dark:border-border
         ${reorderedId === item.id ? 'animate-[inbox-highlight_1s_ease-in-out]' : ''}
         ${isRemoving && autoRemove ? 'transition-all duration-300 opacity-0 -translate-y-2' : ''}
-        ${isActive ? 'bg-indigo-50 dark:bg-indigo-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-800'} cursor-pointer`}
+        ${isActive ? 'bg-accent dark:bg-accent' : 'hover:bg-muted dark:hover:bg-card'} cursor-pointer`}
       onClick={() => onClick(item)}
     >
       {/* Reorder arrows */}
@@ -94,7 +93,7 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
           <button
             onClick={() => onMoveUp(item)}
             disabled={isFirst}
-            className={`p-0.5 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-700 ${isFirst ? 'invisible' : ''}`}
+            className={`p-0.5 rounded text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:hover:text-foreground dark:hover:bg-muted ${isFirst ? 'invisible' : ''}`}
             aria-label={t('inbox.moveUp')}
           >
             <ChevronUp className="h-4 w-4" />
@@ -102,7 +101,7 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
           <button
             onClick={() => onMoveDown(item)}
             disabled={isLast}
-            className={`p-0.5 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-700 ${isLast ? 'invisible' : ''}`}
+            className={`p-0.5 rounded text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:hover:text-foreground dark:hover:bg-muted ${isLast ? 'invisible' : ''}`}
             aria-label={t('inbox.moveDown')}
           >
             <ChevronDown className="h-4 w-4" />
@@ -110,7 +109,7 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
         </div>
       </td>
       {/* Display ID */}
-      <td style={columnWidths.display_id ? { width: columnWidths.display_id } : undefined} className={`px-3 py-3 text-sm font-mono whitespace-nowrap ${isCompleted && !isRemoving ? 'text-gray-400 dark:text-gray-500' : 'text-gray-500 dark:text-gray-400'} ${columnWidths.display_id ? '' : 'w-24'}`}>
+      <td style={columnWidths.display_id ? { width: columnWidths.display_id } : undefined} className={`px-3 py-3 text-sm font-mono whitespace-nowrap ${isCompleted && !isRemoving ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'} ${columnWidths.display_id ? '' : 'w-24'}`}>
         {item.display_id}
       </td>
       {/* Type */}
@@ -118,8 +117,8 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
         <TypeBadge type={item.type} />
       </td>
       {/* Title */}
-      <td className={`px-3 py-3 text-sm truncate ${item.description && !isCompleted ? 'text-gray-400 dark:text-gray-500' : ''}`}>
-        <span className={isCompleted && !isRemoving ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}>
+      <td className={`px-3 py-3 text-sm truncate ${item.description && !isCompleted ? 'text-muted-foreground dark:text-muted-foreground' : ''}`}>
+        <span className={isCompleted && !isRemoving ? 'line-through text-muted-foreground dark:text-muted-foreground' : 'text-foreground dark:text-foreground'}>
           {item.title}
         </span>
         {item.description && !isCompleted && (
@@ -139,7 +138,7 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
         <SLAIndicator sla={item.sla} />
       </td>
       {/* Updated */}
-      <td style={columnWidths.updated ? { width: columnWidths.updated } : undefined} className={`px-3 py-3 whitespace-nowrap text-sm text-right ${isCompleted && !isRemoving ? 'text-gray-300 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'} ${columnWidths.updated ? '' : 'w-[130px]'}`}>
+      <td style={columnWidths.updated ? { width: columnWidths.updated } : undefined} className={`px-3 py-3 whitespace-nowrap text-sm text-right ${isCompleted && !isRemoving ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'} ${columnWidths.updated ? '' : 'w-[130px]'}`}>
         {new Date(item.updated_at).toLocaleDateString()}
       </td>
       {/* Remove button */}
@@ -149,7 +148,7 @@ function InboxRow({ item, isCompleted, isFirst, isLast, isActive, onRemove, onMo
         ) : (
           <button
             onClick={() => onRemove(item.id)}
-            className="lg:opacity-0 lg:group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-opacity"
+            className="lg:opacity-0 lg:group-hover:opacity-100 text-muted-foreground hover:text-red-500 transition-opacity"
             aria-label={t('inbox.removeFromInbox')}
           >
             <X className="h-4 w-4" />
@@ -192,8 +191,8 @@ function InboxCard({ item, isCompleted, isFirst, isLast, isActive, editing, onRe
   return (
     <div
       ref={cardRef}
-      className={`flex items-stretch gap-0 rounded-lg border bg-white dark:bg-gray-800 shadow-sm transition-colors
-        ${isActive ? 'border-indigo-400 dark:border-indigo-500 ring-1 ring-indigo-300 dark:ring-indigo-600' : 'border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-600'}
+      className={`flex items-stretch gap-0 rounded-lg border bg-surface dark:bg-card shadow-sm transition-colors
+        ${isActive ? 'border-border dark:border-border ring-1 ring-ring dark:ring-ring' : 'border-border dark:border-border hover:border-input dark:hover:border-input'}
         ${reorderedId === item.id ? 'animate-[inbox-highlight_1s_ease-in-out]' : ''}
         ${isRemoving && autoRemove ? 'transition-all duration-300 opacity-0 -translate-y-2' : ''}`}
     >
@@ -204,37 +203,37 @@ function InboxCard({ item, isCompleted, isFirst, isLast, isActive, editing, onRe
       >
         {/* Line 1: Display ID + badges */}
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
-          <span className={`shrink-0 font-mono text-sm font-semibold ${dimmed ? 'text-gray-400 dark:text-gray-500' : 'text-gray-700 dark:text-gray-300'}`}>{item.display_id}</span>
+          <span className={`shrink-0 font-mono text-sm font-semibold ${dimmed ? 'text-muted-foreground dark:text-muted-foreground' : 'text-foreground dark:text-foreground'}`}>{item.display_id}</span>
           <span className={`shrink-0 inline-flex ${dimmed ? 'opacity-40' : ''}`}><TypeBadge type={item.type} /></span>
           <span className="shrink-0 inline-flex"><InboxStatusBadge status={item.status} category={item.status_category} /></span>
           <span className={`shrink-0 inline-flex ${dimmed ? 'opacity-40' : ''}`}><PriorityBadge priority={item.priority} /></span>
         </div>
         {/* Line 2: Assignee, Updated, SLA */}
-        <div className={`flex items-center gap-3 mt-1.5 text-xs overflow-x-auto scrollbar-none ${dimmed ? 'text-gray-300 dark:text-gray-600' : 'text-gray-400 dark:text-gray-500'}`}>
+        <div className={`flex items-center gap-3 mt-1.5 text-xs overflow-x-auto scrollbar-none ${dimmed ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>
           <span className="shrink-0 inline-flex items-center gap-1">
             <User className="h-3 w-3" />
             <span className="truncate max-w-[8rem]">{assigneeName}</span>
           </span>
           <span className="shrink-0 inline-flex items-center gap-1">
             <History className="h-3 w-3" />
-            {formatRelativeTime(item.updated_at)}
+            {formatRelativeTime(item.updated_at, t)}
           </span>
           {!dimmed && item.sla && <span className="shrink-0 inline-flex"><SLAIndicator sla={item.sla} /></span>}
         </div>
         {/* Line 3: Title */}
-        <p className={`mt-1.5 text-sm font-medium truncate ${dimmed ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
+        <p className={`mt-1.5 text-sm font-medium truncate ${dimmed ? 'line-through text-muted-foreground dark:text-muted-foreground' : 'text-foreground dark:text-foreground'}`}>
           {item.title}
         </p>
         {/* Line 4: Description (first line) */}
         {item.description && (
-          <p className={`mt-0.5 text-xs truncate ${dimmed ? 'text-gray-300 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'}`}>
+          <p className={`mt-0.5 text-xs truncate ${dimmed ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>
             {item.description}
           </p>
         )}
       </button>
       {/* Edit controls — right column, fits within card's natural height */}
       {editing && (
-        <div className="flex flex-col items-center justify-between flex-shrink-0 rounded-r-lg bg-indigo-50 dark:bg-indigo-900/20 border-l border-indigo-200 dark:border-indigo-700/50 px-2 py-1">
+        <div className="flex flex-col items-center justify-between flex-shrink-0 rounded-r-lg bg-accent dark:bg-accent border-l border-border dark:border-border/50 px-2 py-1">
           {/* Remove at top */}
           <button
             onClick={() => onRemove(item.id)}
@@ -248,7 +247,7 @@ function InboxCard({ item, isCompleted, isFirst, isLast, isActive, editing, onRe
             <button
               onClick={() => onMoveUp(item)}
               disabled={isFirst}
-              className={`p-0.5 rounded text-indigo-400 hover:text-indigo-600 hover:bg-indigo-100 dark:text-indigo-400 dark:hover:text-indigo-300 dark:hover:bg-indigo-800/40 ${isFirst ? 'invisible' : ''}`}
+              className={`p-0.5 rounded text-foreground hover:text-foreground hover:bg-accent dark:text-foreground dark:hover:text-foreground dark:hover:bg-accent ${isFirst ? 'invisible' : ''}`}
               aria-label={t('inbox.moveUp')}
             >
               <ChevronUp className="h-4 w-4" />
@@ -256,7 +255,7 @@ function InboxCard({ item, isCompleted, isFirst, isLast, isActive, editing, onRe
             <button
               onClick={() => onMoveDown(item)}
               disabled={isLast}
-              className={`p-0.5 rounded text-indigo-400 hover:text-indigo-600 hover:bg-indigo-100 dark:text-indigo-400 dark:hover:text-indigo-300 dark:hover:bg-indigo-800/40 ${isLast ? 'invisible' : ''}`}
+              className={`p-0.5 rounded text-foreground hover:text-foreground hover:bg-accent dark:text-foreground dark:hover:text-foreground dark:hover:bg-accent ${isLast ? 'invisible' : ''}`}
               aria-label={t('inbox.moveDown')}
             >
               <ChevronDown className="h-4 w-4" />
@@ -388,7 +387,7 @@ function InboxListPage() {
         <ProjectKeyBadge size="icon">{p.key}</ProjectKeyBadge>
         <span className="truncate">{p.name}</span>
         {showNamespaces && p.namespace_slug && (
-          <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-gray-400 dark:text-gray-500 shrink-0">
+          <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-muted-foreground dark:text-muted-foreground shrink-0">
             <span>{p.namespace_slug}</span>
             <NamespaceIcon icon={p.namespace_icon ?? 'building2'} color={p.namespace_color ?? 'slate'} className="h-3 w-3" />
           </span>
@@ -604,9 +603,9 @@ function InboxListPage() {
       {/* Header: title + search + actions */}
       <div className="flex items-center justify-between gap-4 mb-4">
         <div className="flex items-center gap-3 min-w-0 shrink lg:shrink-0">
-          <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('inbox.title')}</h1>
+          <h1 className="text-lg font-semibold text-foreground dark:text-foreground">{t('inbox.title')}</h1>
           {data && (
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-muted-foreground dark:text-muted-foreground">
               ({data.total})
             </span>
           )}
@@ -628,7 +627,7 @@ function InboxListPage() {
               {searchInput && (
                 <button
                   onClick={() => { setSearchInput(''); searchRef.current?.focus() }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground"
                   aria-label={t('common.clear')}
                 >
                   <X className="h-4 w-4" />
@@ -648,22 +647,22 @@ function InboxListPage() {
       <Modal open={settingsOpen} onClose={() => setSettingsOpen(false)} title={t('inbox.settings')}>
         <div className="py-2">
           <label className="flex items-center justify-between cursor-pointer select-none">
-            <span className="text-sm text-gray-700 dark:text-gray-300">{t('inbox.autoRemove')}</span>
+            <span className="text-sm text-foreground dark:text-foreground">{t('inbox.autoRemove')}</span>
             <button
               type="button"
               role="switch"
               aria-checked={autoRemove}
               onClick={() => setPreferenceMutation.mutate({ key: 'inbox_auto_remove', value: !autoRemove })}
               className={`relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors ${
-                autoRemove ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-600'
+                autoRemove ? 'bg-primary' : 'bg-muted-strong dark:bg-muted'
               }`}
             >
-              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow ring-0 transition-transform ${
+              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-surface shadow ring-0 transition-transform ${
                 autoRemove ? 'translate-x-4' : 'translate-x-0'
               }`} />
             </button>
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t('inbox.autoRemoveDescription')}</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{t('inbox.autoRemoveDescription')}</p>
         </div>
       </Modal>
 
@@ -685,17 +684,17 @@ function InboxListPage() {
         {/* Auto-hide toggle */}
         <Tooltip content={t('inbox.autoRemoveDescription')}>
           <label className="flex items-center gap-2 cursor-pointer select-none">
-            <span className="text-sm text-gray-600 dark:text-gray-400">{t('inbox.autoRemove')}</span>
+            <span className="text-sm text-muted-foreground dark:text-muted-foreground">{t('inbox.autoRemove')}</span>
             <button
               type="button"
               role="switch"
               aria-checked={autoRemove}
               onClick={() => setPreferenceMutation.mutate({ key: 'inbox_auto_remove', value: !autoRemove })}
               className={`relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors ${
-                autoRemove ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-600'
+                autoRemove ? 'bg-primary' : 'bg-muted-strong dark:bg-muted'
               }`}
             >
-              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow ring-0 transition-transform ${
+              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-surface shadow ring-0 transition-transform ${
                 autoRemove ? 'translate-x-4' : 'translate-x-0'
               }`} />
             </button>
@@ -706,10 +705,10 @@ function InboxListPage() {
           <button
             onClick={() => clearCompletedMutation.mutate()}
             disabled={clearCompletedMutation.isPending || completedItems.length === 0}
-            className={`relative p-2 rounded-lg border border-gray-300 dark:border-gray-600 transition-colors ${
+            className={`relative p-2 rounded-lg border border-border dark:border-border transition-colors ${
               completedItems.length === 0
-                ? 'opacity-40 cursor-not-allowed text-gray-400 dark:text-gray-500'
-                : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300'
+                ? 'opacity-40 cursor-not-allowed text-muted-foreground dark:text-muted-foreground'
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground'
             }`}
             aria-label={t('inbox.clearCompleted')}
           >
@@ -736,7 +735,7 @@ function InboxListPage() {
       {/* Mobile: Search + project filter + icons */}
       <div className="flex lg:hidden items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-0">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -749,7 +748,7 @@ function InboxListPage() {
           {searchInput && (
             <button
               onClick={() => setSearchInput('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground"
               aria-label={t('common.clear')}
             >
               <X className="h-4 w-4" />
@@ -761,14 +760,14 @@ function InboxListPage() {
           onClick={() => setProjectFilterOpen(true)}
           className={`relative shrink-0 p-2 rounded-lg border transition-colors ${
             selectedProjects.length > 0
-              ? 'border-indigo-400 bg-indigo-50 text-indigo-600 dark:border-indigo-500 dark:bg-indigo-900/30 dark:text-indigo-400'
-              : 'border-gray-300 dark:border-gray-600 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300'
+              ? 'border-border bg-accent text-foreground dark:border-border dark:bg-accent dark:text-foreground'
+              : 'border-border dark:border-border text-muted-foreground hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground'
           }`}
           aria-label={t('inbox.filterByProject')}
         >
           <FolderKanban className="h-5 w-5" />
           {selectedProjects.length > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white">
+            <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
               {selectedProjects.length}
             </span>
           )}
@@ -777,10 +776,10 @@ function InboxListPage() {
         <button
           onClick={() => clearCompletedMutation.mutate()}
           disabled={clearCompletedMutation.isPending || completedItems.length === 0}
-          className={`relative shrink-0 p-2 rounded-lg border border-gray-300 dark:border-gray-600 transition-colors ${
+          className={`relative shrink-0 p-2 rounded-lg border border-border dark:border-border transition-colors ${
             completedItems.length === 0
-              ? 'opacity-40 cursor-not-allowed text-gray-400 dark:text-gray-500'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300'
+              ? 'opacity-40 cursor-not-allowed text-muted-foreground dark:text-muted-foreground'
+              : 'text-muted-foreground hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground'
           }`}
           aria-label={t('inbox.clearCompleted')}
         >
@@ -796,8 +795,8 @@ function InboxListPage() {
           onClick={() => setEditing((v) => !v)}
           className={`p-2 rounded-lg border transition-colors ${
             editing
-              ? 'border-indigo-400 bg-indigo-50 text-indigo-600 dark:border-indigo-500 dark:bg-indigo-900/30 dark:text-indigo-400'
-              : 'border-gray-300 dark:border-gray-600 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300'
+              ? 'border-border bg-accent text-foreground dark:border-border dark:bg-accent dark:text-foreground'
+              : 'border-border dark:border-border text-muted-foreground hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground'
           }`}
           aria-label={t('common.edit')}
         >
@@ -806,7 +805,7 @@ function InboxListPage() {
         {/* Mobile: settings button */}
         <button
           onClick={() => setSettingsOpen(true)}
-          className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300 transition-colors"
+          className="p-2 rounded-lg border border-border dark:border-border text-muted-foreground hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground transition-colors"
           aria-label={t('inbox.settings')}
         >
           <Settings className="h-5 w-5" />
@@ -835,7 +834,7 @@ function InboxListPage() {
       </Modal>
 
       {allItems.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-gray-500 dark:text-gray-400">
+        <div className="flex flex-col items-center justify-center py-16 text-muted-foreground dark:text-muted-foreground">
           <Inbox className="h-16 w-16 mb-4 opacity-30" />
           <p className="text-lg font-medium">{t('inbox.empty')}</p>
           <p className="text-sm mt-1">{t('inbox.emptyHint')}</p>
@@ -843,35 +842,35 @@ function InboxListPage() {
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden lg:block overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+          <div className="hidden lg:block overflow-hidden rounded-lg border border-border dark:border-border">
             <table className="w-full table-fixed">
-              <thead className="bg-gray-50 dark:bg-gray-800 group/thead">
+              <thead className="bg-muted dark:bg-card group/thead">
                 <tr>
                   <th className="w-10 px-1 py-3"></th>
-                  <th style={columnWidths.display_id ? { width: columnWidths.display_id } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.display_id ? '' : 'w-24'}`}>
+                  <th style={columnWidths.display_id ? { width: columnWidths.display_id } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.display_id ? '' : 'w-24'}`}>
                     {t('workitems.table.id')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'display_id')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('display_id') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'display_id')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('display_id') }} />
                   </th>
-                  <th style={columnWidths.type ? { width: columnWidths.type } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.type ? '' : 'w-20'}`}>
+                  <th style={columnWidths.type ? { width: columnWidths.type } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.type ? '' : 'w-20'}`}>
                     {t('workitems.table.type')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'type')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('type') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'type')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('type') }} />
                   </th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{t('workitems.table.title')}</th>
-                  <th style={columnWidths.status ? { width: columnWidths.status } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.status ? '' : 'w-28'}`}>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase">{t('workitems.table.title')}</th>
+                  <th style={columnWidths.status ? { width: columnWidths.status } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.status ? '' : 'w-28'}`}>
                     {t('workitems.table.status')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'status')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('status') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'status')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('status') }} />
                   </th>
-                  <th style={columnWidths.priority ? { width: columnWidths.priority } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.priority ? '' : 'w-24'}`}>
+                  <th style={columnWidths.priority ? { width: columnWidths.priority } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.priority ? '' : 'w-24'}`}>
                     {t('workitems.table.priority')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'priority')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('priority') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'priority')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('priority') }} />
                   </th>
-                  <th style={columnWidths.sla ? { width: columnWidths.sla } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.sla ? '' : 'w-[110px]'}`}>
+                  <th style={columnWidths.sla ? { width: columnWidths.sla } : undefined} className={`relative px-3 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.sla ? '' : 'w-[110px]'}`}>
                     {t('sla.columnHeader')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'sla')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('sla') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'sla')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('sla') }} />
                   </th>
-                  <th style={columnWidths.updated ? { width: columnWidths.updated } : undefined} className={`relative px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase ${columnWidths.updated ? '' : 'w-[130px]'}`}>
+                  <th style={columnWidths.updated ? { width: columnWidths.updated } : undefined} className={`relative px-3 py-3 text-right text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase ${columnWidths.updated ? '' : 'w-[130px]'}`}>
                     {t('workitems.table.updated')}
-                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-indigo-300/40 hover:!bg-indigo-400/60 active:!bg-indigo-500/60 dark:bg-indigo-500/30 dark:hover:!bg-indigo-400/50 dark:active:!bg-indigo-500/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'updated')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('updated') }} />
+                    <div className="absolute right-0.5 top-0 bottom-0 w-1.5 cursor-col-resize opacity-0 group-hover/thead:opacity-100 bg-accent hover:!bg-primary/60 active:!bg-primary/60 dark:bg-accent dark:hover:!bg-primary/50 dark:active:!bg-primary/50 transition-opacity z-10" onMouseDown={(e) => handleResizeStart(e, 'updated')} onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth('updated') }} />
                   </th>
                   <th className="w-10 px-2 py-3"></th>
                 </tr>
@@ -957,7 +956,7 @@ function InboxListPage() {
             setRemoveConfirmItem(null)
           }
         }}>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+          <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
             <Trans i18nKey="inbox.removeConfirmBody" values={{ displayId: removeConfirmItem?.display_id ?? '' }} components={{ bold: <strong /> }} />
           </p>
           <label className="flex items-center gap-2 mb-4 cursor-pointer select-none">
@@ -966,7 +965,7 @@ function InboxListPage() {
               checked={dontShowAgainChecked}
               onChange={(e) => setDontShowAgainChecked(e.target.checked)}
             />
-            <span className="text-sm text-gray-500 dark:text-gray-400">{t('inbox.dontShowAgain')}</span>
+            <span className="text-sm text-muted-foreground dark:text-muted-foreground">{t('inbox.dontShowAgain')}</span>
           </label>
           <div className="flex justify-end gap-3">
             <Button type="button" variant="secondary" onClick={() => setRemoveConfirmItem(null)}>{t('common.cancel')}</Button>
@@ -989,7 +988,7 @@ function InboxListPage() {
 function FeedPage() {
   const { t } = useTranslation()
   return (
-    <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
+    <div className="flex flex-col items-center justify-center h-64 text-muted-foreground dark:text-muted-foreground">
       <Rss className="h-12 w-12 mb-4 opacity-30" />
       <p className="text-lg font-medium">{t('user.feedComingSoon')}</p>
     </div>
@@ -1030,34 +1029,34 @@ function MobileProjectFilterContent({ projectOptions, selectedProjects, setSelec
           className="text-sm"
         />
       </div>
-      <div className="flex items-center gap-2 px-1 pb-2 border-b border-gray-100 dark:border-gray-700">
-        <button type="button" className="text-xs text-indigo-600 hover:text-indigo-800" onClick={() => setSelectedProjects(filtered.map((o) => o.value))}>
+      <div className="flex items-center gap-2 px-1 pb-2 border-b border-border dark:border-border">
+        <button type="button" className="text-xs text-foreground hover:text-foreground" onClick={() => setSelectedProjects(filtered.map((o) => o.value))}>
           {t('common.all')}
         </button>
-        <button type="button" className="ml-auto text-xs text-gray-400 hover:text-gray-600" onClick={() => setSelectedProjects([])}>
+        <button type="button" className="ml-auto text-xs text-muted-foreground hover:text-muted-foreground" onClick={() => setSelectedProjects([])}>
           {t('common.none')}
         </button>
       </div>
       <div className="max-h-60 overflow-y-auto space-y-1 pt-1">
         {filtered.length === 0 ? (
-          <p className="text-sm text-gray-400 dark:text-gray-500 py-2">{t('common.noResults')}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground py-2">{t('common.noResults')}</p>
         ) : (
           filtered.map((opt) => {
             const p = projectMap.get(opt.value)
             return (
-              <label key={opt.value} className="flex items-center gap-2 px-1 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer text-sm text-gray-700 dark:text-gray-300 rounded">
+              <label key={opt.value} className="flex items-center gap-2 px-1 py-2 hover:bg-muted dark:hover:bg-muted cursor-pointer text-sm text-foreground dark:text-foreground rounded">
                 <input
                   type="checkbox"
                   checked={selectedProjects.includes(opt.value)}
                   onChange={() => setSelectedProjects((prev: string[]) =>
                     prev.includes(opt.value) ? prev.filter((v) => v !== opt.value) : [...prev, opt.value]
                   )}
-                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 shrink-0"
+                  className="rounded border-border text-foreground focus:ring-ring shrink-0"
                 />
                 <ProjectKeyBadge size="icon">{opt.value}</ProjectKeyBadge>
                 <span className="truncate">{p?.name ?? opt.label}</span>
                 {showNamespaces && p?.namespace_slug && (
-                  <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-gray-400 dark:text-gray-500 shrink-0">
+                  <span className="ml-auto flex items-center gap-1 text-[0.7rem] text-muted-foreground dark:text-muted-foreground shrink-0">
                     <span>{p.namespace_slug}</span>
                     <NamespaceIcon icon={p.namespace_icon ?? 'building2'} color={p.namespace_color ?? 'slate'} className="h-3 w-3" />
                   </span>
@@ -1080,7 +1079,6 @@ export default function UserPage() {
   return (
     <div className={`${containerClass(true)} py-6 h-full flex flex-col`}>
       <div className={`flex flex-1 min-h-0 transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-        <AppSidebar />
         <div className="flex-1 min-w-0">
           <Routes>
             <Route path="inbox" element={<InboxListPage />} />

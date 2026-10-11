@@ -118,10 +118,10 @@ export function SystemIntegrationsPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-xl font-semibold text-foreground dark:text-foreground">
           {t('admin.integrations.title')}
         </h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">
           {t('admin.integrations.description')}
         </p>
       </div>
@@ -203,13 +203,13 @@ export function SystemIntegrationsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
               {t('admin.integrations.smtp.encryption')}
             </label>
             <select
               value={cfg.encryption}
               onChange={(e) => updateField('encryption', e.target.value as SMTPConfig['encryption'])}
-              className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
+              className="block w-full rounded-md border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring dark:border-border dark:bg-card dark:text-foreground"
             >
               {encryptionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -236,11 +236,11 @@ export function SystemIntegrationsPage() {
           </div>
 
           {/* IMAP section */}
-          <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <div className="border-t border-border dark:border-border pt-4 mt-4">
+            <h4 className="text-sm font-medium text-foreground dark:text-foreground mb-1">
               {t('admin.integrations.smtp.imapSection')}
             </h4>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground mb-3">
               {t('admin.integrations.smtp.imapHelp')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

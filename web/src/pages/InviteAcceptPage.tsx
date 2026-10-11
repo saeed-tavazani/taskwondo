@@ -75,7 +75,7 @@ export function InviteAcceptPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background">
         <Spinner size="lg" />
       </div>
     )
@@ -83,10 +83,10 @@ export function InviteAcceptPage() {
 
   if (fetchError || !inviteInfo) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-sm w-full text-center">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('invite.notFound')}</p>
-          <a href="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+          <p className="text-muted-foreground dark:text-muted-foreground mb-4">{t('invite.notFound')}</p>
+          <a href="/login" className="text-foreground dark:text-foreground hover:underline text-sm">
             {t('login.oauth.backToLogin')}
           </a>
         </div>
@@ -97,10 +97,10 @@ export function InviteAcceptPage() {
   // Show spinner during auto-accept
   if (autoAccepting) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background">
         <div className="text-center">
           <Spinner size="lg" />
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-4 text-sm text-muted-foreground dark:text-muted-foreground">
             {t('invite.joining')}
           </p>
         </div>
@@ -110,10 +110,10 @@ export function InviteAcceptPage() {
 
   if (inviteInfo.expired) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-sm w-full text-center">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('invite.expired')}</p>
-          <a href="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+          <p className="text-muted-foreground dark:text-muted-foreground mb-4">{t('invite.expired')}</p>
+          <a href="/login" className="text-foreground dark:text-foreground hover:underline text-sm">
             {t('login.oauth.backToLogin')}
           </a>
         </div>
@@ -123,10 +123,10 @@ export function InviteAcceptPage() {
 
   if (inviteInfo.full) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-sm w-full text-center">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('invite.full')}</p>
-          <a href="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+          <p className="text-muted-foreground dark:text-muted-foreground mb-4">{t('invite.full')}</p>
+          <a href="/login" className="text-foreground dark:text-foreground hover:underline text-sm">
             {t('login.oauth.backToLogin')}
           </a>
         </div>
@@ -166,17 +166,17 @@ export function InviteAcceptPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background px-4">
       <div className="max-w-sm w-full text-center space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-foreground dark:text-foreground">
           {t('invite.title')}
         </h1>
 
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-muted-foreground dark:text-muted-foreground">
           <Trans
             i18nKey={joinKey}
             values={{ projectName: resourceDisplayName, namespaceName: resourceDisplayName, role: roleLabel }}
-            components={{ bold: <strong className="text-gray-900 dark:text-gray-100" /> }}
+            components={{ bold: <strong className="text-foreground dark:text-foreground" /> }}
           />
         </p>
 

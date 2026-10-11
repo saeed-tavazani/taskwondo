@@ -34,6 +34,13 @@ test.describe('Theme Preferences', () => {
     await expect(page).toHaveURL(/projects/);
     await dismissWelcomeModal(page);
     await attach(page, testInfo, '02-projects-light');
+    const lightSurface = await page.locator('.app-shell-main').evaluate(element => ({
+      panel: getComputedStyle(element).backgroundColor,
+      rail: getComputedStyle(document.querySelector('.app-shell-rail')!).backgroundColor,
+      foreground: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground').trim(),
+    }));
+    expect(lightSurface).toEqual({ panel: 'rgb(255, 255, 255)', rail: 'rgb(250, 250, 250)', foreground: '#262626' });
+    await expect(page.locator('.app-shell-rail')).toHaveCount(1);
 
     // Items page in light mode
     await page.goto(`/d/projects/${testProject.key}/items`);
@@ -52,6 +59,13 @@ test.describe('Theme Preferences', () => {
     await expect(page).toHaveURL(/projects/);
     await dismissWelcomeModal(page);
     await attach(page, testInfo, '05-projects-dark');
+    const darkSurface = await page.locator('.app-shell-main').evaluate(element => ({
+      panel: getComputedStyle(element).backgroundColor,
+      rail: getComputedStyle(document.querySelector('.app-shell-rail')!).backgroundColor,
+      foreground: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground').trim(),
+    }));
+    expect(darkSurface).toEqual({ panel: 'rgb(20, 20, 20)', rail: 'rgb(17, 17, 17)', foreground: '#f5f5f5' });
+    await expect(page.locator('.app-shell-rail')).toHaveCount(1);
 
     // Items page in dark mode
     await page.goto(`/d/projects/${testProject.key}/items`);

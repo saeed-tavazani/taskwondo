@@ -12,7 +12,7 @@ import type { WorkflowStatus, Workflow } from '@/api/workflows'
 import type { ProjectMember, ProjectTypeWorkflow } from '@/api/projects'
 import type { Milestone } from '@/api/milestones'
 import { Megaphone, CalendarPlus, History, CheckCircle, Info, Lock, Unlock, Globe, AlertCircle } from 'lucide-react'
-import { formatRelativeTime } from '@/utils/duration'
+import { formatRelativeTime, formatDuration as formatLocalizedDuration } from '@/utils/duration'
 
 interface DetailSidebarProps {
   item: WorkItem
@@ -131,8 +131,8 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
         <p className="text-xs text-red-600 dark:text-red-400">{t('workitems.detail.updateError')}</p>
       )}
 
-      <div className="space-y-2 pb-4 border-b border-gray-100 dark:border-gray-700">
-        <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+      <div className="space-y-2 pb-4 border-b border-border dark:border-border">
+        <div className="flex items-center gap-1.5 text-sm text-muted-foreground dark:text-muted-foreground">
           <Tooltip content={t('workitems.detail.reporter')}>
             <Megaphone className="h-4 w-4 shrink-0" />
           </Tooltip>
@@ -143,32 +143,33 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
             </Tooltip>
           )}
         </div>
-        <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex items-center gap-1.5 text-sm text-muted-foreground dark:text-muted-foreground">
           <Tooltip content={t('workitems.detail.created')}>
             <CalendarPlus className="h-4 w-4 shrink-0" />
           </Tooltip>
-          <span>{formatRelativeTime(item.created_at)}</span>
+          <span>{formatRelativeTime(item.created_at, t)}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex items-center gap-1.5 text-sm text-muted-foreground dark:text-muted-foreground">
           <Tooltip content={t('workitems.detail.updated')}>
             <History className="h-4 w-4 shrink-0" />
           </Tooltip>
-          <span>{formatRelativeTime(item.updated_at)}</span>
+          <span>{formatRelativeTime(item.updated_at, t)}</span>
         </div>
         {item.resolved_at && (
-          <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1.5 text-sm text-muted-foreground dark:text-muted-foreground">
             <Tooltip content={t('workitems.detail.resolved')}>
               <CheckCircle className="h-4 w-4 shrink-0" />
             </Tooltip>
-            <span>{formatRelativeTime(item.resolved_at)}</span>
+            <span>{formatRelativeTime(item.resolved_at, t)}</span>
           </div>
         )}
       </div>
 
-      <div className="space-y-2 pb-4 border-b border-gray-100 dark:border-gray-700">
+      <div className="space-y-2 pb-4 border-b border-border dark:border-border">
         <Field label={t('timeTracking.estimate')}>
           <Input
             type="text"
+            dir="ltr"
             defaultValue={item.estimated_seconds != null ? formatDuration(item.estimated_seconds) : ''}
             placeholder={t('timeTracking.estimatePlaceholder')}
             error={estimateError}
@@ -200,11 +201,11 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
             }}
           />
         </Field>
-        <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+        <div className="text-xs text-muted-foreground dark:text-muted-foreground space-y-1">
           <div className="flex justify-between">
             <span>{t('timeTracking.logged')}</span>
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              {formatDuration(timeData?.total_logged_seconds ?? 0)}
+            <span className="font-medium text-foreground dark:text-foreground">
+              {formatLocalizedDuration(timeData?.total_logged_seconds ?? 0, t)}
             </span>
           </div>
           {item.estimated_seconds != null && item.estimated_seconds > 0 && (() => {
@@ -212,9 +213,9 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
             const pct = Math.min((logged / item.estimated_seconds) * 100, 100)
             const over = logged > item.estimated_seconds
             return (
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+              <div className="w-full bg-muted-strong dark:bg-muted rounded-full h-1.5">
                 <div
-                  className={`h-1.5 rounded-full transition-all ${over ? 'bg-red-500' : 'bg-indigo-500'}`}
+                  className={`h-1.5 rounded-full transition-all ${over ? 'bg-red-500' : 'bg-primary'}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -335,8 +336,8 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
 
       <div>
         <div className="flex items-center gap-1 mb-1">
-          <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">{t('workitems.form.visibility')}</label>
-          <button type="button" onClick={() => setShowVisibilityInfo(true)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-500 dark:hover:text-gray-300">
+          <label className="block text-xs font-medium text-muted-foreground dark:text-muted-foreground">{t('workitems.form.visibility')}</label>
+          <button type="button" onClick={() => setShowVisibilityInfo(true)} className="text-muted-foreground hover:text-muted-foreground dark:hover:text-muted-foreground dark:hover:text-foreground">
             <Info className="h-3.5 w-3.5" />
           </button>
         </div>
@@ -374,26 +375,26 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
       </Field>
 
       {!readOnly && onDelete && (
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
+        <div className="border-t border-border dark:border-border pt-4">
           <Button variant="danger" size="sm" onClick={onDelete}>{t('workitems.detail.deleteItem')}</Button>
         </div>
       )}
 
       <Modal open={showVisibilityInfo} onClose={() => setShowVisibilityInfo(false)} title={t('workitems.form.visibility')}>
-        <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+        <ul className="space-y-3 text-sm text-foreground dark:text-foreground">
           <li>
-            <span className="inline-flex items-center gap-1 font-medium text-gray-500 dark:text-gray-400"><Lock className="h-3.5 w-3.5" />{t('workitems.visibilities.internal')}</span>
-            <span className="text-gray-400 dark:text-gray-500"> — </span>
+            <span className="inline-flex items-center gap-1 font-medium text-muted-foreground dark:text-muted-foreground"><Lock className="h-3.5 w-3.5" />{t('workitems.visibilities.internal')}</span>
+            <span className="text-muted-foreground dark:text-muted-foreground"> — </span>
             {t('workitems.visibilities.internal.description')}
           </li>
           <li>
             <span className="inline-flex items-center gap-1 font-medium text-yellow-500 dark:text-yellow-400"><Unlock className="h-3.5 w-3.5" />{t('workitems.visibilities.portal')}</span>
-            <span className="text-gray-400 dark:text-gray-500"> — </span>
+            <span className="text-muted-foreground dark:text-muted-foreground"> — </span>
             {t('workitems.visibilities.portal.description')}
           </li>
           <li>
             <span className="inline-flex items-center gap-1 font-medium text-red-500 dark:text-red-400"><Globe className="h-3.5 w-3.5" />{t('workitems.visibilities.public')}</span>
-            <span className="text-gray-400 dark:text-gray-500"> — </span>
+            <span className="text-muted-foreground dark:text-muted-foreground"> — </span>
             {t('workitems.visibilities.public.description')}
           </li>
         </ul>
@@ -405,14 +406,14 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-muted-foreground dark:text-muted-foreground mb-1">{label}</label>
       {children}
     </div>
   )
 }
 
 const visibilityConfig = {
-  internal: { icon: Lock, color: 'text-gray-500 dark:text-gray-400' },
+  internal: { icon: Lock, color: 'text-muted-foreground dark:text-muted-foreground' },
   portal: { icon: Unlock, color: 'text-yellow-500 dark:text-yellow-400' },
   public: { icon: Globe, color: 'text-red-500 dark:text-red-400' },
 } as const
@@ -440,13 +441,13 @@ function VisibilityPicker({ value, onChange, disabled }: { value: string; onChan
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setOpen(!open)}
-        className={`flex items-center gap-1.5 w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm shadow-sm bg-white dark:bg-gray-800 ${disabled ? 'opacity-50 cursor-not-allowed' : 'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'}`}
+        className={`flex items-center gap-1.5 w-full rounded-md border border-border dark:border-border px-3 py-2 text-sm shadow-sm bg-surface dark:bg-card ${disabled ? 'opacity-50 cursor-not-allowed' : 'focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring'}`}
       >
         <Icon className={`h-3.5 w-3.5 ${cfg.color}`} />
         <span className={cfg.color}>{t(`workitems.visibilities.${value}`)}</span>
       </button>
       {open && (
-        <div className="absolute z-20 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg">
+        <div className="absolute z-20 mt-1 w-full bg-surface dark:bg-card border border-border dark:border-border rounded-md shadow-lg">
           {VISIBILITIES.map((v) => {
             const c = visibilityConfig[v]
             const VIcon = c.icon
@@ -454,7 +455,7 @@ function VisibilityPicker({ value, onChange, disabled }: { value: string; onChan
               <button
                 key={v}
                 type="button"
-                className={`flex items-center gap-1.5 w-full px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 ${v === value ? 'bg-indigo-50 dark:bg-indigo-900/30' : ''}`}
+                className={`flex items-center gap-1.5 w-full px-3 py-2 text-sm hover:bg-muted dark:hover:bg-muted ${v === value ? 'bg-accent dark:bg-accent' : ''}`}
                 onClick={() => { onChange(v); setOpen(false) }}
               >
                 <VIcon className={`h-3.5 w-3.5 ${c.color}`} />

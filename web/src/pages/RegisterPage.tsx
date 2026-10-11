@@ -49,18 +49,18 @@ export function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex flex-col bg-muted dark:bg-background px-4">
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-sm w-full text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h1 className="text-2xl font-bold text-foreground dark:text-foreground mb-4">
               {t('register.checkEmail')}
             </h1>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-6">
               {t('register.checkEmailDescription', { email })}
             </p>
             <Link
               to="/login"
-              className="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+              className="text-sm text-foreground hover:text-foreground dark:text-foreground dark:hover:text-foreground"
             >
               {t('register.backToLogin')}
             </Link>
@@ -72,10 +72,10 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex flex-col bg-muted dark:bg-background px-4">
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-sm w-full">
-          <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">
+          <h1 className="text-2xl font-bold text-center text-foreground dark:text-foreground mb-8">
             {t('register.title', { brandName })}
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -99,11 +99,11 @@ export function RegisterPage() {
               {loading ? t('register.submitting') : t('register.submit')}
             </Button>
           </form>
-          <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-center text-sm text-muted-foreground dark:text-muted-foreground">
             {t('register.haveAccount')}{' '}
             <Link
               to="/login"
-              className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+              className="text-foreground hover:text-foreground dark:text-foreground dark:hover:text-foreground"
             >
               {t('register.signIn')}
             </Link>

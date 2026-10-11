@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 import { useKeyboardShortcutContext } from '@/contexts/KeyboardShortcutContext'
 
@@ -24,14 +25,15 @@ interface ModalProps {
 }
 
 const sizeClasses: Record<NonNullable<ModalProps['size']>, string> = {
-  default: 'max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto overscroll-contain',
-  full: 'w-[96vw] h-[96vh] p-0 flex flex-col overflow-hidden',
+  default: 'max-w-lg w-full mx-4 p-6 max-h-[90dvh] overflow-y-auto overscroll-contain',
+  full: 'w-[96vw] h-[96dvh] p-0 flex flex-col overflow-hidden',
   // A definite height (not just a cap) so the body can divide the space between
   // a scrolling fields column and a description that fills what is left.
-  wide: 'max-w-[67.2rem] w-full mx-4 p-0 max-h-[90vh] md:h-[min(90vh,56rem)] flex flex-col overflow-hidden',
+  wide: 'max-w-[56rem] w-full mx-4 p-0 max-h-[90dvh] md:h-[min(90vh,56rem)] flex flex-col overflow-hidden',
 }
 
 export function Modal({ open, onClose, title, position = 'center', size = 'default', headerRight, dismissable = true, onEscape, className, containerClassName, children }: ModalProps) {
+  const { t } = useTranslation()
   const { incrementModalOpen, decrementModalOpen } = useKeyboardShortcutContext()
 
   useEffect(() => {
@@ -60,19 +62,20 @@ export function Modal({ open, onClose, title, position = 'center', size = 'defau
 
   return createPortal(
     <div className={`fixed inset-0 z-50 flex justify-center ${position === 'top' ? 'items-start pt-4' : 'items-center'} ${containerClassName ?? ''}`}>
-      <div className="fixed inset-0 bg-black/50" onClick={dismissable ? onClose : undefined} />
-      <div role="dialog" aria-modal="true" className={`relative bg-white dark:bg-gray-800/40 dark:backdrop-blur-sm rounded-lg shadow-xl ${sizeClasses[size]} ${className ?? ''}`}>
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-[6px]" onClick={dismissable ? onClose : undefined} />
+      <div role="dialog" aria-modal="true" className={`relative bg-card text-foreground border border-border rounded-2xl shadow-lg shadow-black/5 ${sizeClasses[size]} ${className ?? ''}`}>
         {title && (
           // 'wide' owns its own padding and separates the header with a rule so
           // the body can scroll under a pinned header and footer.
-          <div className={`flex items-center gap-3 ${size === 'wide' ? 'shrink-0 border-b border-gray-200 dark:border-gray-700 px-6 py-4' : 'mb-4'}`}>
-            <h2 className="flex-1 min-w-0 truncate text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+          <div className={`flex items-center gap-3 ${size === 'wide' ? 'shrink-0 border-b border-border dark:border-border px-6 py-4' : 'mb-4'}`}>
+            <h2 className="flex-1 min-w-0 truncate text-xl font-semibold tracking-tight text-foreground dark:text-foreground">{title}</h2>
             {headerRight}
             {/* Matching flex-1 on both sides centres headerRight in the row. */}
             <div className={headerRight ? 'flex flex-1 justify-end' : ''}>
               <button
                 onClick={onClose}
-                className="p-1 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-700"
+                aria-label={t('common.close')}
+                className="p-1 rounded-md text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:hover:text-foreground dark:hover:bg-muted"
               >
                 <X className="h-5 w-5" />
               </button>

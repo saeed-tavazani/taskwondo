@@ -46,7 +46,7 @@ export function ExpandableConfigCard({
   const { t } = useTranslation()
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700">
+    <div className="rounded-lg border border-border dark:border-border">
       {/* Header — always visible */}
       <div className={`flex justify-between p-6${headerExtra ? ' items-stretch' : ' items-center'}`}>
         <button
@@ -55,15 +55,15 @@ export function ExpandableConfigCard({
           onClick={onToggleExpand}
         >
           {expanded ? (
-            <ChevronUp className="h-4 w-4 shrink-0 text-gray-400" />
+            <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" />
           ) : (
-            <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" />
+            <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
           )}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h3 className="text-lg font-medium text-foreground dark:text-foreground">
               {title}
             </h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">
               {description}
             </p>
           </div>
@@ -76,7 +76,7 @@ export function ExpandableConfigCard({
 
       {/* Expandable body */}
       {expanded && (
-        <div className="border-t border-gray-200 dark:border-gray-700 px-6 pb-6 pt-4">
+        <div className="border-t border-border dark:border-border px-6 pb-6 pt-4">
           <div className="space-y-4">{children}</div>
 
           {/* Actions */}

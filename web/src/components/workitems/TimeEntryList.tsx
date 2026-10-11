@@ -1,3 +1,4 @@
+import { formatDuration as formatLocalizedDuration } from '@/utils/duration'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Check, X } from 'lucide-react'
@@ -121,7 +122,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
   return (
     <div className="space-y-4">
       {!readOnly && (
-        <div className="pb-3 border-b border-gray-100 dark:border-gray-700 space-y-2">
+        <div className="pb-3 border-b border-border dark:border-border space-y-2">
           <div className="flex gap-2 items-center">
             <Input
               type="text"
@@ -189,33 +190,33 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
       )}
 
       {sorted.length === 0 && (
-        <p className="text-sm text-gray-400 dark:text-gray-500 italic">{t('timeTracking.noEntries')}</p>
+        <p className="text-sm text-muted-foreground dark:text-muted-foreground italic">{t('timeTracking.noEntries')}</p>
       )}
 
       {sorted.map((entry) => (
         <div
           key={entry.id}
-          className="group/entry border-b border-gray-100 dark:border-gray-700 pb-3"
+          className="group/entry border-b border-border dark:border-border pb-3"
         >
           <div className="flex items-center justify-between gap-2 mb-1">
             <div className="flex items-center gap-2 min-w-0">
               <Avatar name={authorName(entry.user_id)} avatarUrl={authorAvatarUrl(entry.user_id)} size="xs" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 shrink-0">{authorName(entry.user_id)}</span>
-              <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 shrink-0">
-                {formatDuration(entry.duration_seconds)}
+              <span className="text-sm font-medium text-foreground dark:text-foreground shrink-0">{authorName(entry.user_id)}</span>
+              <span className="text-sm font-semibold text-foreground dark:text-foreground shrink-0">
+                {formatLocalizedDuration(entry.duration_seconds, t)}
               </span>
               <ScrollableDate date={entry.started_at} />
             </div>
             {user && entry.user_id === user.id && !readOnly && editingId !== entry.id && (
               <div className="flex items-center shrink-0">
                 <button
-                  className="group/edit relative inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 transition-colors sm:opacity-0 sm:group-hover/entry:opacity-100"
+                  className="group/edit relative inline-flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted transition-colors sm:opacity-0 sm:group-hover/entry:opacity-100"
                   onClick={() => startEdit(entry)}
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11.5 2.5a1.5 1.5 0 012.121 2.121L6.5 11.743l-2.5.757.757-2.5L11.5 2.5z" />
                   </svg>
-                  <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/edit:opacity-100 transition-opacity">
+                  <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/edit:opacity-100 transition-opacity">
                     {t('common.edit')}
                   </span>
                 </button>
@@ -226,7 +227,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h10M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M5 4.5v8a1 1 0 001 1h4a1 1 0 001-1v-8" />
                   </svg>
-                  <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
+                  <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
                     {t('common.delete')}
                   </span>
                 </button>
@@ -234,7 +235,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
             )}
           </div>
           {entry.description && editingId !== entry.id && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 pl-8">{entry.description}</p>
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground pl-8">{entry.description}</p>
           )}
           {editingId === entry.id && (
             <div className="mt-2 space-y-2">
@@ -299,7 +300,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
                 />
                 <button
                   type="button"
-                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-md border border-indigo-500 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-900/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-md border border-border text-foreground hover:bg-accent dark:border-border dark:text-foreground dark:hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleUpdate}
                   disabled={!parseDurationString(editDuration) || updateMutation.isPending}
                   aria-label={t('common.save')}
@@ -308,7 +309,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
                 </button>
                 <button
                   type="button"
-                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors"
+                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-md border border-border text-muted-foreground hover:bg-muted dark:border-border dark:text-muted-foreground dark:hover:bg-muted transition-colors"
                   onClick={() => setEditingId(null)}
                   aria-label={t('common.cancel')}
                 >
@@ -321,7 +322,7 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
       ))}
 
       <Modal open={!!deletingId} onClose={() => setDeletingId(null)} title={t('timeTracking.deleteTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           {t('timeTracking.deleteConfirm')}
         </p>
         <div className="flex justify-end gap-3">

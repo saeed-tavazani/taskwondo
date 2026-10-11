@@ -73,7 +73,9 @@ test.describe('Admin directory — Users tab on mobile', () => {
     // The row structure has a chevron > avatar > name on line 1, controls on line 2
     // Find the parent row and click it
     const userRow = firstCombobox.locator('xpath=ancestor::*[@class and contains(@class,"cursor")]').first();
-    await userRow.click();
+    // Click the expansion control itself: the row center can intersect the
+    // status control at compact text sizes and open a different operation.
+    await userRow.getByRole('button').first().click();
 
     // The expanded section should show a project limit input on mobile
     // (hidden on desktop, shown in expanded panel on mobile). The Users tab

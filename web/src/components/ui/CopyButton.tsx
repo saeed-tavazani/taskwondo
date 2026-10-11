@@ -35,7 +35,7 @@ export function CopyButton({ text, className = '', tooltip }: CopyButtonProps) {
   return (
     <button
       type="button"
-      className={`group/copy relative inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 transition-colors ${className}`}
+      className={`group/copy relative inline-flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted transition-colors ${className}`}
       onClick={handleCopy}
       aria-label={tooltip ?? t('common.copyToClipboard')}
     >
@@ -49,7 +49,7 @@ export function CopyButton({ text, className = '', tooltip }: CopyButtonProps) {
           <path d="M3.5 11.5v-8a1.5 1.5 0 011.5-1.5h5" />
         </svg>
       )}
-      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/copy:opacity-100 transition-opacity">
+      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/copy:opacity-100 transition-opacity">
         {copied ? t('common.copied') : (tooltip ?? t('common.copyToClipboard'))}
       </span>
     </button>

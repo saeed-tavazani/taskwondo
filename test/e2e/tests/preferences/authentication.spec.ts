@@ -40,9 +40,9 @@ test.describe('Authentication Page', () => {
   test('password tab is active by default', async ({ page }, testInfo) => {
     await navigateToAuthentication(page);
 
-    // Password tab should be active (has indigo styling)
+    // Password tab should be active (has the selected state)
     const passwordTab = page.getByRole('button', { name: 'Password', exact: true });
-    await expect(passwordTab).toHaveClass(/text-indigo/);
+    await expect(passwordTab).toHaveAttribute('aria-pressed', 'true');
 
     // Password form fields should be visible
     await expect(page.getByLabel('Current Password')).toBeVisible();

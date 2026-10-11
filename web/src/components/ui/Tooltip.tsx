@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 
 interface TooltipProps {
   content: string | undefined
   children: ReactNode
-  position?: 'top' | 'bottom' | 'left' | 'right'
+  position?: 'top' | 'bottom' | 'left' | 'right' | 'start' | 'end'
   className?: string
   style?: React.CSSProperties
   maxWidth?: number
@@ -57,13 +58,17 @@ const arrowStyle: Record<string, React.CSSProperties> = {
 }
 
 const arrowClasses = {
-  top: 'border-t-gray-600 dark:border-t-gray-600 border-x-transparent border-b-transparent',
-  bottom: 'border-b-gray-600 dark:border-b-gray-600 border-x-transparent border-t-transparent',
-  left: 'border-l-gray-600 dark:border-l-gray-600 border-y-transparent border-r-transparent',
-  right: 'border-r-gray-600 dark:border-r-gray-600 border-y-transparent border-l-transparent',
+  top: 'border-t-inverse dark:border-t-inverse border-x-transparent border-b-transparent',
+  bottom: 'border-b-inverse dark:border-b-inverse border-x-transparent border-t-transparent',
+  left: 'border-l-inverse dark:border-l-inverse border-y-transparent border-r-transparent',
+  right: 'border-r-inverse dark:border-r-inverse border-y-transparent border-l-transparent',
 }
 
 export function Tooltip({ content, children, position = 'top', className, style: wrapperStyle, maxWidth }: TooltipProps) {
+  const { i18n } = useTranslation()
+  const direction = i18n.dir()
+  const physicalPosition = position === 'end' ? (direction === 'rtl' ? 'left' : 'right')
+    : position === 'start' ? (direction === 'rtl' ? 'right' : 'left') : position
   const [visible, setVisible] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const triggerRef = useRef<HTMLSpanElement>(null)
@@ -73,13 +78,20 @@ export function Tooltip({ content, children, position = 'top', className, style:
   const updatePosition = useCallback(() => {
     if (!triggerRef.current || !tooltipRef.current) return
     const rect = triggerRef.current.getBoundingClientRect()
-    setStyle(getTooltipStyle(rect, tooltipRef.current, position))
-  }, [position])
+    setStyle(getTooltipStyle(rect, tooltipRef.current, physicalPosition))
+  }, [physicalPosition])
 
   useEffect(() => {
     if (visible) {
       // Use rAF to measure after the portal renders
-      requestAnimationFrame(updatePosition)
+      const frame = requestAnimationFrame(updatePosition)
+      window.addEventListener('scroll', updatePosition, true)
+      window.addEventListener('resize', updatePosition)
+      return () => {
+        cancelAnimationFrame(frame)
+        window.removeEventListener('scroll', updatePosition, true)
+        window.removeEventListener('resize', updatePosition)
+      }
     }
   }, [visible, updatePosition])
 
@@ -115,12 +127,13 @@ export function Tooltip({ content, children, position = 'top', className, style:
       {visible && createPortal(
         <span
           ref={tooltipRef}
-          className={`z-50 pointer-events-none rounded bg-gray-600 dark:bg-gray-600 px-2 py-1 text-xs text-white shadow-lg animate-in fade-in duration-100 ${maxWidth ? 'whitespace-pre-line' : 'whitespace-nowrap'}`}
+          dir={direction}
+          className={`z-50 pointer-events-none rounded bg-inverse px-2 py-1 text-xs text-inverse-foreground shadow-lg max-w-[calc(100vw-8px)] animate-in fade-in duration-100 ${maxWidth ? 'whitespace-pre-line' : 'whitespace-nowrap'}`}
           role="tooltip"
           style={{ ...style, ...(maxWidth ? { maxWidth } : {}) }}
         >
           {content}
-          <span className={`absolute border-4 ${arrowClasses[position]}`} style={arrowStyle[position]} />
+          <span className={`absolute border-4 ${arrowClasses[physicalPosition]}`} style={arrowStyle[physicalPosition]} />
         </span>,
         document.body,
       )}

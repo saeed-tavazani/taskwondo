@@ -183,7 +183,7 @@ test.describe('Oncall schedule endpoint', () => {
     await page.getByRole('button', { name: 'On-Call', exact: true }).click();
 
     // Calendar should render with day headers
-    await expect(page.getByText('Mon')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Mon', { exact: true })).toBeVisible({ timeout: 10000 });
 
     // Both members should appear in the calendar legend
     await expect(page.getByText(testUser.displayName, { exact: true }).last()).toBeVisible();

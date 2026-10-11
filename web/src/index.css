@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "@fontsource/geist";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
 @import "@fontsource/geist-mono";
 
 @plugin "@tailwindcss/typography";
@@ -14,16 +17,83 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Semantic interface tokens derived from Kaneo's neutral theme. Tailwind's
+   named palettes remain unchanged for workflow, SLA and user-selected colors. */
+@theme inline {
+  --color-background: var(--ui-background);
+  --color-surface: var(--ui-surface);
+  --color-card: var(--ui-card);
+  --color-board: var(--ui-board);
+  --color-foreground: var(--ui-foreground);
+  --color-muted-foreground: var(--ui-muted-foreground);
+  --color-muted: var(--ui-muted);
+  --color-muted-strong: var(--ui-muted-strong);
+  --color-accent: var(--ui-accent);
+  --color-border: var(--ui-border);
+  --color-input: var(--ui-input);
+  --color-ring: var(--ui-ring);
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-sidebar: var(--ui-sidebar);
+  --color-sidebar-foreground: var(--ui-sidebar-foreground);
+  --color-inverse: #262626;
+  --color-inverse-foreground: #fafafa;
+}
+
+:root {
+  --ui-background: #ffffff;
+  --ui-surface: #ffffff;
+  --ui-card: #ffffff;
+  --ui-board: #fafafa;
+  --ui-foreground: #262626;
+  --ui-muted-foreground: #686868;
+  --ui-muted: rgb(0 0 0 / 4%);
+  --ui-muted-strong: rgb(0 0 0 / 8%);
+  --ui-accent: rgb(0 0 0 / 4%);
+  --ui-border: rgb(0 0 0 / 8%);
+  --ui-input: rgb(0 0 0 / 10%);
+  --ui-ring: #a3a3a3;
+  --ui-primary: #262626;
+  --ui-primary-foreground: #fafafa;
+  --ui-sidebar: #fafafa;
+  --ui-sidebar-foreground: #686868;
+}
+
+html.dark {
+  --ui-background: var(--ui-background);
+  --ui-surface: #141414;
+  --ui-card: #191919;
+  --ui-board: #181818;
+  --ui-foreground: #f5f5f5;
+  --ui-muted-foreground: #909090;
+  --ui-muted: rgb(255 255 255 / 4%);
+  --ui-muted-strong: rgb(255 255 255 / 8%);
+  --ui-accent: rgb(255 255 255 / 4%);
+  --ui-border: rgb(255 255 255 / 6%);
+  --ui-input: rgb(255 255 255 / 8%);
+  --ui-ring: #737373;
+  --ui-primary: #f5f5f5;
+  --ui-primary-foreground: #262626;
+  --ui-sidebar: #111111;
+  --ui-sidebar-foreground: #aaaaaa;
+}
+
+@layer base {
+  body { background: var(--ui-background); color: var(--ui-foreground); }
+  *, ::before, ::after { border-color: var(--ui-border); }
+  button, input, select, textarea { accent-color: var(--ui-primary); }
+}
+
 html {
   scrollbar-gutter: stable;
-  scrollbar-color: #d1d5db #f9fafb;
-  background-color: #f9fafb;
-  font-family: "Vazirmatn", "Geist", "Roboto", sans-serif;
+  scrollbar-color: #d4d4d4 #fafafa;
+  background-color: var(--ui-sidebar);
+  font-family: "Geist", "Vazirmatn", "Roboto", sans-serif;
 }
 
 html:where(.dark) {
-  scrollbar-color: #374151 #111827;
-  background-color: #111827;
+  scrollbar-color: #383838 #141414;
+  background-color: var(--ui-background);
   color-scheme: dark;
 }
 
@@ -80,10 +150,10 @@ html:where(.dark) {
 }
 
 html {
-  --inbox-highlight-color: rgb(199 210 254 / 0.5);
+  --inbox-highlight-color: rgb(212 212 212 / 0.5);
 }
 html:where(.dark) {
-  --inbox-highlight-color: rgb(67 56 202 / 0.2);
+  --inbox-highlight-color: rgb(163 163 163 / 0.2);
 }
 
 /* TF-350: highlight the description text an open inline-comment thread refers to */
@@ -99,6 +169,205 @@ html:where(.dark) {
   --typeset-size: 15px;
   --typeset-leading: 1.75;
   --typeset-flow: 1.25em;
+}
+
+/* Shared workspace frame used on authenticated pages. */
+.app-shell {
+  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--ui-sidebar);
+}
+
+.dark .app-shell {
+  background: var(--ui-background);
+}
+
+.app-shell-rail {
+  order: -1;
+  flex: 0 0 auto;
+  padding: 0.5rem 0;
+  border-inline-end: 0;
+  background: var(--ui-sidebar);
+}
+
+.dark .app-shell-rail {
+  border-inline-end-color: var(--ui-border);
+  background: var(--ui-sidebar);
+}
+
+.app-shell-main {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(100vh - 1rem);
+  height: calc(100dvh - 1rem);
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: 1rem;
+  background: var(--ui-surface);
+}
+
+.dark .app-shell-main {
+  border-color: var(--ui-border);
+  background: var(--ui-surface);
+}
+
+.app-shell-main > nav {
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 1px solid var(--ui-border);
+  background: transparent;
+}
+
+.dark .app-shell-main > nav {
+  border-bottom-color: var(--ui-border);
+}
+
+.app-shell-main > nav > div {
+  max-width: none;
+  padding-inline: 0.75rem;
+}
+
+.app-shell-main > main > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.app-shell-main > nav .h-14 {
+  height: 2.75rem;
+}
+
+.app-shell-rail > nav {
+  position: sticky;
+  top: 0.5rem;
+  height: calc(100vh - 1rem);
+  width: 240px;
+  overflow-y: auto;
+  transition: width 200ms ease;
+}
+
+.app-shell-rail > nav.w-14 {
+  width: 3.5rem;
+}
+
+.app-shell-rail > nav ul {
+  padding-inline: 0.5rem;
+}
+
+.app-shell-rail > nav a,
+.app-shell-rail > nav button,
+.app-shell-main button[class~="rounded-md"] {
+  border-radius: 0.625rem;
+}
+
+.app-shell .rounded-md:not([class~="rounded-full"]) {
+  border-radius: 0.625rem;
+}
+
+.app-shell .rounded-lg {
+  border-radius: 0.625rem;
+}
+
+.app-shell input,
+.app-shell select,
+.app-shell textarea {
+  border-radius: 0.625rem;
+}
+
+.prose {
+  --tw-prose-body: var(--ui-foreground);
+  --tw-prose-headings: var(--ui-foreground);
+  --tw-prose-links: var(--ui-foreground);
+  --tw-prose-bold: var(--ui-foreground);
+  --tw-prose-counters: var(--ui-muted-foreground);
+  --tw-prose-bullets: var(--ui-muted-foreground);
+  --tw-prose-quotes: var(--ui-foreground);
+  --tw-prose-code: var(--ui-foreground);
+  --tw-prose-th-borders: var(--ui-border);
+  --tw-prose-td-borders: var(--ui-border);
+  --tw-prose-invert-body: var(--ui-foreground);
+  --tw-prose-invert-headings: var(--ui-foreground);
+  --tw-prose-invert-links: var(--ui-foreground);
+  --tw-prose-invert-bold: var(--ui-foreground);
+  --tw-prose-invert-code: var(--ui-foreground);
+}
+
+.app-shell-main [class~="bg-white/40"],
+.app-shell-main [class~="dark:bg-gray-800/40"] {
+  background-color: #fff;
+  backdrop-filter: none;
+}
+
+.dark .app-shell-main [class~="bg-white/40"],
+.dark .app-shell-main [class~="dark:bg-gray-800/40"] {
+  background-color: var(--ui-card);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition-duration: 160ms;
+}
+
+/* Reference density with room for translated labels and adjustable text. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+select {
+  min-height: 2rem;
+}
+
+[role="dialog"] input,
+[role="dialog"] select,
+[role="dialog"] textarea {
+  border-radius: 0.625rem;
+}
+
+@media (pointer: coarse) {
+  [data-slot="button"]::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.rtl,
+:lang(fa) {
+  font-family: "Vazirmatn", "Geist", "Roboto", sans-serif;
+}
+
+@media (max-width: 639px) {
+  .app-shell {
+    display: block;
+    padding: 0;
+  }
+
+  .app-shell-main {
+    min-height: 100vh;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .app-shell-main > nav > div {
+    padding-inline: 0.75rem;
+  }
 }
 
 .rtl {

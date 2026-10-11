@@ -96,13 +96,13 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
     return (
       <div key={r.id} className="group/relation flex items-center justify-between text-sm py-1.5">
         <div className="flex items-center gap-2 min-w-0">
-          <span className={`shrink-0 ${done ? 'text-gray-300 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'}`}>{linked.label}</span>
+          <span className={`shrink-0 ${done ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>{linked.label}</span>
           <Link
             to={displayIdToPath(linked.displayId)}
             className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-bold transition-colors shrink-0 ${
               done
-                ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500'
-                : 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-900/60'
+                ? 'bg-muted dark:bg-card text-muted-foreground dark:text-muted-foreground'
+                : 'bg-accent dark:bg-accent text-foreground dark:text-foreground hover:bg-accent dark:hover:bg-accent'
             }`}
           >
             {linked.displayId}
@@ -114,8 +114,8 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
             to={displayIdToPath(linked.displayId)}
             className={`truncate transition-colors ${
               done
-                ? 'line-through text-gray-400 dark:text-gray-500'
-                : 'text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400'
+                ? 'line-through text-muted-foreground dark:text-muted-foreground'
+                : 'text-foreground dark:text-foreground hover:text-foreground dark:hover:text-foreground'
             }`}
           >
             {linked.title}
@@ -130,7 +130,7 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
             <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h10M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M5 4.5v8a1 1 0 001 1h4a1 1 0 001-1v-8" />
             </svg>
-            <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
+            <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-xs text-inverse-foreground bg-inverse dark:bg-inverse rounded whitespace-nowrap opacity-0 group-hover/del:opacity-100 transition-opacity">
               {t('common.remove')}
             </span>
           </button>
@@ -142,7 +142,7 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
   return (
     <div className="space-y-4">
       {!readOnly && (
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 pb-3 border-b border-gray-100 dark:border-gray-700">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 pb-3 border-b border-border dark:border-border">
           <div className="sm:flex-1">
             <WorkItemPicker
               projectKey={projectKey}
@@ -179,15 +179,15 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
       {children.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">
+            <h4 className="text-xs font-semibold uppercase text-muted-foreground dark:text-muted-foreground">
               {t('relations.children')}
             </h4>
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs text-muted-foreground dark:text-muted-foreground">
               {t('relations.childrenProgress', { completed: childrenCompleted, total: children.length })}
             </span>
           </div>
           <div className="mb-2">
-            <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+            <div className="h-1.5 w-full rounded-full bg-muted-strong dark:bg-muted overflow-hidden">
               <div
                 className="h-full rounded-full bg-green-500 dark:bg-green-400 transition-all duration-300"
                 style={{ width: `${children.length > 0 ? (childrenCompleted / children.length) * 100 : 0}%` }}
@@ -204,7 +204,7 @@ export function RelationList({ projectKey, itemNumber, readOnly = false }: Relat
       {others.length > 0 && (
         <div>
           {children.length > 0 && (
-            <h4 className="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mb-2">
+            <h4 className="text-xs font-semibold uppercase text-muted-foreground dark:text-muted-foreground mb-2">
               {t('relations.otherRelations')}
             </h4>
           )}

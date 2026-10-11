@@ -33,7 +33,7 @@ const HEADER_COLLAPSED_PREF = 'milestone_header_collapsed'
 const typeBarColors: Record<string, string> = {
   bug: 'bg-red-500',
   task: 'bg-blue-500',
-  ticket: 'bg-indigo-500',
+  ticket: 'bg-primary',
   feedback: 'bg-yellow-500',
   epic: 'bg-green-500',
 }
@@ -42,7 +42,7 @@ const priorityBarColors: Record<string, string> = {
   critical: 'bg-red-500',
   high: 'bg-yellow-500',
   medium: 'bg-blue-500',
-  low: 'bg-gray-400',
+  low: 'bg-muted-strong',
 }
 
 const statusCategoryOrder: Record<string, number> = {
@@ -180,12 +180,12 @@ export function MilestoneDashboardPage() {
   return (
     <div className="max-w-4xl space-y-6">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-        <Link to={p(`/projects/${projectKey}/milestones`)} className="hover:text-gray-700 dark:hover:text-gray-300">
+      <nav className="flex items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground">
+        <Link to={p(`/projects/${projectKey}/milestones`)} className="hover:text-foreground dark:hover:text-foreground">
           {t('milestone.dashboard.backToMilestones')}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-gray-900 dark:text-gray-100">{milestone.name}</span>
+        <span className="text-foreground dark:text-foreground">{milestone.name}</span>
       </nav>
 
       {/* Header */}
@@ -264,8 +264,8 @@ export function MilestoneDashboardPage() {
           </div>
           <div className="p-4 flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('milestone.dashboard.deleteThisMilestone')}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('milestone.dashboard.deleteWarning')}</p>
+              <p className="text-sm font-medium text-foreground dark:text-foreground">{t('milestone.dashboard.deleteThisMilestone')}</p>
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('milestone.dashboard.deleteWarning')}</p>
             </div>
             <Button variant="danger" className="min-w-[7.5rem] h-10" onClick={() => { setDeleteError(''); setDeleteOpen(true) }}>
               {t('milestones.deleteConfirmTitle')}
@@ -287,7 +287,7 @@ export function MilestoneDashboardPage() {
 
       {/* Delete confirmation */}
       <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title={t('milestones.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           <Trans i18nKey="milestones.deleteConfirmBody" values={{ name: milestone.name }} components={{ bold: <strong /> }} />
         </p>
         {deleteError && <p className="text-sm text-red-600 dark:text-red-400 mb-4">{deleteError}</p>}
@@ -335,7 +335,7 @@ function HeaderSection({
     <span
       className={`inline-flex shrink-0 items-center px-2 py-0.5 text-xs font-medium rounded-full ${
         isClosed
-          ? 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+          ? 'bg-muted text-muted-foreground dark:bg-muted dark:text-muted-foreground'
           : 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
       }`}
     >
@@ -369,14 +369,14 @@ function HeaderSection({
         className="flex flex-wrap items-center gap-x-3 gap-y-2 cursor-pointer"
         onClick={handleRowClick}
       >
-        <h2 className="min-w-0 truncate text-xl font-semibold text-gray-900 dark:text-gray-100">{milestone.name}</h2>
+        <h2 className="min-w-0 truncate text-xl font-semibold text-foreground dark:text-foreground">{milestone.name}</h2>
         {statusBadge}
         {milestone.due_date && <DueDateLabel dueDate={milestone.due_date} isClosed={isClosed} />}
 
         {/* Progress bar fills the space between the metadata and the actions */}
-        <div className="flex flex-1 items-center gap-2 min-w-[10rem] text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex flex-1 items-center gap-2 min-w-[10rem] text-sm text-muted-foreground dark:text-muted-foreground">
           <span className="whitespace-nowrap">{progressLabel}</span>
-          <div className="flex-1 min-w-[3rem] bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+          <div className="flex-1 min-w-[3rem] bg-muted-strong dark:bg-muted rounded-full h-3">
             <div
               className="bg-green-500 dark:bg-green-400 h-3 rounded-full transition-all"
               style={{ width: `${percent}%` }}
@@ -394,22 +394,22 @@ function HeaderSection({
     <div>
       <div className="flex items-center justify-between gap-2 cursor-pointer" onClick={handleRowClick}>
         <div className="min-w-0 flex-1 flex items-center gap-3 flex-wrap">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{milestone.name}</h2>
+          <h2 className="text-xl font-semibold text-foreground dark:text-foreground">{milestone.name}</h2>
           {statusBadge}
           {milestone.due_date && <DueDateLabel dueDate={milestone.due_date} isClosed={isClosed} />}
         </div>
         {actions}
       </div>
       {milestone.description && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{milestone.description}</p>
+        <p className="text-sm text-muted-foreground dark:text-muted-foreground mt-1">{milestone.description}</p>
       )}
       {/* Progress bar */}
       <div className="mt-4">
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+        <div className="flex items-center justify-between text-sm text-muted-foreground dark:text-muted-foreground mb-1">
           <span>{progressLabel}</span>
           {milestone.total_count > 0 && <span>{percent}%</span>}
         </div>
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+        <div className="w-full bg-muted-strong dark:bg-muted rounded-full h-3">
           <div
             className="bg-green-500 dark:bg-green-400 h-3 rounded-full transition-all"
             style={{ width: `${percent}%` }}
@@ -434,7 +434,7 @@ function SummaryCounters({
   const counters = [
     { label: t('milestone.dashboard.openItems'), value: milestone.open_count, color: 'text-blue-600 dark:text-blue-400' },
     { label: t('milestone.dashboard.closedItems'), value: milestone.closed_count, color: 'text-green-600 dark:text-green-400' },
-    { label: t('milestone.dashboard.totalItems'), value: milestone.total_count, color: 'text-gray-900 dark:text-gray-100' },
+    { label: t('milestone.dashboard.totalItems'), value: milestone.total_count, color: 'text-foreground dark:text-foreground' },
   ]
 
   // Add type counts
@@ -443,7 +443,7 @@ function SummaryCounters({
       counters.push({
         label: t(`workitems.types.${type}`, { defaultValue: type }),
         value: counts.open + counts.closed,
-        color: 'text-gray-700 dark:text-gray-300',
+        color: 'text-foreground dark:text-foreground',
       })
     }
   }
@@ -451,9 +451,9 @@ function SummaryCounters({
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
       {counters.map((c) => (
-        <div key={c.label} className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 text-center">
+        <div key={c.label} className="rounded-lg border border-border dark:border-border p-3 text-center">
           <div className={`text-2xl font-bold ${c.color}`}>{c.value}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{c.label}</div>
+          <div className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5">{c.label}</div>
         </div>
       ))}
     </div>
@@ -483,8 +483,8 @@ function BreakdownChart({
   const maxCount = Math.max(...entries.map(([, v]) => v.open + v.closed), 1)
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">{title}</h3>
+    <div className="rounded-lg border border-border dark:border-border p-4">
+      <h3 className="text-sm font-medium text-foreground dark:text-foreground mb-3">{title}</h3>
       <div className="space-y-2">
         {entries.map(([key, counts]) => {
           const total = counts.open + counts.closed
@@ -499,12 +499,12 @@ function BreakdownChart({
               className="block group"
             >
               <div className="flex items-center justify-between text-xs mb-0.5">
-                <span className="text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{label}</span>
-                <span className="text-gray-500 dark:text-gray-400">{total}</span>
+                <span className="text-foreground dark:text-foreground group-hover:text-foreground dark:group-hover:text-foreground">{label}</span>
+                <span className="text-muted-foreground dark:text-muted-foreground">{total}</span>
               </div>
-              <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
+              <div className="w-full bg-muted dark:bg-card rounded-full h-2">
                 <div
-                  className={`h-2 rounded-full transition-all ${colorMap[key] ?? 'bg-gray-400'}`}
+                  className={`h-2 rounded-full transition-all ${colorMap[key] ?? 'bg-muted-strong'}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -524,15 +524,15 @@ function LabelBreakdown({ labels }: { labels: Record<string, number> }) {
 
   return (
     <div>
-      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('milestone.dashboard.byLabel')}</h3>
+      <h3 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-3">{t('milestone.dashboard.byLabel')}</h3>
       <div className="flex flex-wrap gap-2">
         {entries.map(([label, count]) => (
           <span
             key={label}
-            className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 dark:border-gray-700 px-3 py-1 text-xs text-gray-700 dark:text-gray-300"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border dark:border-border px-3 py-1 text-xs text-foreground dark:text-foreground"
           >
             {label}
-            <span className="font-medium text-gray-900 dark:text-gray-100">{count}</span>
+            <span className="font-medium text-foreground dark:text-foreground">{count}</span>
           </span>
         ))}
       </div>
@@ -552,35 +552,35 @@ function TimeTrackingSection({ milestone }: { milestone: Milestone }) {
   const timePercent = estimated > 0 ? Math.min(Math.round((spent / estimated) * 100), 100) : 0
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+    <div className="rounded-lg border border-border dark:border-border p-4">
+      <h3 className="text-sm font-medium text-foreground dark:text-foreground mb-3 flex items-center gap-2">
         <Clock className="h-4 w-4" />
         {t('milestone.dashboard.timeTracking')}
       </h3>
       <div className="grid grid-cols-3 gap-4 text-center mb-3">
         {estimated > 0 && (
           <div>
-            <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">{formatDuration(estimated)}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">{t('milestone.dashboard.estimated')}</div>
+            <div className="text-lg font-semibold text-foreground dark:text-foreground">{formatDuration(estimated, t)}</div>
+            <div className="text-xs text-muted-foreground dark:text-muted-foreground">{t('milestone.dashboard.estimated')}</div>
           </div>
         )}
         {spent > 0 && (
           <div>
-            <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">{formatDuration(spent)}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">{t('milestone.dashboard.spent')}</div>
+            <div className="text-lg font-semibold text-foreground dark:text-foreground">{formatDuration(spent, t)}</div>
+            <div className="text-xs text-muted-foreground dark:text-muted-foreground">{t('milestone.dashboard.spent')}</div>
           </div>
         )}
         {estimated > 0 && (
           <div>
-            <div className={`text-lg font-semibold ${isOver ? 'text-red-500' : 'text-gray-900 dark:text-gray-100'}`}>
-              {isOver ? t('milestone.dashboard.overBy', { time: formatDuration(Math.abs(remaining)) }) : formatDuration(remaining)}
+            <div className={`text-lg font-semibold ${isOver ? 'text-red-500' : 'text-foreground dark:text-foreground'}`}>
+              {isOver ? t('milestone.dashboard.overBy', { time: formatDuration(Math.abs(remaining), t) }) : formatDuration(remaining, t)}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">{t('milestone.dashboard.remaining')}</div>
+            <div className="text-xs text-muted-foreground dark:text-muted-foreground">{t('milestone.dashboard.remaining')}</div>
           </div>
         )}
       </div>
       {estimated > 0 && (
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+        <div className="w-full bg-muted-strong dark:bg-muted rounded-full h-2">
           <div
             className={`h-2 rounded-full transition-all ${isOver ? 'bg-red-500' : 'bg-blue-500'}`}
             style={{ width: `${timePercent}%` }}
@@ -652,7 +652,7 @@ function WorkItemsTable({
       <div className="flex items-center justify-end mb-3">
         <Link
           to={p(`/projects/${projectKey}/items?milestone=${milestoneId}`)}
-          className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+          className="text-xs text-foreground dark:text-foreground hover:underline"
         >
           {t('milestone.dashboard.viewAll')}
         </Link>
@@ -663,11 +663,11 @@ function WorkItemsTable({
           <Spinner />
         </div>
       ) : items.length === 0 ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('milestone.dashboard.noItems')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('milestone.dashboard.noItems')}</p>
         </div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+        <div className="border border-border dark:border-border rounded-lg overflow-hidden divide-y divide-border dark:divide-border text-sm">
           {visibleItems.map((item) => {
             const cat = statuses?.find((s) => s.name === item.status)?.category
             return (
@@ -685,18 +685,18 @@ function WorkItemsTable({
             )
           })}
           {(hasHiddenItems || hasMore) && (
-            <div className="border-t border-gray-200 dark:border-gray-700 p-2 text-center">
+            <div className="border-t border-border dark:border-border p-2 text-center">
               {hasHiddenItems && !expanded ? (
                 <button
                   onClick={() => setExpanded(true)}
-                  className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="text-xs text-foreground dark:text-foreground hover:underline"
                 >
                   {t('milestone.dashboard.showAll', { count: items.length })}
                 </button>
               ) : hasMore ? (
                 <Link
                   to={p(`/projects/${projectKey}/items?milestone=${milestoneId}`)}
-                  className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="text-xs text-foreground dark:text-foreground hover:underline"
                 >
                   {t('milestone.dashboard.viewAll')}
                 </Link>
@@ -743,15 +743,15 @@ function WorkItemRow({
   return (
     <ScrollableRow
       ref={rowRef}
-      className={isActive ? 'bg-indigo-50 dark:bg-indigo-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}
-      gradientFrom="from-white dark:from-gray-900"
+      className={isActive ? 'bg-accent dark:bg-accent' : 'hover:bg-muted dark:hover:bg-card'}
+      gradientFrom="from-surface dark:from-background"
     >
       <div className="px-3 py-2 shrink-0">
         <Link
           to={p(`/projects/${projectKey}/items/${item.item_number}`)}
           {...linkState}
           onClick={() => onClick?.(item.item_number)}
-          className={`text-xs font-mono ${isCompleted ? 'text-gray-400 dark:text-gray-500' : 'text-gray-500 dark:text-gray-400'} hover:text-indigo-600 dark:hover:text-indigo-400`}
+          className={`text-xs font-mono ${isCompleted ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'} hover:text-foreground dark:hover:text-foreground`}
         >
           {item.display_id}
         </Link>
@@ -761,7 +761,7 @@ function WorkItemRow({
           to={p(`/projects/${projectKey}/items/${item.item_number}`)}
           {...linkState}
           onClick={() => onClick?.(item.item_number)}
-          className={`hover:text-indigo-600 dark:hover:text-indigo-400 whitespace-nowrap sm:truncate sm:block ${isCompleted ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}
+          className={`hover:text-foreground dark:hover:text-foreground whitespace-nowrap sm:truncate sm:block ${isCompleted ? 'line-through text-muted-foreground dark:text-muted-foreground' : 'text-foreground dark:text-foreground'}`}
         >
           {item.title}
         </Link>
@@ -779,7 +779,7 @@ function WorkItemRow({
         {member ? (
           <Avatar name={member.display_name} avatarUrl={member.avatar_url} size="xs" />
         ) : (
-          <span className="text-xs text-gray-400 whitespace-nowrap">{t('milestone.dashboard.unassigned')}</span>
+          <span className="text-xs text-muted-foreground whitespace-nowrap">{t('milestone.dashboard.unassigned')}</span>
         )}
       </div>
     </ScrollableRow>
@@ -800,7 +800,7 @@ function DueDateLabel({ dueDate, isClosed }: { dueDate: string; isClosed: boolea
 
   if (isClosed) {
     text = dueDate
-    colorClass = 'text-gray-400 dark:text-gray-500'
+    colorClass = 'text-muted-foreground dark:text-muted-foreground'
   } else if (diffDays < 0) {
     text = t('milestones.overdue', { days: Math.abs(diffDays) })
     colorClass = 'text-red-600 dark:text-red-400'
@@ -812,7 +812,7 @@ function DueDateLabel({ dueDate, isClosed }: { dueDate: string; isClosed: boolea
     colorClass = 'text-yellow-600 dark:text-yellow-400'
   } else {
     text = dueDate
-    colorClass = 'text-gray-400 dark:text-gray-500'
+    colorClass = 'text-muted-foreground dark:text-muted-foreground'
   }
 
   return <span className={`text-sm ${colorClass}`}>{text}</span>
@@ -863,10 +863,10 @@ function MilestoneEditForm({
         <p className="text-sm text-red-600 dark:text-red-400">{validationError || error}</p>
       )}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('milestones.name')}</label>
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">{t('milestones.name')}</label>
         <input
           type="text"
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -874,28 +874,28 @@ function MilestoneEditForm({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('common.description')}</label>
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">{t('common.description')}</label>
         <textarea
           rows={3}
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
       <div className="flex gap-4">
         <div className="w-48">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('milestones.dueDate')}</label>
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">{t('milestones.dueDate')}</label>
           <input
             type="date"
-            className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
           />
         </div>
         <div className="w-48">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('workitems.form.status')}</label>
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">{t('workitems.form.status')}</label>
           <select
-            className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
             value={status}
             onChange={(e) => setStatus(e.target.value as 'open' | 'closed')}
           >

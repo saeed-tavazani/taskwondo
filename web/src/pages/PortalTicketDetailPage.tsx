@@ -194,7 +194,7 @@ export function PortalTicketDetailPage() {
     <div>
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+        className="flex items-center gap-1.5 text-sm text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
         {t('portal.backToTickets')}
@@ -203,24 +203,24 @@ export function PortalTicketDetailPage() {
       {/* Header row */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <span className="text-base font-bold font-mono text-gray-600 dark:text-gray-400">{ticket.display_id}</span>
+          <span className="text-base font-bold font-mono text-muted-foreground dark:text-muted-foreground">{ticket.display_id}</span>
           <StatusBadge status={ticket.status} />
           <PriorityBadge priority={ticket.priority} />
           <Tooltip content={t('portal.created')}>
-            <span className="hidden sm:inline-flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 ml-auto shrink-0">
+            <span className="hidden sm:inline-flex items-center gap-1 text-xs text-muted-foreground dark:text-muted-foreground ml-auto shrink-0">
               <CalendarPlus className="h-3.5 w-3.5" />
               {new Date(ticket.created_at).toLocaleString()}
             </span>
           </Tooltip>
           <Tooltip content={t('portal.updated')}>
-            <span className="hidden sm:inline-flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 shrink-0">
+            <span className="hidden sm:inline-flex items-center gap-1 text-xs text-muted-foreground dark:text-muted-foreground shrink-0">
               <History className="h-3.5 w-3.5" />
               {new Date(ticket.updated_at).toLocaleString()}
             </span>
           </Tooltip>
         </div>
         {/* Mobile metadata line */}
-        <ScrollableRow className="sm:hidden mb-2" contentClassName="gap-3 text-xs text-gray-400 dark:text-gray-500" gradientFrom="from-gray-50 dark:from-gray-900">
+        <ScrollableRow className="sm:hidden mb-2" contentClassName="gap-3 text-xs text-muted-foreground dark:text-muted-foreground" gradientFrom="from-surface dark:from-background">
           <span className="inline-flex items-center gap-1 shrink-0">
             <CalendarPlus className="h-3.5 w-3.5" />
             {new Date(ticket.created_at).toLocaleString()}
@@ -238,7 +238,7 @@ export function PortalTicketDetailPage() {
               type="text"
               value={titleDraft}
               onChange={(e) => setTitleDraft(e.target.value)}
-              className="w-full text-xl font-semibold rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-100"
+              className="w-full text-xl font-semibold rounded-md border border-border dark:border-border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring dark:bg-card dark:text-foreground"
               autoFocus
               onKeyDown={(e) => {
                 if (e.key === 'Enter') saveTitle()
@@ -256,7 +256,7 @@ export function PortalTicketDetailPage() {
           </div>
         ) : (
           <h1
-            className="text-xl font-semibold text-gray-900 dark:text-gray-100 rounded px-1 -mx-1 cursor-pointer border border-transparent hover:border-gray-300 dark:hover:border-gray-600"
+            className="text-xl font-semibold text-foreground dark:text-foreground rounded px-1 -mx-1 cursor-pointer border border-transparent hover:border-input dark:hover:border-input"
             onClick={startEditTitle}
             onDoubleClick={startEditTitle}
           >
@@ -268,11 +268,11 @@ export function PortalTicketDetailPage() {
         {/* Editable description */}
         <div className="mt-3 group/desc">
           <div className="flex items-center gap-1 mb-1">
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 cursor-pointer" onClick={startEditDesc}>{t('workitems.detail.description')}</h3>
+            <h3 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground cursor-pointer" onClick={startEditDesc}>{t('workitems.detail.description')}</h3>
             {descSaved && <Check className="h-4 w-4 text-green-500" />}
             {!editingDesc && (
               <button
-                className="inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 transition-colors opacity-0 group-hover/desc:opacity-100"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted transition-colors opacity-0 group-hover/desc:opacity-100"
                 onClick={startEditDesc}
               >
                 <Pencil className="h-3.5 w-3.5" />
@@ -285,7 +285,7 @@ export function PortalTicketDetailPage() {
                 value={descDraft}
                 onChange={(e) => setDescDraft(e.target.value)}
                 rows={4}
-                className="block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100"
+                className="block w-full rounded-md border border-border dark:border-border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring dark:bg-card dark:text-foreground"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) saveDesc()
@@ -303,15 +303,15 @@ export function PortalTicketDetailPage() {
             </div>
           ) : (
             <div
-              className="border border-transparent hover:border-gray-300 dark:hover:border-gray-600 rounded p-2 min-h-[2rem] cursor-pointer"
+              className="border border-transparent hover:border-input dark:hover:border-input rounded p-2 min-h-[2rem] cursor-pointer"
               onClick={startEditDesc}
             >
               {ticket.description ? (
-                <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                <p className="text-sm text-foreground dark:text-foreground whitespace-pre-wrap">
                   {ticket.description}
                 </p>
               ) : (
-                <p className="text-sm text-gray-400 dark:text-gray-500 italic">
+                <p className="text-sm text-muted-foreground dark:text-muted-foreground italic">
                   {t('portal.noDescription')}
                 </p>
               )}
@@ -321,15 +321,15 @@ export function PortalTicketDetailPage() {
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 dark:border-gray-700 mb-4 flex items-center justify-between">
+      <div className="border-b border-border dark:border-border mb-4 flex items-center justify-between">
         <nav className="flex gap-6 pr-8 overflow-x-auto scrollbar-none">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               className={`pb-2 text-sm font-medium border-b-2 whitespace-nowrap ${
                 activeTab === tab.key
-                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                  ? 'border-border text-foreground dark:text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground'
               }`}
               onClick={() => setActiveTab(tab.key)}
             >
@@ -339,7 +339,7 @@ export function PortalTicketDetailPage() {
         </nav>
         <Tooltip content={sortOrder === 'desc' ? t('common.showingNewestFirst') : t('common.showingOldestFirst')}>
           <button
-            className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 pb-2 flex items-center gap-1"
+            className="text-xs text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground pb-2 flex items-center gap-1"
             onClick={() => setSortOrder((s) => (s === 'desc' ? 'asc' : 'desc'))}
           >
             <span className="text-base lg:text-xs">{sortOrder === 'desc' ? '\u2193' : '\u2191'}</span>
@@ -357,7 +357,7 @@ export function PortalTicketDetailPage() {
               onChange={(e) => setCommentBody(e.target.value)}
               rows={3}
               placeholder={t('portal.commentPlaceholder')}
-              className="block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+              className="block w-full rounded-md border border-border dark:border-border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring dark:bg-card dark:text-foreground dark:placeholder-muted-foreground"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAddComment()
               }}
@@ -370,18 +370,18 @@ export function PortalTicketDetailPage() {
           </div>
 
           {(!comments || comments.length === 0) ? (
-            <p className="text-sm text-gray-500 dark:text-gray-400 py-4 text-center">
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground py-4 text-center">
               {t('portal.noComments')}
             </p>
           ) : (
             <div className="space-y-4">
               {(sortOrder === 'desc' ? [...comments].reverse() : comments).map((c: PortalComment) => (
-                <div key={c.id} className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+                <div key={c.id} className="rounded-lg border border-border dark:border-border bg-surface dark:bg-card p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{c.author_name}</span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">{new Date(c.created_at).toLocaleString()}</span>
+                    <span className="text-sm font-medium text-foreground dark:text-foreground">{c.author_name}</span>
+                    <span className="text-xs text-muted-foreground dark:text-muted-foreground">{new Date(c.created_at).toLocaleString()}</span>
                   </div>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{c.body}</p>
+                  <p className="text-sm text-foreground dark:text-foreground whitespace-pre-wrap">{c.body}</p>
                 </div>
               ))}
             </div>
@@ -395,13 +395,13 @@ export function PortalTicketDetailPage() {
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
-          className={`space-y-4 rounded-lg transition-colors ${dragging ? 'bg-indigo-50 dark:bg-indigo-900/20 ring-2 ring-indigo-400 ring-dashed' : ''}`}
+          className={`space-y-4 rounded-lg transition-colors ${dragging ? 'bg-accent dark:bg-accent ring-2 ring-ring ring-dashed' : ''}`}
         >
           {/* Upload form — matches AttachmentList */}
-          <div className="space-y-2 pb-3 border-b border-gray-100 dark:border-gray-700">
+          <div className="space-y-2 pb-3 border-b border-border dark:border-border">
             <input
               type="text"
-              className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-1.5 text-sm"
+              className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-1.5 text-sm"
               placeholder={t('attachments.commentPlaceholder')}
               value={uploadComment}
               onChange={(e) => setUploadComment(e.target.value)}
@@ -410,7 +410,7 @@ export function PortalTicketDetailPage() {
               <input
                 ref={fileInputRef}
                 type="file"
-                className="text-sm text-gray-500 file:mr-2 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:bg-indigo-50 file:text-indigo-600 dark:file:bg-indigo-900/30 dark:file:text-indigo-400 hover:file:bg-indigo-100"
+                className="text-sm text-muted-foreground file:mr-2 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:bg-accent file:text-foreground dark:file:bg-accent dark:file:text-foreground hover:file:bg-accent"
                 onChange={handleFileSelect}
                 disabled={uploadMutation.isPending}
               />
@@ -423,11 +423,11 @@ export function PortalTicketDetailPage() {
 
           {/* Attachment list — matches AttachmentList */}
           {(sortOrder === 'desc' ? [...(attachments ?? [])].reverse() : (attachments ?? [])).map((a: PortalAttachment) => (
-            <div key={a.id} className="flex items-start gap-3 border-b border-gray-100 dark:border-gray-700 pb-3">
+            <div key={a.id} className="flex items-start gap-3 border-b border-border dark:border-border pb-3">
               <div className="flex-1 min-w-0">
                 <button
                   onClick={() => handleAttachmentClick(a)}
-                  className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline whitespace-nowrap text-left cursor-pointer"
+                  className="text-sm font-medium text-foreground dark:text-foreground hover:underline whitespace-nowrap text-left cursor-pointer"
                 >
                   {a.filename}
                 </button>
@@ -435,7 +435,7 @@ export function PortalTicketDetailPage() {
                   <div className="flex items-center gap-1 mt-0.5">
                     <input
                       type="text"
-                      className="text-xs border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded px-1.5 py-0.5 flex-1"
+                      className="text-xs border border-border dark:border-border dark:bg-card dark:text-foreground rounded px-1.5 py-0.5 flex-1"
                       value={editCommentDraft}
                       onChange={(e) => setEditCommentDraft(e.target.value)}
                       onKeyDown={(e) => {
@@ -447,16 +447,16 @@ export function PortalTicketDetailPage() {
                       }}
                       autoFocus
                     />
-                    <button className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline" onClick={() => { updateCommentMutation.mutate({ attachmentId: a.id, comment: editCommentDraft }); setEditingCommentId(null) }}>
+                    <button className="text-xs text-foreground dark:text-foreground hover:underline" onClick={() => { updateCommentMutation.mutate({ attachmentId: a.id, comment: editCommentDraft }); setEditingCommentId(null) }}>
                       {t('common.save')}
                     </button>
-                    <button className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onClick={() => setEditingCommentId(null)}>
+                    <button className="text-xs text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground" onClick={() => setEditingCommentId(null)}>
                       {t('common.cancel')}
                     </button>
                   </div>
                 ) : a.comment ? (
                   <p
-                    className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-default"
+                    className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5 rounded hover:bg-muted dark:hover:bg-muted cursor-default"
                     onDoubleClick={() => {
                       {
                         setEditingCommentId(a.id)
@@ -467,14 +467,14 @@ export function PortalTicketDetailPage() {
                     {a.comment}
                   </p>
                 ) : null}
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5">
                   {formatFileSize(a.size_bytes)} &middot; {new Date(a.created_at).toLocaleString()}
                 </p>
               </div>
               <div className="flex items-center gap-1 shrink-0">
                 <Tooltip content={t('attachments.editDescription')}>
                   <button
-                    className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="p-1 text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground rounded hover:bg-muted dark:hover:bg-muted"
                     onClick={() => { setEditingCommentId(a.id); setEditCommentDraft(a.comment ?? '') }}
                   >
                     <Pencil className="h-4 w-4" />
@@ -482,7 +482,7 @@ export function PortalTicketDetailPage() {
                 </Tooltip>
                 <Tooltip content={t('preview.download')}>
                   <button
-                    className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="p-1 text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground rounded hover:bg-muted dark:hover:bg-muted"
                     onClick={() => handleDownload(a.download_url, a.filename)}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
@@ -492,7 +492,7 @@ export function PortalTicketDetailPage() {
                 </Tooltip>
                 <Tooltip content={t('common.delete')}>
                   <button
-                    className="p-1 text-red-400 hover:text-red-600 dark:hover:text-red-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="p-1 text-red-400 hover:text-red-600 dark:hover:text-red-300 rounded hover:bg-muted dark:hover:bg-muted"
                     onClick={() => setDeleteTarget(a)}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
@@ -505,12 +505,12 @@ export function PortalTicketDetailPage() {
           ))}
 
           {(attachments ?? []).length === 0 && (
-            <p className="text-sm text-gray-400 italic">{t('attachments.noAttachments')}</p>
+            <p className="text-sm text-muted-foreground italic">{t('attachments.noAttachments')}</p>
           )}
 
           {/* Delete confirmation modal */}
           <Modal open={!!deleteTarget} onClose={() => setDeleteTarget(null)} title={t('attachments.deleteTitle')}>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
               {t('attachments.deleteConfirm')} <strong>{deleteTarget?.filename}</strong>
             </p>
             <div className="flex justify-end gap-3">

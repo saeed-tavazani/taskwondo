@@ -82,9 +82,9 @@ export function TimeEntryForm({ ns, projects, entry, onSaved, onCancel }: { ns: 
           {(items ?? []).map(i => <option key={i.id} value={i.item_number}>{project}-{i.item_number} · {i.title}</option>)}
         </Select>
         <Input id={`${formId}-search`} label={t('timeTracking.searchItems')} value={search} onChange={e => setSearch(e.target.value)} disabled={!project} />
-        <div className="flex items-center justify-between gap-4 rounded-md bg-gray-50 px-3 py-2 dark:bg-gray-900/50">
-          <span className="text-sm text-gray-500 dark:text-gray-400">{t('timeTracking.duration')}</span>
-          <span dir="ltr" className="font-mono text-2xl tabular-nums text-gray-900 dark:text-gray-100">{formatTimeDuration(mode === 'manual' ? manualSeconds || 0 : seconds)}</span>
+        <div className="flex items-center justify-between gap-4 rounded-md bg-muted px-3 py-2 dark:bg-background">
+          <span className="text-sm text-muted-foreground dark:text-muted-foreground">{t('timeTracking.duration')}</span>
+          <span dir="ltr" className="font-mono text-2xl tabular-nums text-foreground dark:text-foreground">{formatTimeDuration(mode === 'manual' ? manualSeconds || 0 : seconds)}</span>
         </div>
       </div>
       {mode === 'manual' && <div className="grid gap-4 sm:grid-cols-2">
@@ -103,7 +103,7 @@ export function TimeEntryForm({ ns, projects, entry, onSaved, onCancel }: { ns: 
           <Button type="submit" disabled={pending || !project || !!warning || (mode === 'timer' && (timerLoading || timerError))} className="inline-flex items-center gap-2"><Play className="h-4 w-4" aria-hidden="true" />{mode === 'timer' ? t('timeTracking.start') : t('common.save')}</Button>}
         {onCancel && <Button type="button" variant="secondary" onClick={onCancel}>{t('common.cancel')}</Button>}
         {saved && <span role="status" className="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400"><Check className="h-4 w-4" aria-hidden="true" />{t('timeTracking.saved')}</span>}
-        {mode === 'timer' && timer && <span className="text-sm text-gray-500 dark:text-gray-400">{t('timeTracking.runningProject', { project: timer.project_name })}</span>}
+        {mode === 'timer' && timer && <span className="text-sm text-muted-foreground dark:text-muted-foreground">{t('timeTracking.runningProject', { project: timer.project_name })}</span>}
         {mode === 'timer' && timerError && <span role="alert" className="text-sm text-red-600 dark:text-red-400">{t('timeTracking.error')}</span>}
       </div>
     </form>

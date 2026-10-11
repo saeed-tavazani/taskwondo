@@ -50,10 +50,10 @@ export function OAuthCallbackPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-sm w-full text-center">
           <p className="text-sm text-red-600 dark:text-red-400 mb-4">{error}</p>
-          <a href="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+          <a href="/login" className="text-foreground dark:text-foreground hover:underline text-sm">
             {t(`login.${provider ?? 'oauth'}.backToLogin`, t('login.oauth.backToLogin'))}
           </a>
         </div>
@@ -62,10 +62,10 @@ export function OAuthCallbackPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background">
       <div className="text-center">
         <Spinner size="lg" />
-        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-4 text-sm text-muted-foreground dark:text-muted-foreground">
           {t(`login.${provider ?? 'oauth'}.authenticating`, t('login.oauth.authenticating'))}
         </p>
       </div>

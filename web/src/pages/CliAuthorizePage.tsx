@@ -31,7 +31,7 @@ export function CliAuthorizePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-muted dark:bg-background">
         <Spinner />
       </div>
     );
@@ -44,9 +44,9 @@ export function CliAuthorizePage() {
 
   if (!callbackPort || callbackPort < 1024 || callbackPort > 65535) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-md w-full text-center">
-          <p className="text-gray-600 dark:text-gray-400">{t('cliAuth.missingParams')}</p>
+          <p className="text-muted-foreground dark:text-muted-foreground">{t('cliAuth.missingParams')}</p>
         </div>
       </div>
     );
@@ -72,7 +72,7 @@ export function CliAuthorizePage() {
 
   if (status === 'success') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-md w-full text-center">
           <p className="text-lg text-green-600 dark:text-green-400">{t('cliAuth.success')}</p>
         </div>
@@ -82,32 +82,32 @@ export function CliAuthorizePage() {
 
   if (status === 'denied') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-muted dark:bg-background px-4">
         <div className="max-w-md w-full text-center">
-          <p className="text-lg text-gray-600 dark:text-gray-400">{t('cliAuth.denied')}</p>
+          <p className="text-lg text-muted-foreground dark:text-muted-foreground">{t('cliAuth.denied')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex flex-col bg-muted dark:bg-background px-4">
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-md w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
-            <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+          <div className="bg-surface dark:bg-card rounded-lg shadow-sm border border-border dark:border-border p-8">
+            <h1 className="text-xl font-bold text-foreground dark:text-foreground mb-6 text-center">
               {t('cliAuth.title')}
             </h1>
 
-            <p className="text-gray-700 dark:text-gray-300 mb-4 text-center">
+            <p className="text-foreground dark:text-foreground mb-4 text-center">
               {t('cliAuth.description', { clientName })}
             </p>
 
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 text-center">
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-2 text-center">
               {t('cliAuth.loggedInAs', { displayName: user.display_name, email: user.email })}
             </p>
 
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-8 text-center">
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-8 text-center">
               {t('cliAuth.permissions')}
             </p>
 

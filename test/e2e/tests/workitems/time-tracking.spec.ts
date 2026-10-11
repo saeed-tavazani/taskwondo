@@ -143,7 +143,7 @@ test.describe('Time tracking', () => {
     await expect(sidebar.getByText('Logged')).toBeVisible();
 
     // The progress bar should be visible (50% — 1h out of 2h)
-    const progressBar = sidebar.locator('.bg-indigo-500');
+    const progressBar = sidebar.locator('.bg-primary');
     await expect(progressBar).toBeVisible();
   });
 });

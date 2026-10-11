@@ -86,9 +86,9 @@ export function OncallTab({
     return (
       <div className="max-w-3xl space-y-4">
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-12 text-center">
-          <Clock className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{t('teams.oncall.noRotation')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-12 text-center">
+          <Clock className="h-12 w-12 text-muted-foreground dark:text-muted-foreground mx-auto mb-4" />
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-4">{t('teams.oncall.noRotation')}</p>
           {canManage && (
             <Button onClick={() => setCreateOpen(true)}>
               <Plus className="h-4 w-4 mr-1" />
@@ -177,23 +177,23 @@ function RotationDetailsCard({ data }: { data: OncallRotationWithMembers }) {
   const { t } = useTranslation()
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
-      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+    <div className="border border-border dark:border-border rounded-lg p-4 space-y-3">
+      <p className="text-xs text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
         {t('teams.oncall.title')}
       </p>
-      <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400">
+      <div className="space-y-1 text-xs text-muted-foreground dark:text-muted-foreground">
         <div className="flex justify-between">
           <span>{t('teams.oncall.periodDays')}</span>
-          <span className="text-gray-700 dark:text-gray-300">{t('teams.oncall.period', { days: data.period_days })}</span>
+          <span className="text-foreground dark:text-foreground">{t('teams.oncall.period', { days: data.period_days })}</span>
         </div>
         <div className="flex justify-between">
           <span>{t('teams.oncall.timezone')}</span>
-          <span className="text-gray-700 dark:text-gray-300">{data.timezone}</span>
+          <span className="text-foreground dark:text-foreground">{data.timezone}</span>
         </div>
         {data.next_rotation_at && (
           <div className="flex justify-between">
             <span>{t('teams.oncall.nextRotationLabel')}</span>
-            <span className="text-gray-700 dark:text-gray-300">
+            <span className="text-foreground dark:text-foreground">
               {new Date(data.next_rotation_at).toLocaleDateString()}{' '}
               {(() => { const match = data.rotation_time?.match(/T(\d{2}:\d{2})/); return match ? match[1] : data.rotation_time?.slice(0, 5) })()}
             </span>
@@ -211,16 +211,16 @@ function RotationMembersPanel({ data }: { data: OncallRotationWithMembers }) {
   const sortedMembers = [...data.members].sort((a, b) => a.position - b.position)
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
-      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+    <div className="border border-border dark:border-border rounded-lg p-4 space-y-3">
+      <p className="text-xs text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
         {t('teams.oncall.participants')}
       </p>
       <div className="space-y-2">
         {sortedMembers.map((member, idx) => (
           <div key={member.user_id} className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 w-4 text-right shrink-0">{idx + 1}</span>
+            <span className="text-xs text-muted-foreground w-4 text-right shrink-0">{idx + 1}</span>
             <Avatar name={member.display_name} avatarUrl={member.avatar_url} size="xs" />
-            <span className="text-sm text-gray-900 dark:text-gray-100">{member.display_name}</span>
+            <span className="text-sm text-foreground dark:text-foreground">{member.display_name}</span>
             {member.user_id === data.current_user_id && !data.is_override && (
               <Badge color="green">{t('teams.oncall.active')}</Badge>
             )}
@@ -332,7 +332,7 @@ function EditRotationModal({
       </Modal>
 
       <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title={t('teams.oncall.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{t('teams.oncall.deleteConfirmBody')}</p>
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">{t('teams.oncall.deleteConfirmBody')}</p>
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={() => setDeleteOpen(false)}>
             {t('common.cancel')}
@@ -473,27 +473,27 @@ function RotationForm({
 
       {/* Participants selection */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
           {t('teams.oncall.participants')}
         </label>
-        <div className="border border-gray-200 dark:border-gray-600 rounded-md max-h-40 overflow-auto">
+        <div className="border border-border dark:border-border rounded-md max-h-40 overflow-auto">
           {teamMembers.map((member) => (
             <label
               key={member.user_id}
-              className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+              className="flex items-center gap-2 px-3 py-2 hover:bg-muted dark:hover:bg-muted cursor-pointer"
             >
               <input
                 type="checkbox"
                 checked={selectedIds.includes(member.user_id)}
                 onChange={() => toggleMember(member.user_id)}
-                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="rounded border-border text-foreground focus:ring-ring"
               />
               <Avatar name={member.display_name} avatarUrl={member.avatar_url ?? undefined} size="xs" />
-              <span className="text-sm text-gray-900 dark:text-gray-100">{member.display_name}</span>
+              <span className="text-sm text-foreground dark:text-foreground">{member.display_name}</span>
             </label>
           ))}
           {teamMembers.length === 0 && (
-            <p className="px-3 py-2 text-sm text-gray-400">{t('teams.noMembers')}</p>
+            <p className="px-3 py-2 text-sm text-muted-foreground">{t('teams.noMembers')}</p>
           )}
         </div>
       </div>
@@ -502,7 +502,7 @@ function RotationForm({
       {selectedIds.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-foreground dark:text-foreground">
               {t('teams.oncall.order')}
             </label>
             <Button type="button" variant="ghost" size="sm" onClick={randomizeOrder}>
@@ -510,7 +510,7 @@ function RotationForm({
               {t('teams.oncall.randomize')}
             </Button>
           </div>
-          <div className="border border-gray-200 dark:border-gray-600 rounded-md">
+          <div className="border border-border dark:border-border rounded-md">
             {selectedIds.map((userId, idx) => {
               const member = memberMap.get(userId)
               if (!member) return null
@@ -522,13 +522,13 @@ function RotationForm({
                   onDragOver={(e) => handleDragOver(e, idx)}
                   onDragEnd={handleDragEnd}
                   className={`flex items-center gap-2 px-3 py-2 cursor-grab active:cursor-grabbing ${
-                    draggedIdx === idx ? 'bg-indigo-50 dark:bg-indigo-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-                  } ${idx > 0 ? 'border-t border-gray-100 dark:border-gray-700' : ''}`}
+                    draggedIdx === idx ? 'bg-accent dark:bg-accent' : 'hover:bg-muted dark:hover:bg-muted'
+                  } ${idx > 0 ? 'border-t border-border dark:border-border' : ''}`}
                 >
-                  <GripVertical className="h-3.5 w-3.5 text-gray-400 shrink-0" />
-                  <span className="text-xs text-gray-400 w-5 text-right shrink-0">{idx + 1}</span>
+                  <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  <span className="text-xs text-muted-foreground w-5 text-right shrink-0">{idx + 1}</span>
                   <Avatar name={member.display_name} avatarUrl={member.avatar_url ?? undefined} size="xs" />
-                  <span className="text-sm text-gray-900 dark:text-gray-100">{member.display_name}</span>
+                  <span className="text-sm text-foreground dark:text-foreground">{member.display_name}</span>
                 </div>
               )
             })}
@@ -631,8 +631,8 @@ function OverridePanel({
 
   return (
     <>
-      <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
-        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+      <div className="border border-border dark:border-border rounded-lg p-4 space-y-3">
+        <p className="text-xs text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
           {t('teams.oncall.override.title')}
         </p>
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
@@ -644,7 +644,7 @@ function OverridePanel({
                 <div key={override.id} className="space-y-1">
                   {/* First row: name + badge + actions */}
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <span className="text-sm font-medium text-foreground dark:text-foreground">
                       {override.override_user_name}
                     </span>
                     <Badge color={isActive ? 'yellow' : 'blue'}>
@@ -662,18 +662,18 @@ function OverridePanel({
                     )}
                   </div>
                   {/* Second row: time range */}
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-muted-foreground dark:text-muted-foreground">
                     {new Date(override.start_at).toLocaleString()} — {new Date(override.end_at).toLocaleString()}
                   </div>
                   {override.reason && (
-                    <div className="text-xs text-gray-400 dark:text-gray-500">{override.reason}</div>
+                    <div className="text-xs text-muted-foreground dark:text-muted-foreground">{override.reason}</div>
                   )}
                 </div>
               )
             })}
           </div>
         ) : (
-          <p className="text-xs text-gray-400 dark:text-gray-500">{t('teams.oncall.override.empty')}</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground">{t('teams.oncall.override.empty')}</p>
         )}
       </div>
 
@@ -690,7 +690,7 @@ function OverridePanel({
 
       {/* Delete confirmation */}
       <Modal open={!!deleteTarget} onClose={() => setDeleteTarget(null)} title={t('teams.oncall.override.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{t('teams.oncall.override.deleteConfirmBody')}</p>
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">{t('teams.oncall.override.deleteConfirmBody')}</p>
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={() => setDeleteTarget(null)}>{t('common.cancel')}</Button>
           <Button variant="danger" disabled={deleteMutation.isPending} onClick={handleDelete}>
@@ -768,7 +768,7 @@ function CreateOverrideModal({
       {error && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
             {t('teams.oncall.override.coveringMember')}
           </label>
           <UserPicker
@@ -875,7 +875,7 @@ function EditOverrideModal({
       {error && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
             {t('teams.oncall.override.coveringMember')}
           </label>
           <UserPicker
@@ -953,14 +953,14 @@ function HistoryLog({
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('teams.oncall.history')}</h3>
-      <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+      <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t('teams.oncall.history')}</h3>
+      <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
         {history.map((entry) => (
           <div key={entry.id} className="p-3 flex items-center gap-3">
             <Avatar name={entry.display_name} avatarUrl={entry.avatar_url} size="xs" />
             <div className="min-w-0 flex-1">
-              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{entry.display_name}</span>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-sm font-medium text-foreground dark:text-foreground">{entry.display_name}</span>
+              <div className="text-xs text-muted-foreground dark:text-muted-foreground">
                 {new Date(entry.started_at).toLocaleDateString()} - {entry.ended_at ? new Date(entry.ended_at).toLocaleDateString() : t('common.current')}
               </div>
             </div>

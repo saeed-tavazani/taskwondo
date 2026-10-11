@@ -83,8 +83,8 @@ export function TeamsPage() {
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('teams.title')}</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t('teams.description')}</p>
+          <h2 className="text-lg font-semibold text-foreground dark:text-foreground">{t('teams.title')}</h2>
+          <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">{t('teams.description')}</p>
         </div>
         {canManage && (
           <Button onClick={() => setCreateOpen(true)} className="border border-transparent">
@@ -97,8 +97,8 @@ export function TeamsPage() {
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {(!teams || teams.length === 0) ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('teams.noTeams')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('teams.noTeams')}</p>
           {canManage && (
             <Button size="sm" variant="secondary" className="mt-3" onClick={() => setCreateOpen(true)}>
               <Plus className="h-4 w-4 mr-1" />
@@ -107,7 +107,7 @@ export function TeamsPage() {
           )}
         </div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
           {teams.map((team) => (
             <TeamCard
               key={team.id}
@@ -137,7 +137,7 @@ export function TeamsPage() {
 
       {/* Delete confirmation */}
       <Modal open={!!deleteTarget} onClose={() => setDeleteTarget(null)} title={t('teams.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           <Trans i18nKey="teams.deleteConfirmBody" values={{ name: deleteTarget?.name }} components={{ bold: <strong /> }} />
         </p>
         <div className="flex justify-end gap-2">
@@ -181,7 +181,7 @@ function TeamCard({
           <div className="flex items-center gap-2 flex-wrap">
             <Link
               to={pathFn(`/projects/${projectKey}/teams/${team.id}`)}
-              className="text-base font-semibold text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400"
+              className="text-base font-semibold text-foreground dark:text-foreground hover:text-foreground dark:hover:text-foreground"
             >
               {team.name}
             </Link>
@@ -190,7 +190,7 @@ function TeamCard({
             </Badge>
           </div>
           {team.description && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{team.description}</p>
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{team.description}</p>
           )}
         </div>
         <div className="flex items-center gap-1 shrink-0">
@@ -256,12 +256,12 @@ function TeamCreateForm({
         autoFocus
       />
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
           {t('common.description')}
         </label>
         <textarea
           rows={3}
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

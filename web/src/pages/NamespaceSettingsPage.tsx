@@ -19,7 +19,6 @@ import {
 } from '@/hooks/useNamespaces'
 import { useSidebar } from '@/contexts/SidebarContext'
 import { useLayout } from '@/contexts/LayoutContext'
-import { AppSidebar } from '@/components/AppSidebar'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Modal } from '@/components/ui/Modal'
@@ -95,7 +94,6 @@ export function NamespaceSettingsPage() {
     return (
       <div className={`${containerClass(true)} py-6`}>
         <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-          <AppSidebar />
           <div className="flex-1 min-w-0 flex items-center justify-center py-24">
             <Spinner size="lg" />
           </div>
@@ -234,12 +232,11 @@ export function NamespaceSettingsPage() {
   return (
     <div className={`${containerClass(true)} py-6`}>
       <div className={`flex transition-all duration-200 ${collapsed ? 'gap-4' : 'gap-8'}`}>
-        <AppSidebar />
         <div className="flex-1 min-w-0 max-w-3xl space-y-6">
           {/* Page Header */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{t('namespaces.settingsTitle')}</h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t('namespaces.settingsDescription')}</p>
+            <h2 className="text-xl font-semibold text-foreground dark:text-foreground">{t('namespaces.settingsTitle')}</h2>
+            <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">{t('namespaces.settingsDescription')}</p>
           </div>
 
           <Tabs tabs={tabs} activeTab={effectiveTab} onTabChange={setActiveTab} />
@@ -262,14 +259,14 @@ export function NamespaceSettingsPage() {
               required
               disabled={!canManage}
             />
-            <p className="text-xs text-gray-400 dark:text-gray-500 -mt-3">{t('namespaces.slugHint')}</p>
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground -mt-3">{t('namespaces.slugHint')}</p>
 
             {/* Icon & Color pickers + Preview */}
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-start">
               <div className="flex-1 min-w-0 space-y-4">
                 {/* Icon picker */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('namespaces.icon')}</label>
+                  <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">{t('namespaces.icon')}</label>
                   <div className="overflow-x-auto pb-1 sm:overflow-x-visible sm:pb-0">
                     <div className="grid grid-rows-3 grid-flow-col auto-cols-min gap-2 sm:grid-rows-none sm:grid-flow-row sm:grid-cols-10 sm:gap-1.5">
                       {NAMESPACE_ICONS.map((iconName) => {
@@ -283,8 +280,8 @@ export function NamespaceSettingsPage() {
                             onClick={() => setIconInput(iconName)}
                             className={`p-2 rounded-lg border-2 transition-all ${
                               selected
-                                ? `border-current ${getColorClasses(currentColor).text} bg-gray-100 dark:bg-gray-700`
-                                : 'border-transparent text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                                ? `border-current ${getColorClasses(currentColor).text} bg-muted dark:bg-muted`
+                                : 'border-transparent text-muted-foreground dark:text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground hover:bg-muted dark:hover:bg-card'
                             } disabled:opacity-50 disabled:cursor-not-allowed`}
                           >
                             <Icon className="h-5 w-5" />
@@ -297,7 +294,7 @@ export function NamespaceSettingsPage() {
 
                 {/* Color picker */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('namespaces.color')}</label>
+                  <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">{t('namespaces.color')}</label>
                   <div className="flex flex-wrap gap-1.5">
                     {NAMESPACE_COLORS.map((c) => {
                       const selected = currentColor === c
@@ -308,7 +305,7 @@ export function NamespaceSettingsPage() {
                           disabled={!canManage}
                           onClick={() => setColorInput(c)}
                           className={`w-8 h-8 rounded-full transition-all ${getColorClasses(c).bg} ${
-                            selected ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ' + getColorClasses(c).ring : 'opacity-60 hover:opacity-100'
+                            selected ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background ' + getColorClasses(c).ring : 'opacity-60 hover:opacity-100'
                           } disabled:cursor-not-allowed`}
                           aria-label={c}
                         />
@@ -320,10 +317,10 @@ export function NamespaceSettingsPage() {
 
               {/* Preview */}
               <div className="shrink-0">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('namespaces.preview')}</label>
-                <div className="flex flex-col items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 px-6 py-5 bg-white dark:bg-gray-800">
+                <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">{t('namespaces.preview')}</label>
+                <div className="flex flex-col items-center gap-3 rounded-lg border border-border dark:border-border px-6 py-5 bg-surface dark:bg-card">
                   <NamespaceIcon icon={currentIcon} color={currentColor} className="h-10 w-10" />
-                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{currentDisplayName}</span>
+                  <span className="text-sm font-medium text-foreground dark:text-foreground">{currentDisplayName}</span>
                 </div>
               </div>
             </div>
@@ -350,8 +347,8 @@ export function NamespaceSettingsPage() {
               </div>
               <div className="p-4 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('namespaces.deleteTitle')}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('namespaces.deleteWarning')}</p>
+                  <p className="text-sm font-medium text-foreground dark:text-foreground">{t('namespaces.deleteTitle')}</p>
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('namespaces.deleteWarning')}</p>
                 </div>
                 <Button variant="danger" size="sm" onClick={() => setShowDeleteModal(true)}>
                   {t('namespaces.delete')}
@@ -365,13 +362,13 @@ export function NamespaceSettingsPage() {
           {/* ───── Users tab ───── */}
           {effectiveTab === 'users' && (
           <div className="space-y-6">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('namespaces.membersDescription')}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('namespaces.membersDescription')}</p>
 
           {memberError && <p className="text-sm text-red-600 dark:text-red-400">{memberError}</p>}
 
           {canManage && (
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('namespaces.inviteByEmail')}</h3>
+            <div className="border border-border dark:border-border rounded-lg p-4 space-y-3">
+              <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t('namespaces.inviteByEmail')}</h3>
               <div className="flex gap-2 items-end">
                 <div className="flex-1 min-w-0">
                   <Input
@@ -382,7 +379,7 @@ export function NamespaceSettingsPage() {
                   />
                 </div>
                 <select
-                  className="shrink-0 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="shrink-0 rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   value={newMemberRole}
                   onChange={(e) => setNewMemberRole(e.target.value)}
                 >
@@ -402,7 +399,7 @@ export function NamespaceSettingsPage() {
           )}
 
           {((members && members.length > 0) || pendingEmailInvites.length > 0) && (
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
               {members?.map((member) => {
                 const isSelf = member.user_id === user?.id
                 const memberIsOwner = member.role === 'owner'
@@ -415,11 +412,11 @@ export function NamespaceSettingsPage() {
                     <div className="flex items-center gap-3 min-w-0">
                       <Avatar name={member.display_name} avatarUrl={member.avatar_url} size="sm" />
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                        <p className="text-sm font-medium text-foreground dark:text-foreground truncate">
                           {member.display_name}
-                          {isSelf && <span className="ml-1 text-xs text-gray-400">({t('common.you')})</span>}
+                          {isSelf && <span className="ml-1 text-xs text-muted-foreground">({t('common.you')})</span>}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{member.email}</p>
+                        <p className="text-xs text-muted-foreground dark:text-muted-foreground truncate">{member.email}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
@@ -428,7 +425,7 @@ export function NamespaceSettingsPage() {
                           {saved[`role:${member.user_id}`] && <Check className="h-5 w-5 text-green-500 animate-[pulse_0.6s_ease-in-out_2]" />}
                           <Tooltip content={isLastOwner ? t('namespaces.lastOwnerTooltip') : undefined}>
                             <select
-                              className="rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-2 py-1 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-2 py-1 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
                               value={member.role}
                               onChange={(e) => handleRoleChange(member.user_id, e.target.value)}
                               disabled={updateRoleMutation.isPending || isLastOwner}
@@ -441,7 +438,7 @@ export function NamespaceSettingsPage() {
                           </Tooltip>
                           <Tooltip content={isLastOwner ? t('namespaces.lastOwnerTooltip') : undefined}>
                             <button
-                              className={`p-1 ${isLastOwner ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed' : 'text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300'}`}
+                              className={`p-1 ${isLastOwner ? 'text-muted-foreground dark:text-muted-foreground cursor-not-allowed' : 'text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300'}`}
                               onClick={() => !isLastOwner && setRemoveTarget({ userId: member.user_id, name: member.display_name })}
                               disabled={isLastOwner}
                             >
@@ -461,11 +458,11 @@ export function NamespaceSettingsPage() {
               {pendingEmailInvites.map((invite) => (
                 <div key={invite.id} className="flex flex-wrap items-center justify-between gap-2 p-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
-                      <Mail className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                    <div className="h-8 w-8 rounded-full bg-muted dark:bg-muted flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-4 w-4 text-muted-foreground dark:text-muted-foreground" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                      <p className="text-sm text-muted-foreground dark:text-muted-foreground truncate">
                         {invite.invitee_email}
                       </p>
                     </div>
@@ -495,10 +492,10 @@ export function NamespaceSettingsPage() {
 
           {/* Delete confirmation modal */}
           <Modal open={showDeleteModal} onClose={() => setShowDeleteModal(false)} title={t('namespaces.deleteConfirmTitle')}>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
               <Trans i18nKey="namespaces.deleteConfirmBody" values={{ name: namespace.display_name }} components={{ bold: <strong /> }} />
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-2">
               <Trans i18nKey="namespaces.deleteConfirmType" values={{ slug: namespace.slug }} components={{ bold: <strong /> }} />
             </p>
             <Input
@@ -520,7 +517,7 @@ export function NamespaceSettingsPage() {
 
           {/* Remove member confirmation modal */}
           <Modal open={!!removeTarget} onClose={() => setRemoveTarget(null)} title={t('namespaces.removeMemberConfirmTitle')}>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
               <Trans i18nKey="namespaces.removeMemberConfirmBody" values={{ name: removeTarget?.name }} components={{ bold: <strong /> }} />
             </p>
             <div className="flex justify-end gap-2">
@@ -533,7 +530,7 @@ export function NamespaceSettingsPage() {
 
           {/* Revoke invite confirmation modal */}
           <Modal open={!!revokeTarget} onClose={() => setRevokeTarget(null)} title={t('namespaces.revokeInviteConfirmTitle')}>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
               <Trans i18nKey="namespaces.revokeInviteConfirmBody" values={{ email: revokeTarget?.email }} components={{ bold: <strong /> }} />
             </p>
             <div className="flex justify-end gap-2">
@@ -546,7 +543,7 @@ export function NamespaceSettingsPage() {
 
           {/* Email invite confirmation modal */}
           <Modal open={showEmailInviteModal} onClose={() => setShowEmailInviteModal(false)} title={t('namespaces.emailInviteConfirmTitle')}>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
               <Trans
                 i18nKey="namespaces.emailInviteConfirmBody"
                 values={{ email: emailInput, role: t(`namespaces.roles.${newMemberRole}`) }}

@@ -106,14 +106,14 @@ export function ProfilePage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
+      <h1 className="text-xl font-semibold text-foreground dark:text-foreground mb-6">
         {t('preferences.profile.title')}
       </h1>
 
       <div className="space-y-8">
         {/* Display Name */}
         <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.profile.displayName')}
           </h2>
           <div className="flex gap-3 items-center max-w-md">
@@ -134,7 +134,7 @@ export function ProfilePage() {
 
         {/* Profile Picture */}
         <div>
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-3">
             {t('preferences.profile.picture')}
           </h2>
 
@@ -153,7 +153,7 @@ export function ProfilePage() {
               <div
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
-                className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors"
+                className="border-2 border-dashed border-border dark:border-border rounded-lg p-4 text-center hover:border-input dark:hover:border-input transition-colors"
               >
                 <input
                   ref={fileInputRef}
@@ -171,10 +171,10 @@ export function ProfilePage() {
                   <Upload className="h-4 w-4 mr-1" />
                   {t('preferences.profile.uploadPicture')}
                 </Button>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">
                   {t('preferences.profile.dragDrop')}
                 </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">
                   {t('preferences.profile.fileRequirements')}
                 </p>
               </div>
@@ -204,7 +204,7 @@ export function ProfilePage() {
         onClose={() => setCropImage(null)}
         title={t('preferences.profile.cropTitle')}
       >
-        <div className="relative w-full h-64 bg-gray-900">
+        <div className="relative w-full h-64 bg-inverse">
           {cropImage && (
             <Cropper
               image={cropImage}
@@ -246,7 +246,7 @@ export function ProfilePage() {
         title={t('preferences.profile.removePicture')}
       >
         <div className="p-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-4">
             {t('preferences.profile.removePictureConfirm')}
           </p>
           <div className="flex justify-end gap-3">

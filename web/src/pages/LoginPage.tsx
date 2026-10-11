@@ -144,10 +144,10 @@ export function LoginPage() {
   const emailRegistrationEnabled = providers?.email_registration === true;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex flex-col bg-muted dark:bg-background px-4">
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-sm w-full">
-          <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">
+          <h1 className="text-2xl font-bold text-center text-foreground dark:text-foreground mb-8">
             {t('login.title', { brandName })}
           </h1>
 
@@ -177,18 +177,18 @@ export function LoginPage() {
               <p className="text-center text-sm">
                 <Link
                   to="/forgot-password"
-                  className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+                  className="text-foreground hover:text-foreground dark:text-foreground dark:hover:text-foreground"
                 >
                   {t('login.forgotPassword')}
                 </Link>
               </p>
 
               {emailRegistrationEnabled && (
-                <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground">
                   {t('login.noAccount')}{' '}
                   <Link
                     to="/register"
-                    className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+                    className="text-foreground hover:text-foreground dark:text-foreground dark:hover:text-foreground"
                   >
                     {t('login.createAccount')}
                   </Link>
@@ -206,10 +206,10 @@ export function LoginPage() {
               {emailLoginEnabled && (
                 <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+                    <div className="w-full border-t border-border dark:border-border" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                    <span className="px-2 bg-muted dark:bg-background text-muted-foreground dark:text-muted-foreground">
                       {t('login.or')}
                     </span>
                   </div>

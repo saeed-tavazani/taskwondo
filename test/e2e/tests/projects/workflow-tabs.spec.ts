@@ -12,7 +12,7 @@ test.describe('Workflow page tabs', () => {
     // Workflow tab is active by default
     const workflowTab = page.getByRole('button', { name: 'Workflow', exact: true });
     await expect(workflowTab).toBeVisible();
-    await expect(workflowTab).toHaveClass(/border-indigo/);
+    await expect(workflowTab).toHaveAttribute('aria-pressed', 'true');
 
     // Workflow content is visible
     await expect(page.getByRole('heading', { name: 'Workflow Definitions' })).toBeVisible();

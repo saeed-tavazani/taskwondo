@@ -77,14 +77,14 @@ export function SystemWorkflowsPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('admin.workflows.title')}</h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t('admin.workflows.description')}</p>
+        <h2 className="text-lg font-semibold text-foreground dark:text-foreground">{t('admin.workflows.title')}</h2>
+        <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">{t('admin.workflows.description')}</p>
       </div>
 
       {/* Workflow Definitions */}
       <div>
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+          <h3 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground">
             {t('workflows.definitionsTitle')}
           </h3>
           <Button onClick={() => openEditor()} className="border border-transparent">
@@ -95,22 +95,22 @@ export function SystemWorkflowsPage() {
       </div>
 
       {(!workflows || workflows.length === 0) ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('admin.workflows.noWorkflows')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('admin.workflows.noWorkflows')}</p>
           <Button size="sm" variant="secondary" className="mt-3" onClick={() => openEditor()}>
             <Plus className="h-4 w-4 mr-1" />
             {t('workflows.createFirst')}
           </Button>
         </div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
           {workflows.map((wf) => (
             <div key={wf.id} className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <div>
-                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{wf.name}</span>
+                  <span className="text-sm font-medium text-foreground dark:text-foreground">{wf.name}</span>
                   {wf.description && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{wf.description}</p>
+                    <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5">{wf.description}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-1">
@@ -128,7 +128,7 @@ export function SystemWorkflowsPage() {
                   <Tooltip content={wf.is_default ? t('admin.workflows.cannotDeleteDefault') : t('common.delete')}>
                     <span>
                       <Button variant="ghost" size="sm" onClick={() => setDeleteTarget({ id: wf.id, name: wf.name })} disabled={wf.is_default}>
-                        <Trash2 className={`h-3.5 w-3.5 ${wf.is_default ? 'text-gray-300 dark:text-gray-600' : 'text-red-500'}`} />
+                        <Trash2 className={`h-3.5 w-3.5 ${wf.is_default ? 'text-muted-foreground dark:text-muted-foreground' : 'text-red-500'}`} />
                       </Button>
                     </span>
                   </Tooltip>
@@ -148,16 +148,16 @@ export function SystemWorkflowsPage() {
 
       {/* Default Workflow Mapping */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('admin.workflows.defaultMappingTitle')}</h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t('admin.workflows.defaultMappingDescription')}</p>
+        <h2 className="text-lg font-semibold text-foreground dark:text-foreground">{t('admin.workflows.defaultMappingTitle')}</h2>
+        <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">{t('admin.workflows.defaultMappingDescription')}</p>
       </div>
 
-      <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
         {['task', 'ticket', 'bug', 'feedback', 'epic'].map((itemType) => {
           const currentWfId = (defaultTypeWorkflows as Record<string, string> | undefined)?.[itemType] ?? ''
           return (
             <div key={itemType} className="flex items-center justify-between p-3">
-              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              <span className="text-sm font-medium text-foreground dark:text-foreground">
                 {t(`workitems.types.${itemType}`)}
               </span>
               <div className="flex items-center gap-2">
@@ -165,7 +165,7 @@ export function SystemWorkflowsPage() {
                   <Check className="h-5 w-5 text-green-500 animate-[pulse_0.6s_ease-in-out_2]" />
                 )}
                 <select
-                  className="min-w-0 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-1.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="min-w-0 rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-1.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-60 disabled:cursor-not-allowed"
                   value={currentWfId}
                   onChange={(e) => {
                     const updated = { ...(defaultTypeWorkflows as Record<string, string> ?? {}), [itemType]: e.target.value }
@@ -217,7 +217,7 @@ export function SystemWorkflowsPage() {
 
       {/* Delete confirmation modal */}
       <Modal open={!!deleteTarget} onClose={() => setDeleteTarget(null)} title={t('workflows.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           {t('workflows.deleteConfirmBody', { name: deleteTarget?.name })}
         </p>
         <div className="flex justify-end gap-2">
@@ -252,11 +252,11 @@ function SystemWorkflowDetailModal({
       ) : (
         <div className="space-y-4">
           {workflow.description && (
-            <p className="text-sm text-gray-600 dark:text-gray-300">{workflow.description}</p>
+            <p className="text-sm text-muted-foreground dark:text-foreground">{workflow.description}</p>
           )}
 
           <div>
-            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{t('workflows.statuses')}</h4>
+            <h4 className="text-sm font-medium text-foreground dark:text-foreground mb-2">{t('workflows.statuses')}</h4>
             <div className="flex flex-wrap gap-1.5">
               {workflow.statuses.map((s) => (
                 <Badge key={s.name} color={CATEGORY_COLORS[s.category] ?? 'gray'}>
@@ -267,25 +267,25 @@ function SystemWorkflowDetailModal({
           </div>
 
           <div>
-            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{t('workflows.transitions')}</h4>
+            <h4 className="text-sm font-medium text-foreground dark:text-foreground mb-2">{t('workflows.transitions')}</h4>
             {workflow.transitions.length === 0 ? (
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('workflows.noTransitions')}</p>
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('workflows.noTransitions')}</p>
             ) : (
               <div className="space-y-1">
                 {workflow.transitions.map((tr) => {
                   const fromStatus = workflow.statuses.find((s) => s.name === tr.from_status)
                   const toStatus = workflow.statuses.find((s) => s.name === tr.to_status)
                   return (
-                    <div key={tr.id} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <div key={tr.id} className="flex items-center gap-2 text-sm text-foreground dark:text-foreground">
                       <Badge color={CATEGORY_COLORS[fromStatus?.category ?? ''] ?? 'gray'}>
                         {t(`workitems.statuses.${tr.from_status}`, { defaultValue: fromStatus?.display_name ?? tr.from_status })}
                       </Badge>
-                      <ArrowRight className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                      <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                       <Badge color={CATEGORY_COLORS[toStatus?.category ?? ''] ?? 'gray'}>
                         {t(`workitems.statuses.${tr.to_status}`, { defaultValue: toStatus?.display_name ?? tr.to_status })}
                       </Badge>
                       {tr.name && (
-                        <span className="text-xs text-gray-400 ml-1">({tr.name})</span>
+                        <span className="text-xs text-muted-foreground ml-1">({tr.name})</span>
                       )}
                     </div>
                   )
@@ -503,12 +503,12 @@ function SystemWorkflowEditorModal({
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
             {t('common.description')}
           </label>
           <textarea
             rows={2}
-            className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder={t('workflows.descriptionPlaceholder')}
@@ -517,7 +517,7 @@ function SystemWorkflowEditorModal({
 
         {/* Status Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
             {t('workflows.selectStatuses')}
           </label>
           <div className="flex flex-wrap gap-2">
@@ -530,11 +530,11 @@ function SystemWorkflowEditorModal({
                   onClick={() => toggleStatus(status)}
                   className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium border transition-colors ${
                     isSelected
-                      ? 'bg-indigo-50 border-indigo-300 text-indigo-700 dark:bg-indigo-900/30 dark:border-indigo-600 dark:text-indigo-300'
-                      : 'bg-white border-gray-300 text-gray-600 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700'
+                      ? 'bg-accent border-border text-foreground dark:bg-accent dark:border-border dark:text-foreground'
+                      : 'bg-surface border-border text-muted-foreground hover:bg-muted dark:bg-card dark:border-border dark:text-muted-foreground dark:hover:bg-muted'
                   }`}
                 >
-                  {isSelected && <span className="text-indigo-500">&#10003;</span>}
+                  {isSelected && <span className="text-foreground">&#10003;</span>}
                   {t(`workitems.statuses.${status.name}`, { defaultValue: status.display_name })}
                   <span className="text-[10px] opacity-60">({status.category})</span>
                 </button>
@@ -545,7 +545,7 @@ function SystemWorkflowEditorModal({
           {/* Selected statuses order */}
           {statuses.length > 0 && (
             <div className="mt-3">
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t('workflows.statusOrder')}</p>
+              <p className="text-xs text-muted-foreground dark:text-muted-foreground mb-1">{t('workflows.statusOrder')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {[...statuses].sort((a, b) => a.position - b.position).map((s, idx) => (
                   <Badge key={s.name} color={CATEGORY_COLORS[s.category] ?? 'gray'}>
@@ -560,7 +560,7 @@ function SystemWorkflowEditorModal({
         {/* Transitions */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-foreground dark:text-foreground">
               {t('workflows.transitions')}
             </label>
             <Button
@@ -575,13 +575,13 @@ function SystemWorkflowEditorModal({
           </div>
 
           {transitions.length === 0 ? (
-            <p className="text-sm text-gray-500 dark:text-gray-400">{t('workflows.noTransitionsYet')}</p>
+            <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('workflows.noTransitionsYet')}</p>
           ) : (
             <div className="space-y-2">
               {transitions.map((tr, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <select
-                    className="min-w-0 flex-1 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="min-w-0 flex-1 rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
                     value={tr.from_status}
                     onChange={(e) => updateTransition(idx, 'from_status', e.target.value)}
                   >
@@ -589,9 +589,9 @@ function SystemWorkflowEditorModal({
                       <option key={s.name} value={s.name}>{t(`workitems.statuses.${s.name}`, { defaultValue: s.display_name })}</option>
                     ))}
                   </select>
-                  <ArrowRight className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                  <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                   <select
-                    className="min-w-0 flex-1 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="min-w-0 flex-1 rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
                     value={tr.to_status}
                     onChange={(e) => updateTransition(idx, 'to_status', e.target.value)}
                   >
@@ -601,14 +601,14 @@ function SystemWorkflowEditorModal({
                   </select>
                   <input
                     type="text"
-                    className="min-w-0 w-16 sm:w-28 shrink rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="min-w-0 w-16 sm:w-28 shrink rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-2 py-1.5 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
                     placeholder={t('workflows.transitionName')}
                     value={tr.name}
                     onChange={(e) => updateTransition(idx, 'name', e.target.value)}
                   />
                   <button
                     type="button"
-                    className="text-gray-400 hover:text-red-500 p-1"
+                    className="text-muted-foreground hover:text-red-500 p-1"
                     onClick={() => removeTransition(idx)}
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -620,7 +620,7 @@ function SystemWorkflowEditorModal({
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end gap-2 pt-2 border-t border-border dark:border-border">
           <Button variant="secondary" onClick={onClose}>
             {t('common.cancel')}
           </Button>

@@ -1585,5 +1585,16 @@
   "errors.time_tracking_forbidden": "اجازه دسترسی یا تغییر این زمان را ندارید.",
   "errors.time_tracking_not_found": "ثبت زمان، پروژه یا آیتم پیدا نشد.",
   "errors.time_tracking_failed": "دریافت یا ذخیره زمان انجام نشد. دوباره تلاش کنید.",
-  "errors.time_timer_active": "یک تایمر فعال است. پیش از شروع تایمر جدید آن را متوقف کنید."
+  "errors.time_timer_active": "یک تایمر فعال است. پیش از شروع تایمر جدید آن را متوقف کنید.",
+  "timeFormat.minute": "{{count}} دقیقه",
+  "timeFormat.hour": "{{count}} ساعت",
+  "timeFormat.day": "{{count}} روز",
+  "timeFormat.week": "{{count}} هفته",
+  "timeFormat.month": "{{count}} ماه",
+  "timeFormat.underMinute": "کمتر از یک دقیقه",
+  "timeFormat.past": "{{time}} پیش",
+  "timeFormat.left": "{{time}} باقی‌مانده",
+  "timeFormat.overdue": "{{time}} تأخیر",
+  "timeFormat.today": "امروز",
+  "timeFormat.yesterday": "دیروز"
 }

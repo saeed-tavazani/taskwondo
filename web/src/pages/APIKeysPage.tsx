@@ -115,8 +115,8 @@ export function APIKeysPage() {
             <div className="flex-1 min-w-0">
               <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">{t('preferences.apiKeys.keyCreated')}</p>
               <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">{t('preferences.apiKeys.keyWarning')}</p>
-              <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-md border border-amber-300 dark:border-amber-700 px-3 py-2">
-                <code className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all flex-1">{createdKey.key}</code>
+              <div className="flex items-center gap-2 bg-surface dark:bg-card rounded-md border border-amber-300 dark:border-amber-700 px-3 py-2">
+                <code className="text-sm font-mono text-foreground dark:text-foreground break-all flex-1">{createdKey.key}</code>
                 <CopyButton text={createdKey.key} />
               </div>
             </div>
@@ -128,11 +128,11 @@ export function APIKeysPage() {
       )}
 
       {/* Create Form */}
-      <div className="mb-8 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-        <h2 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4">{t('preferences.apiKeys.createNew')}</h2>
+      <div className="mb-8 rounded-lg border border-border dark:border-border bg-surface dark:bg-card p-4">
+        <h2 className="text-sm font-medium text-foreground dark:text-foreground mb-4">{t('preferences.apiKeys.createNew')}</h2>
         <form onSubmit={handleCreate} className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">{t('preferences.apiKeys.name')}</label>
+            <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-1">{t('preferences.apiKeys.name')}</label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -141,11 +141,11 @@ export function APIKeysPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">{t('preferences.apiKeys.permissions')}</label>
+              <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-1">{t('preferences.apiKeys.permissions')}</label>
               <select
                 value={permission}
                 onChange={(e) => setPermission(e.target.value)}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="w-full rounded-md border border-border dark:border-border bg-surface dark:bg-muted px-3 py-2 text-sm text-foreground dark:text-foreground"
               >
                 {PERMISSION_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>{t(opt.label)}</option>
@@ -153,11 +153,11 @@ export function APIKeysPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">{t('preferences.apiKeys.expiration')}</label>
+              <label className="block text-sm text-muted-foreground dark:text-muted-foreground mb-1">{t('preferences.apiKeys.expiration')}</label>
               <select
                 value={expiration}
                 onChange={(e) => setExpiration(e.target.value)}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="w-full rounded-md border border-border dark:border-border bg-surface dark:bg-muted px-3 py-2 text-sm text-foreground dark:text-foreground"
               >
                 {EXPIRATION_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>{t(opt.label)}</option>
@@ -176,17 +176,17 @@ export function APIKeysPage() {
       {isLoading ? (
         <div className="flex justify-center py-8"><Spinner /></div>
       ) : !keys || keys.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+        <div className="text-center py-8 text-muted-foreground dark:text-muted-foreground">
           <Key className="h-8 w-8 mx-auto mb-2 opacity-40" />
           <p>{t('preferences.apiKeys.empty')}</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="rounded-lg border border-border dark:border-border divide-y divide-border dark:divide-border">
           {keys.map((key) => {
             const exp = formatExpiration(key)
             const isEditing = editingKeyId === key.id
             return (
-              <div key={key.id} className="p-4 bg-white dark:bg-gray-800 first:rounded-t-lg last:rounded-b-lg">
+              <div key={key.id} className="p-4 bg-surface dark:bg-card first:rounded-t-lg last:rounded-b-lg">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -204,14 +204,14 @@ export function APIKeysPage() {
                           />
                           <button
                             type="submit"
-                            className="p-1 text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                            className="p-1 text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors"
                             disabled={renameMutation.isPending}
                           >
                             <Check className="h-4 w-4" />
                           </button>
                           <button
                             type="button"
-                            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                            className="p-1 text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground transition-colors"
                             onClick={() => { setEditingKeyId(null); setEditingName('') }}
                           >
                             <X className="h-4 w-4" />
@@ -219,14 +219,14 @@ export function APIKeysPage() {
                         </form>
                       ) : (
                         <>
-                          <span className="font-medium text-gray-900 dark:text-gray-100">{key.name}</span>
+                          <span className="font-medium text-foreground dark:text-foreground">{key.name}</span>
                           {savedId === key.id && <Check className="h-4 w-4 text-green-500" />}
                         </>
                       )}
                       <Badge color="gray">{permissionLabel(key.permissions)}</Badge>
                       {exp.expired && <Badge color="red">{exp.text}</Badge>}
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground dark:text-muted-foreground">
                       <span><code>{key.key_prefix}...</code></span>
                       <span>{t('preferences.apiKeys.createdAt')}: {new Date(key.created_at).toLocaleDateString()}</span>
                       <span>{t('preferences.apiKeys.lastUsed')}: {key.last_used_at ? new Date(key.last_used_at).toLocaleDateString() : t('preferences.apiKeys.lastUsedNever')}</span>
@@ -238,7 +238,7 @@ export function APIKeysPage() {
                     {!isEditing && (
                       <button
                         type="button"
-                        className="p-1.5 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                        className="p-1.5 text-muted-foreground hover:text-foreground dark:hover:text-foreground transition-colors"
                         onClick={() => { setEditingKeyId(key.id); setEditingName(key.name) }}
                         title={t('preferences.apiKeys.rename')}
                       >
@@ -247,7 +247,7 @@ export function APIKeysPage() {
                     )}
                     <button
                       type="button"
-                      className="p-1.5 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                      className="p-1.5 text-muted-foreground hover:text-red-600 dark:hover:text-red-400 transition-colors"
                       onClick={() => setDeleteTarget(key)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -267,11 +267,11 @@ export function APIKeysPage() {
         title={t('preferences.apiKeys.deleteConfirmTitle')}
       >
         <div className="p-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-4">
             <Trans
               i18nKey="preferences.apiKeys.deleteConfirmBody"
               values={{ name: deleteTarget?.name }}
-              components={{ bold: <strong className="font-semibold text-gray-900 dark:text-gray-100" /> }}
+              components={{ bold: <strong className="font-semibold text-foreground dark:text-foreground" /> }}
             />
           </p>
           <div className="flex justify-end gap-2">

@@ -391,7 +391,7 @@ test.describe('Escalation Lists', () => {
     await expect(cardTeamChip).toBeVisible();
 
     // Verify user chip (indigo) is rendered in the card
-    const cardUserChip = cardContainer.locator('span.bg-indigo-50').filter({ hasText: helper.name });
+    const cardUserChip = cardContainer.locator('span.bg-accent').filter({ hasText: helper.name });
     await expect(cardUserChip).toBeVisible();
 
     // Open the list edit dialog via pencil button
@@ -405,7 +405,7 @@ test.describe('Escalation Lists', () => {
 
     // Verify team chip (green) and user chip (indigo) are both visible in the modal
     await expect(dialog.locator('span.bg-green-50').filter({ hasText: 'E2E Mixed Team' })).toBeVisible();
-    await expect(dialog.locator('span.bg-indigo-50').filter({ hasText: helper.name })).toBeVisible();
+    await expect(dialog.locator('span.bg-accent').filter({ hasText: helper.name })).toBeVisible();
 
     await dialog.getByRole('button', { name: 'Cancel' }).click();
 

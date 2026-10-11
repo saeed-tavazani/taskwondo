@@ -23,7 +23,7 @@ export function TimeEntryActions({ ns, entry, projects, personal = false }: { ns
       {dialog === 'edit' && <TimeEntryForm key={entry.id} ns={ns} projects={projects} entry={entry} onSaved={() => setDialog(null)} onCancel={() => setDialog(null)} />}
     </Modal>
     <Modal open={dialog === 'delete'} onClose={() => { if (!remove.isPending) setDialog(null) }} title={t('timeTracking.delete')}>
-      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">{t('timeTracking.removeConfirm')}</p>
+      <p className="mb-4 text-sm text-muted-foreground dark:text-foreground">{t('timeTracking.removeConfirm')}</p>
       {remove.error && <p role="alert" className="mb-3 text-sm text-red-600 dark:text-red-400">{getLocalizedError(remove.error, t, 'timeTracking.error')}</p>}
       <div className="flex justify-end gap-2"><Button variant="secondary" onClick={() => setDialog(null)} disabled={remove.isPending}>{t('common.cancel')}</Button><Button variant="danger" disabled={remove.isPending} onClick={() => remove.mutate(entry.id, { onSuccess: () => setDialog(null) })}>{t('common.delete')}</Button></div>
     </Modal>

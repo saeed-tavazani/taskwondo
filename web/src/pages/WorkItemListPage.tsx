@@ -124,7 +124,7 @@ function WorkItemSearchBar({ search, onSearchChange }: { search: string; onSearc
       {search && (
         <button
           onClick={() => { onSearchChange(''); searchRef.current?.focus() }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground"
           aria-label={t('common.clear')}
         >
           <X className="h-4 w-4" />
@@ -632,7 +632,7 @@ export function WorkItemListPage() {
       sortKey: 'item_number',
       render: (row) => {
         const done = strikethroughEnabled && isItemCompleted(row.status, allStatuses ?? statuses)
-        return <span className={`font-mono ${done ? 'text-gray-400 dark:text-gray-500' : 'text-gray-500 dark:text-gray-400'}`}>{row.display_id}</span>
+        return <span className={`font-mono ${done ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>{row.display_id}</span>
       },
     },
     {
@@ -656,8 +656,8 @@ export function WorkItemListPage() {
         return (
           <div className="flex items-center gap-1 min-w-0">
             <Tooltip content={row.title} className="relative block min-w-0 flex-1">
-              <span className={`truncate block ${!done && row.description ? 'text-gray-400 dark:text-gray-500' : ''}`}>
-                <span className={done ? 'line-through text-gray-400 dark:text-gray-500' : 'font-medium text-gray-900 dark:text-gray-100'}>{row.title}</span>
+              <span className={`truncate block ${!done && row.description ? 'text-muted-foreground dark:text-muted-foreground' : ''}`}>
+                <span className={done ? 'line-through text-muted-foreground dark:text-muted-foreground' : 'font-medium text-foreground dark:text-foreground'}>{row.title}</span>
                 {row.description && !done && (
                   <span className="font-normal text-xs"> – {getDescriptionPreview(row.description)}</span>
                 )}
@@ -709,22 +709,22 @@ export function WorkItemListPage() {
       sortKey: 'updated_at',
       render: (row) => {
         const done = strikethroughEnabled && isItemCompleted(row.status, allStatuses ?? statuses)
-        return <span className={done ? 'text-gray-300 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'}>{new Date(row.updated_at).toLocaleDateString()}</span>
+        return <span className={done ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}>{new Date(row.updated_at).toLocaleDateString()}</span>
       },
     },
   ]
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-1 flex-col gap-4">
       <div className="flex items-center gap-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 shrink-0">
+        <h2 className="text-lg font-semibold text-foreground dark:text-foreground shrink-0">
           <span className="lg:hidden">{t('workitems.titleShort')}</span>
           <span className="hidden lg:inline">{t('workitems.title')}</span>
         </h2>
         <div className="grid grid-cols-2 rounded-md shadow-sm shrink-0">
           <button
-            className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-l-md border ${
-              viewMode === 'list' ? 'bg-indigo-50 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700'
+            className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-s-md border ${
+              viewMode === 'list' ? 'bg-accent text-foreground border-border dark:bg-accent dark:text-foreground dark:border-border' : 'bg-surface text-foreground border-border hover:bg-muted dark:bg-card dark:text-foreground dark:border-border dark:hover:bg-muted'
             }`}
             onClick={() => handleViewChange('list')}
           >
@@ -732,8 +732,8 @@ export function WorkItemListPage() {
             {t('workitems.view.list')}
           </button>
           <button
-            className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-r-md border-t border-r border-b ${
-              viewMode === 'board' ? 'bg-indigo-50 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700'
+            className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium rounded-e-md border-t border-e border-b ${
+              viewMode === 'board' ? 'bg-accent text-foreground border-border dark:bg-accent dark:text-foreground dark:border-border' : 'bg-surface text-foreground border-border hover:bg-muted dark:bg-card dark:text-foreground dark:border-border dark:hover:bg-muted'
             }`}
             onClick={() => handleViewChange('board')}
           >
@@ -833,8 +833,8 @@ export function WorkItemListPage() {
 
       {/* Bulk action toolbar */}
       {!readOnly && selected.size > 0 && (
-        <div className="flex items-center gap-3 rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2">
-          <span className="text-sm font-medium text-indigo-700 dark:text-indigo-300">{t('workitems.selected', { count: selected.size })}</span>
+        <div className="flex items-center gap-3 rounded-md bg-accent dark:bg-accent px-4 py-2">
+          <span className="text-sm font-medium text-foreground dark:text-foreground">{t('workitems.selected', { count: selected.size })}</span>
           <div className="w-40">
             <Select onChange={(e) => handleBulkStatus(e.target.value)} value="">
               <option value="">{t('workitems.bulk.changeStatus')}</option>
@@ -878,10 +878,10 @@ export function WorkItemListPage() {
       ) : viewMode === 'list' ? (
         <>
           {/* Desktop: table view */}
-          <div className="hidden lg:block border dark:border-gray-700 rounded-lg overflow-hidden">
+          <div className="hidden lg:block border dark:border-border rounded-lg overflow-hidden">
             {!readOnly && (
-              <div className="bg-gray-50 dark:bg-gray-800 px-6 py-2 border-b dark:border-gray-700">
-                <label className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <div className="bg-muted dark:bg-card px-6 py-2 border-b dark:border-border">
+                <label className="flex items-center gap-2 text-xs text-muted-foreground dark:text-muted-foreground">
                   <input
                     type="checkbox"
                     checked={items.length > 0 && selected.size === items.length}
@@ -914,7 +914,7 @@ export function WorkItemListPage() {
           {/* Mobile: card view */}
           <div className="lg:hidden space-y-2">
             {allItems.length === 0 ? (
-              <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-12">{t('workitems.empty')}</p>
+              <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground py-12">{t('workitems.empty')}</p>
             ) : (
               allItems.map((item) => {
                 const assigneeName = item.assignee_id
@@ -988,7 +988,7 @@ export function WorkItemListPage() {
           setSelected(new Set())
           setActiveRow(-1)
         }}>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+          <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
             {t('workitems.deleteSelectedBody', { count: deleteTargets.length })}
           </p>
           <div className="flex justify-end gap-3">

@@ -50,8 +50,8 @@ test.describe('Back link navigation', () => {
     await page.getByText('Back to inbox').click();
     await expect(page).toHaveURL(/\/user\/inbox/, { timeout: 10000 });
 
-    // The previously clicked row should be highlighted (InboxRow uses bg-indigo-50 for isActive)
-    const highlightedRow = page.locator('tr.bg-indigo-50').filter({ hasText: 'Back link inbox test' });
+    // The previously clicked row should be highlighted (InboxRow uses bg-accent for isActive)
+    const highlightedRow = page.locator('tr.bg-accent').filter({ hasText: 'Back link inbox test' });
     await expect(highlightedRow).toBeVisible({ timeout: 5000 });
   });
 
@@ -71,8 +71,8 @@ test.describe('Back link navigation', () => {
     await page.getByText('Back to watchlist').click();
     await expect(page).toHaveURL(/\/user\/watchlist/, { timeout: 10000 });
 
-    // DataTable uses ring-indigo-500 for active row highlight
-    const highlightedRow = page.locator('tr.ring-indigo-500').filter({ hasText: 'Back link watchlist test' });
+    // DataTable uses ring-ring for active row highlight
+    const highlightedRow = page.locator('tr.ring-ring').filter({ hasText: 'Back link watchlist test' });
     await expect(highlightedRow).toBeVisible({ timeout: 5000 });
   });
 
@@ -99,8 +99,8 @@ test.describe('Back link navigation', () => {
     await page.getByText('Back to milestone').click();
     await expect(page).toHaveURL(new RegExp(`/d/projects/${testProject.key}/milestones/${milestone.id}`), { timeout: 10000 });
 
-    // MilestoneDashboardPage WorkItemRow uses bg-indigo-50 for active
-    const highlightedRow = page.locator('.bg-indigo-50').filter({ hasText: 'Back link milestone test' });
+    // MilestoneDashboardPage WorkItemRow uses bg-accent for active
+    const highlightedRow = page.locator('.bg-accent').filter({ hasText: 'Back link milestone test' });
     await expect(highlightedRow).toBeVisible({ timeout: 5000 });
   });
 });

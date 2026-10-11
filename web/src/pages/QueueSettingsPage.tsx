@@ -66,13 +66,13 @@ export function QueueSettingsPage() {
       <div className="flex items-center gap-3">
         <Link
           to={p(`/projects/${projectKey}/queues`)}
-          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          className="text-muted-foreground hover:text-muted-foreground dark:hover:text-foreground"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{queue.name}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('queues.settings')}</p>
+          <h2 className="text-lg font-semibold text-foreground dark:text-foreground">{queue.name}</h2>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('queues.settings')}</p>
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export function QueueSettingsPage() {
       {canManage && (
         <div className="border border-red-200 dark:border-red-800 rounded-lg p-4 mt-8">
           <h3 className="text-sm font-semibold text-red-600 dark:text-red-400 mb-2">{t('queues.dangerZone')}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{t('queues.dangerZoneDescription')}</p>
+          <p className="text-sm text-muted-foreground dark:text-foreground mb-3">{t('queues.dangerZoneDescription')}</p>
           {deleteError && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{deleteError}</p>}
           <Button variant="danger" onClick={() => setDeleteOpen(true)}>
             <Trash2 className="h-3.5 w-3.5 mr-1" />
@@ -105,7 +105,7 @@ export function QueueSettingsPage() {
 
       {/* Delete queue confirmation */}
       <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title={t('queues.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           <Trans i18nKey="queues.deleteConfirmBody" values={{ name: queue.name }} components={{ bold: <strong /> }} />
         </p>
         <div className="flex justify-end gap-2">
@@ -201,12 +201,12 @@ function GeneralTab({
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
           {t('common.description')}
         </label>
         <textarea
           rows={3}
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:opacity-50"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           disabled={!canManage}
@@ -237,7 +237,7 @@ function GeneralTab({
 
       <div className="flex items-center gap-3">
         <Toggle enabled={isPublic} onChange={setIsPublic} disabled={!canManage} label={t('queues.isPublic')} />
-        <span className="text-sm text-gray-700 dark:text-gray-300">{t('queues.isPublic')}</span>
+        <span className="text-sm text-foreground dark:text-foreground">{t('queues.isPublic')}</span>
       </div>
 
       {canManage && (
@@ -336,7 +336,7 @@ function CategoriesTab({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('queues.categories')}</h3>
+        <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t('queues.categories')}</h3>
         {canManage && (
           <Button size="sm" variant="secondary" onClick={() => openEditor()}>
             <Plus className="h-4 w-4 mr-1" />
@@ -348,20 +348,20 @@ function CategoriesTab({
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {sortedCategories.length === 0 ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('queues.categories.noCategories')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('queues.categories.noCategories')}</p>
         </div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
           {sortedCategories.map((cat) => (
             <div key={cat.id} className="p-3 flex items-center justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-400 dark:text-gray-500 w-6 text-right shrink-0">#{cat.position}</span>
-                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{cat.name}</span>
+                  <span className="text-xs text-muted-foreground dark:text-muted-foreground w-6 text-right shrink-0">#{cat.position}</span>
+                  <span className="text-sm font-medium text-foreground dark:text-foreground">{cat.name}</span>
                 </div>
                 {cat.description && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 ml-8">{cat.description}</p>
+                  <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5 ml-8">{cat.description}</p>
                 )}
               </div>
               <div className="flex items-center gap-1 shrink-0">
@@ -399,7 +399,7 @@ function CategoriesTab({
 
       {/* Delete confirmation */}
       <Modal open={!!deleteTarget} onClose={() => setDeleteTarget(null)} title={t('queues.categories.deleteConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           <Trans i18nKey="queues.categories.deleteConfirmBody" values={{ name: deleteTarget?.name }} components={{ bold: <strong /> }} />
         </p>
         <div className="flex justify-end gap-2">
@@ -480,12 +480,12 @@ function CategoryForm({
         autoFocus
       />
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">
           {t('common.description')}
         </label>
         <textarea
           rows={2}
-          className="block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -571,7 +571,7 @@ function TeamsTab({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('queues.teams')}</h3>
+      <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t('queues.teams')}</h3>
 
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
@@ -601,17 +601,17 @@ function TeamsTab({
 
       {/* Assigned teams list */}
       {(!queueTeams || queueTeams.length === 0) ? (
-        <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t('queues.teams.noTeams')}</p>
+        <div className="border border-dashed border-border dark:border-border rounded-lg p-6 text-center">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('queues.teams.noTeams')}</p>
         </div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="border border-border dark:border-border rounded-lg divide-y divide-border dark:divide-border">
           {queueTeams.map((team) => (
             <div key={team.id} className="p-3 flex items-center justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{team.name}</span>
+                <span className="text-sm font-medium text-foreground dark:text-foreground">{team.name}</span>
                 {team.description && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{team.description}</p>
+                  <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-0.5">{team.description}</p>
                 )}
               </div>
               <div className="flex items-center gap-1 shrink-0">
@@ -629,7 +629,7 @@ function TeamsTab({
 
       {/* Unassign confirmation */}
       <Modal open={!!unassignTarget} onClose={() => setUnassignTarget(null)} title={t('queues.teams.unassignConfirmTitle')}>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-muted-foreground dark:text-foreground mb-4">
           <Trans i18nKey="queues.teams.unassignConfirmBody" values={{ name: unassignTarget?.name }} components={{ bold: <strong /> }} />
         </p>
         <div className="flex justify-end gap-2">

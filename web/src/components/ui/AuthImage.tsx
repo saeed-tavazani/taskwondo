@@ -55,7 +55,7 @@ export function AuthImage({ src, alt, ...props }: AuthImageProps) {
   }
 
   if (!blobUrl) {
-    return <span className="text-xs text-gray-400">Loading image...</span>
+    return <span className="text-xs text-muted-foreground">Loading image...</span>
   }
 
   return <img src={blobUrl} alt={alt} {...props} />

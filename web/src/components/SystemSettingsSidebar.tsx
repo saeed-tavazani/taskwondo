@@ -1,3 +1,4 @@
+import { Tooltip } from '@/components/ui/Tooltip'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSidebar } from '@/contexts/SidebarContext'
@@ -17,7 +18,8 @@ export function SystemSettingsSidebar() {
       <ul className="space-y-1">
         {navItems.map((item) => (
           <li key={item.to}>
-            <NavLink
+            <Tooltip content={!showLabels ? item.label : undefined} position="end" className="block w-full">
+          <NavLink aria-label={item.label}
               to={item.to}
               end={item.end}
               onClick={(e) => {
@@ -27,23 +29,20 @@ export function SystemSettingsSidebar() {
                 }
               }}
               className={({ isActive }) =>
-                `group/nav relative flex items-center gap-3 rounded-md text-sm font-medium transition-colors ${
-                  !showLabels ? 'justify-center px-0 py-2' : 'px-3 py-2'
+                `group/nav relative flex items-center gap-2 rounded-md text-sm font-medium transition-colors ${
+                  !showLabels ? 'justify-center px-0 py-2' : 'px-2 py-1.5'
                 } ${
                   isActive
-                    ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300'
-                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                    ? 'bg-accent text-foreground dark:bg-accent dark:text-foreground'
+                    : 'text-sidebar-foreground hover:bg-accent hover:text-foreground'
                 }`
               }
             >
-              <item.icon className="h-5 w-5 shrink-0" />
+              <item.icon className="h-4 w-4 shrink-0" />
               {showLabels && <span>{item.label}</span>}
-              {!showLabels && (
-                <span className="pointer-events-none absolute left-full ml-2 rounded bg-gray-900 px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover/nav:opacity-100 dark:bg-gray-700 z-50">
-                  {item.label}
-                </span>
-              )}
+
             </NavLink>
+        </Tooltip>
           </li>
         ))}
       </ul>
@@ -55,37 +54,35 @@ export function SystemSettingsSidebar() {
       {/* Desktop sidebar */}
       <nav
         className={`hidden sm:block shrink-0 transition-all duration-200 ${
-          collapsed ? 'w-14' : 'w-48'
+          collapsed ? 'w-14' : 'w-[240px]'
         }`}
       >
         {renderNavItems(!collapsed)}
 
         <div
-          className={`mt-4 border-t border-gray-200 pt-4 dark:border-gray-700 ${
+          className={`mt-4 border-t border-border pt-4 dark:border-border ${
             collapsed ? 'flex justify-center' : ''
           }`}
         >
+          <Tooltip content={collapsed ? t('sidebar.expand') : undefined} position="end" className="block w-full">
           <button
             onClick={toggleCollapsed}
-            className={`group/toggle relative flex items-center gap-3 rounded-md text-sm font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300 ${
-              collapsed ? 'justify-center px-0 py-2 w-full' : 'px-3 py-2 w-full'
+            className={`group/toggle relative flex items-center gap-2 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground dark:text-muted-foreground dark:hover:bg-card dark:hover:text-foreground ${
+              collapsed ? 'justify-center px-0 py-2 w-full' : 'px-2 py-1.5 w-full'
             }`}
             aria-label={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
           >
             {collapsed ? (
-              <PanelLeftOpen className="h-5 w-5 shrink-0" />
+              <PanelLeftOpen className="h-4 w-4 shrink-0 rtl:rotate-180" />
             ) : (
               <>
-                <PanelLeftClose className="h-5 w-5 shrink-0" />
+                <PanelLeftClose className="h-4 w-4 shrink-0 rtl:rotate-180" />
                 <span>{t('sidebar.collapse')}</span>
               </>
             )}
-            {collapsed && (
-              <span className="pointer-events-none absolute left-full ml-2 rounded bg-gray-900 px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover/toggle:opacity-100 dark:bg-gray-700 z-50">
-                {t('sidebar.expand')}
-              </span>
-            )}
+
           </button>
+        </Tooltip>
         </div>
       </nav>
 

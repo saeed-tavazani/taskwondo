@@ -116,10 +116,10 @@ export function StatsTimelineChart({ projectKey }: Props) {
     inProgress: isDark ? '#a78bfa' : '#8b5cf6',   // violet
     done: isDark ? '#6ee7b7' : '#10b981',          // emerald
     cancelled: isDark ? '#fca5a5' : '#ef4444',     // red
-    grid: isDark ? '#374151' : '#e5e7eb',
-    text: isDark ? '#9ca3af' : '#6b7280',
-    tooltip: isDark ? '#1f2937' : '#ffffff',
-    tooltipBorder: isDark ? '#374151' : '#e5e7eb',
+    grid: 'var(--ui-border)',
+    text: 'var(--ui-muted-foreground)',
+    tooltip: 'var(--ui-card)',
+    tooltipBorder: 'var(--ui-border)',
   }
 
   const hasData = chartData.length > 0
@@ -127,27 +127,28 @@ export function StatsTimelineChart({ projectKey }: Props) {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+        <h2 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide">
           {t('projects.overview.activity')}
         </h2>
         <div className="flex items-center gap-1">
           {PRESETS.map((r) => (
             <button
               key={r}
+              aria-pressed={range_ === r && !isCustomActive}
               onClick={() => handlePreset(r)}
               className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 range_ === r && !isCustomActive
-                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300'
-                  : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+                  ? 'bg-accent text-foreground dark:bg-accent dark:text-foreground'
+                  : 'text-muted-foreground hover:bg-muted dark:text-muted-foreground dark:hover:bg-card'
               }`}
             >
               {t(`projects.overview.range_${r}`)}
             </button>
           ))}
-          <span className="mx-1 text-gray-300 dark:text-gray-600">|</span>
+          <span className="mx-1 text-muted-foreground dark:text-muted-foreground">|</span>
           <div className={`flex items-center gap-1 rounded-md px-1.5 py-0.5 ${
             isCustomActive
-              ? 'bg-indigo-100 dark:bg-indigo-900/40'
+              ? 'bg-accent dark:bg-accent'
               : ''
           }`}>
             <input
@@ -156,20 +157,20 @@ export function StatsTimelineChart({ projectKey }: Props) {
               max={customUnit === 'd' ? 365 : 8760}
               value={customValue}
               onChange={(e) => handleCustomValueChange(e.target.value)}
-              className={`w-12 text-xs font-medium text-center border rounded px-1 py-0.5 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 ${
+              className={`w-12 text-xs font-medium text-center border rounded px-1 py-0.5 bg-surface dark:bg-card border-border dark:border-border ${
                 isCustomActive
-                  ? 'text-indigo-700 dark:text-indigo-300'
-                  : 'text-gray-500 dark:text-gray-400'
+                  ? 'text-foreground dark:text-foreground'
+                  : 'text-muted-foreground dark:text-muted-foreground'
               }`}
               data-testid="custom-range-value"
             />
             <select
               value={customUnit}
               onChange={(e) => handleCustomUnitChange(e.target.value as 'h' | 'd')}
-              className={`text-xs font-medium border rounded px-1 py-0.5 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 ${
+              className={`text-xs font-medium border rounded px-1 py-0.5 bg-surface dark:bg-card border-border dark:border-border ${
                 isCustomActive
-                  ? 'text-indigo-700 dark:text-indigo-300'
-                  : 'text-gray-500 dark:text-gray-400'
+                  ? 'text-foreground dark:text-foreground'
+                  : 'text-muted-foreground dark:text-muted-foreground'
               }`}
               data-testid="custom-range-unit"
             >
@@ -179,13 +180,13 @@ export function StatsTimelineChart({ projectKey }: Props) {
           </div>
         </div>
       </div>
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+      <div className="rounded-lg border border-border dark:border-border p-4">
         {isLoading ? (
           <div className="flex items-center justify-center" style={{ height: 200 }}>
             <Spinner />
           </div>
         ) : !hasData ? (
-          <div className="flex items-center justify-center text-sm text-gray-400 dark:text-gray-500" style={{ height: 200 }}>
+          <div className="flex items-center justify-center text-sm text-muted-foreground dark:text-muted-foreground" style={{ height: 200 }}>
             {t('projects.overview.noActivityData')}
           </div>
         ) : (

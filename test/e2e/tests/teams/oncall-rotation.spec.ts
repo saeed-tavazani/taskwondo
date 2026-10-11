@@ -208,9 +208,9 @@ test.describe('Oncall rotation', () => {
     await page.getByRole('button', { name: 'On-Call', exact: true }).click();
 
     // Calendar should be visible with day headers
-    await expect(page.getByText('Mon')).toBeVisible({ timeout: 10000 });
-    await expect(page.getByText('Tue')).toBeVisible();
-    await expect(page.getByText('Wed')).toBeVisible();
+    await expect(page.getByText('Mon', { exact: true })).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Tue', { exact: true })).toBeVisible();
+    await expect(page.getByText('Wed', { exact: true })).toBeVisible();
 
     // Today button should be visible
     await expect(page.getByRole('button', { name: 'Today' })).toBeVisible();

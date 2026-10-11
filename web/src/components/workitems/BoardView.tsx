@@ -9,8 +9,6 @@ import { Tooltip } from '@/components/ui/Tooltip'
 import type { WorkItem } from '@/api/workitems'
 import type { WorkflowStatus, WorkflowTransition } from '@/api/workflows'
 
-const COLUMN_WIDTH = 304 // 288px (w-72) + 16px gap (gap-4 = 1rem)
-
 interface DraggedItem {
   itemNumber: number
   fromStatus: string
@@ -100,8 +98,9 @@ export function BoardView({ projectKey, items, statuses, transitionsMap, onItemC
   const updateScrollIndicators = useCallback(() => {
     const el = scrollContainerRef.current
     if (!el) return
-    setCanScrollLeft(el.scrollLeft > 0)
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1)
+    const offset = Math.abs(el.scrollLeft)
+    setCanScrollLeft(offset > 1)
+    setCanScrollRight(offset + el.clientWidth < el.scrollWidth - 1)
   }, [])
 
   useEffect(() => {
@@ -120,52 +119,55 @@ export function BoardView({ projectKey, items, statuses, transitionsMap, onItemC
   const scrollBy = useCallback((direction: 'left' | 'right') => {
     const el = scrollContainerRef.current
     if (!el) return
-    const currentScroll = el.scrollLeft
+    const style = getComputedStyle(el)
+    const columnWidth = (el.firstElementChild?.getBoundingClientRect().width ?? 288) + (parseFloat(style.columnGap) || 0)
+    const sign = style.direction === 'rtl' ? -1 : 1
+    const currentScroll = Math.abs(el.scrollLeft)
     if (direction === 'right') {
       // Snap to the start of the next hidden column
-      const nextColumnStart = (Math.floor(currentScroll / COLUMN_WIDTH) + 1) * COLUMN_WIDTH
-      el.scrollTo({ left: nextColumnStart, behavior: 'smooth' })
+      const nextColumnStart = (Math.floor(currentScroll / columnWidth) + 1) * columnWidth
+      el.scrollTo({ left: sign * nextColumnStart, behavior: 'smooth' })
     } else {
       // Snap to the start of the previous column
-      const prevColumnStart = (Math.ceil(currentScroll / COLUMN_WIDTH) - 1) * COLUMN_WIDTH
-      el.scrollTo({ left: Math.max(0, prevColumnStart), behavior: 'smooth' })
+      const prevColumnStart = (Math.ceil(currentScroll / columnWidth) - 1) * columnWidth
+      el.scrollTo({ left: sign * Math.max(0, prevColumnStart), behavior: 'smooth' })
     }
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative flex flex-1 flex-col">
       {canScrollLeft && (
-        <div className="absolute left-0 top-0 bottom-0 z-20 pointer-events-none" style={{ width: 0 }}>
+        <div className="absolute start-0 top-0 bottom-0 z-20 pointer-events-none" style={{ width: 0 }}>
           <button
             type="button"
             aria-label={t('workitems.board.scrollLeft')}
-            className="pointer-events-auto sticky top-1/2 -translate-y-1/2 ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-600 shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors"
+            className="pointer-events-auto sticky top-1/2 -translate-y-1/2 ms-1 flex items-center justify-center w-8 h-8 rounded-full bg-surface/90 dark:bg-card border border-border dark:border-border shadow-md hover:bg-muted dark:hover:bg-muted text-muted-foreground dark:text-foreground transition-colors"
             onClick={() => scrollBy('left')}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={20} className="rtl:rotate-180" />
           </button>
         </div>
       )}
       {canScrollRight && (
-        <div className="absolute right-0 top-0 bottom-0 z-20 pointer-events-none" style={{ width: 0 }}>
+        <div className="absolute end-0 top-0 bottom-0 z-20 pointer-events-none" style={{ width: 0 }}>
           <button
             type="button"
             aria-label={t('workitems.board.scrollRight')}
-            className="pointer-events-auto sticky top-1/2 -translate-y-1/2 -ml-9 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-600 shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors"
+            className="pointer-events-auto sticky top-1/2 -translate-y-1/2 -ms-9 flex items-center justify-center w-8 h-8 rounded-full bg-surface/90 dark:bg-card border border-border dark:border-border shadow-md hover:bg-muted dark:hover:bg-muted text-muted-foreground dark:text-foreground transition-colors"
             onClick={() => scrollBy('right')}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={20} className="rtl:rotate-180" />
           </button>
         </div>
       )}
-      <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-4">
+      <div ref={scrollContainerRef} className="flex flex-1 items-stretch gap-4 overflow-x-auto pb-4">
         {sortedStatuses.map((status) => {
           const isValidTarget = draggedItem !== null && canDropOnStatus(status.name)
           const isHovered = hoveredColumn === status.name
           const columnClasses = isHovered
-            ? 'border-2 border-dashed border-indigo-400 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-lg'
+            ? 'border-2 border-dashed border-border dark:border-border bg-accent dark:bg-accent rounded-lg'
             : isValidTarget
-              ? 'border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg'
+              ? 'border-2 border-dashed border-border dark:border-border rounded-lg'
               : draggedItem !== null
                 ? 'border-2 border-transparent rounded-lg opacity-60'
                 : ''
@@ -173,16 +175,16 @@ export function BoardView({ projectKey, items, statuses, transitionsMap, onItemC
           return (
             <div
               key={status.name}
-              className={`min-w-[280px] w-72 shrink-0 p-2 transition-colors ${columnClasses}`}
+              className={`min-w-[280px] w-72 shrink-0 min-h-64 bg-board border border-border rounded-2xl p-2 transition-colors ${columnClasses}`}
               onDragOver={(e) => handleColumnDragOver(e, status.name)}
               onDragEnter={(e) => handleColumnDragEnter(e, status.name)}
               onDragLeave={(e) => handleColumnDragLeave(e, status.name)}
               onDrop={(e) => handleColumnDrop(e, status.name)}
             >
-              <div className="flex items-center gap-2 mb-3 px-1">
+              <div className="flex items-center gap-2 mb-2 px-1 pb-2 border-b border-border">
                 <span className={`w-2.5 h-2.5 rounded-full ${categoryDot[status.category] ?? 'bg-gray-400'}`} />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t(`workitems.statuses.${status.name}`, { defaultValue: status.display_name })}</h3>
-                <span className="text-xs text-gray-400 dark:text-gray-500">{itemsByStatus.get(status.name)?.length ?? 0}</span>
+                <h3 className="text-sm font-medium text-foreground dark:text-foreground">{t(`workitems.statuses.${status.name}`, { defaultValue: status.display_name })}</h3>
+                <span className="text-xs text-muted-foreground dark:text-muted-foreground">{itemsByStatus.get(status.name)?.length ?? 0}</span>
               </div>
               <div className="space-y-2">
                 {(itemsByStatus.get(status.name) ?? []).map((item) => (
@@ -244,7 +246,7 @@ function BoardCard({
 
   return (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 shadow-sm hover:shadow-md cursor-pointer relative ${isDragging ? 'opacity-50' : ''}`}
+      className={`bg-surface dark:bg-card rounded-lg border border-border dark:border-border p-3 shadow-xs hover:border-input cursor-pointer relative ${isDragging ? 'opacity-50' : ''}`}
       draggable={!readOnly}
       onClick={onClick}
       onDragStart={(e) => {
@@ -255,27 +257,27 @@ function BoardCard({
       onDragEnd={onDragEnd}
     >
       <div className="flex items-center gap-1.5 mb-1">
-        <span className={`text-xs font-bold font-mono ${isCompleted ? 'text-gray-400 dark:text-gray-500' : 'text-gray-600 dark:text-gray-400'}`}>{item.display_id}</span>
+        <span className={`text-xs font-bold font-mono ${isCompleted ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>{item.display_id}</span>
         <span className={isCompleted ? 'opacity-40' : ''}><TypeBadge type={item.type} /></span>
         <span className={isCompleted ? 'opacity-40' : ''}><PriorityBadge priority={item.priority} /></span>
         {allowed.length > 0 && !readOnly && (
           <div className="relative ml-auto">
             <Tooltip content={t('workitems.view.moveTo')}>
               <button
-                className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 text-xs px-1"
+                className="text-muted-foreground hover:text-muted-foreground dark:text-muted-foreground dark:hover:text-foreground text-xs px-1"
                 onClick={(e) => { e.stopPropagation(); setShowMenu(!showMenu) }}
               >
               &hellip;
               </button>
             </Tooltip>
             {showMenu && (
-              <div className="absolute right-0 top-5 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1 min-w-[140px]">
+              <div className="absolute right-0 top-5 z-10 bg-surface dark:bg-card border border-border dark:border-border rounded-md shadow-lg py-1 min-w-[140px]">
                 {allowed.map((toStatus) => {
                   const ws = statuses.find((s) => s.name === toStatus)
                   return (
                     <button
                       key={toStatus}
-                      className="block w-full text-left px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className="block w-full text-left px-3 py-1.5 text-sm text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted"
                       onClick={(e) => {
                         e.stopPropagation()
                         onStatusChange(toStatus)
@@ -291,9 +293,9 @@ function BoardCard({
           </div>
         )}
       </div>
-      <p className={`text-sm font-medium line-clamp-2 ${isCompleted ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>{item.title}</p>
+      <p className={`text-sm font-medium line-clamp-2 ${isCompleted ? 'line-through text-muted-foreground dark:text-muted-foreground' : 'text-foreground dark:text-foreground'}`}>{item.title}</p>
       {item.description && (
-        <p className={`text-xs line-clamp-1 mt-0.5 ${isCompleted ? 'text-gray-300 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'}`}>{item.description}</p>
+        <p className={`text-xs line-clamp-1 mt-0.5 ${isCompleted ? 'text-muted-foreground dark:text-muted-foreground' : 'text-muted-foreground dark:text-muted-foreground'}`}>{item.description}</p>
       )}
       {!isCompleted && item.sla && (
         <div className="mt-1.5">
