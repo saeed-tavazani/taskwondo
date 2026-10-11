@@ -5,6 +5,7 @@ import { BarChart3, Download, Clock } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { TimeEntryActions } from '@/components/TimeEntryActions'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Select } from '@/components/ui/Select'
 import { TimezoneSelect } from '@/components/ui/TimezoneSelect'
 import { Button } from '@/components/ui/Button'
@@ -62,8 +63,8 @@ function TimeReportsContent() {
     <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="inline-flex items-center gap-2 text-xl font-semibold text-foreground dark:text-foreground"><BarChart3 className="h-5 w-5" aria-hidden="true" />{t('timeTracking.reports')}</h1><Link to={p('/time-tracking')} className="inline-flex items-center gap-2 text-sm text-foreground dark:text-foreground"><Clock className="h-4 w-4" aria-hidden="true" />{t('timeTracking.title')}</Link></div>
     {loadingProjects ? <Spinner /> : projectsError ? <p role="alert">{getLocalizedError(projectsError, t, 'timeTracking.error')}</p> : !canTrackTime ? <p role="alert">{t('timeTracking.noAccess')}</p> : <>
       <div className={`${panel} grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3`}>
-        <Input label={t('timeTracking.from')} type="date" value={from} onChange={e => { setFrom(e.target.value); reset() }} />
-        <Input label={t('timeTracking.to')} type="date" value={to} onChange={e => { setTo(e.target.value); reset() }} />
+        <LocalizedDatePicker label={t('timeTracking.from')} type="date" value={from} onChange={value => { setFrom(value); reset() }} />
+        <LocalizedDatePicker label={t('timeTracking.to')} type="date" value={to} onChange={value => { setTo(value); reset() }} />
         <Select label={t('timeTracking.project')} value={project} onChange={e => { setProject(e.target.value); setItem(''); reset() }}><option value="">{t('timeTracking.allProjects')}</option>{projects.map(pr => <option key={pr.id} value={pr.key}>{pr.name}</option>)}</Select>
         <Input label={t('timeTracking.itemNumber')} type="number" min="1" value={item} disabled={!project} onChange={e => { setItem(e.target.value); reset() }} />
         <Select label={t('timeTracking.person')} value={person} onChange={e => { setPerson(e.target.value); reset() }}><option value="">{t('timeTracking.allPeople')}</option>{(data?.people_options ?? []).map(pe => <option key={pe.key} value={pe.key}>{pe.label}</option>)}</Select>

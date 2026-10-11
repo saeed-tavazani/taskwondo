@@ -657,8 +657,8 @@ function InboxListPage() {
                 autoRemove ? 'bg-primary' : 'bg-muted-strong dark:bg-muted'
               }`}
             >
-              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-surface shadow ring-0 transition-transform ${
-                autoRemove ? 'translate-x-4' : 'translate-x-0'
+              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full shadow ring-0 transition-transform ${
+                autoRemove ? 'translate-x-4 rtl:-translate-x-4 bg-primary-foreground' : 'translate-x-0 bg-surface dark:bg-foreground'
               }`} />
             </button>
           </label>
@@ -694,8 +694,8 @@ function InboxListPage() {
                 autoRemove ? 'bg-primary' : 'bg-muted-strong dark:bg-muted'
               }`}
             >
-              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-surface shadow ring-0 transition-transform ${
-                autoRemove ? 'translate-x-4' : 'translate-x-0'
+              <span className={`pointer-events-none inline-block h-4 w-4 rounded-full shadow ring-0 transition-transform ${
+                autoRemove ? 'translate-x-4 rtl:-translate-x-4 bg-primary-foreground' : 'translate-x-0 bg-surface dark:bg-foreground'
               }`} />
             </button>
           </label>

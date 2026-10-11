@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useNamespacePath } from '@/hooks/useNamespacePath'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Modal } from '@/components/ui/Modal'
 import { Spinner } from '@/components/ui/Spinner'
 import { Plus, ChevronDown, ChevronRight, Check, Clock } from 'lucide-react'
@@ -327,11 +328,11 @@ function MilestoneForm({
         />
       </div>
       <div className="w-48">
-        <Input
+        <LocalizedDatePicker
           label={t('milestones.dueDate')}
           type="date"
           value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
+          onChange={setDueDate}
         />
       </div>
       <div className="flex justify-end gap-3 pt-2">

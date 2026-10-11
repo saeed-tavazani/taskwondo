@@ -12,6 +12,7 @@ import { localDateTimeInput, formatTimeDuration } from '@/utils/timeTracking'
 import { getLocalizedError } from '@/utils/apiError'
 import { ProjectPicker } from '@/components/ui/ProjectPicker'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Select } from '@/components/ui/Select'
 import { Button } from '@/components/ui/Button'
 import { Tabs } from '@/components/ui/Tabs'
@@ -88,8 +89,8 @@ export function TimeEntryForm({ ns, projects, entry, onSaved, onCancel }: { ns: 
         </div>
       </div>
       {mode === 'manual' && <div className="grid gap-4 sm:grid-cols-2">
-        <Input id={`${formId}-start`} label={t('timeTracking.startTime')} type="datetime-local" step="1" required value={start} onChange={e => setStart(e.target.value)} dir="ltr" />
-        <Input id={`${formId}-end`} label={t('timeTracking.endTime')} type="datetime-local" step="1" required value={end} onChange={e => setEnd(e.target.value)} dir="ltr" />
+        <LocalizedDatePicker id={`${formId}-start`} label={t('timeTracking.startTime')} type="datetime-local" required value={start} onChange={setStart} dir="ltr" />
+        <LocalizedDatePicker id={`${formId}-end`} label={t('timeTracking.endTime')} type="datetime-local" required value={end} onChange={setEnd} dir="ltr" />
       </div>}
       {itemError && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{getLocalizedError(itemError, t, 'timeTracking.error')}</p>}
       {invalidRange && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{t('timeTracking.invalidRange')}</p>}

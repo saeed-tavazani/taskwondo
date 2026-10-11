@@ -3,6 +3,7 @@ import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next'
 import { ChevronRight, ChevronDown, ChevronUp, Pencil, Clock } from 'lucide-react'
 import { useMilestone, useMilestoneStats, useUpdateMilestone, useDeleteMilestone } from '@/hooks/useMilestones'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { useWorkItems } from '@/hooks/useWorkItems'
 import { useMembers } from '@/hooks/useProjects'
 import { useProjectWorkflow } from '@/hooks/useWorkflows'
@@ -884,12 +885,12 @@ function MilestoneEditForm({
       </div>
       <div className="flex gap-4">
         <div className="w-48">
-          <label className="block text-sm font-medium text-foreground dark:text-foreground mb-1">{t('milestones.dueDate')}</label>
-          <input
+          <LocalizedDatePicker
+            label={t('milestones.dueDate')}
             type="date"
-            className="block w-full rounded-md border border-border dark:border-border dark:bg-card dark:text-foreground px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
+            className="w-full"
             value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
+            onChange={setDueDate}
           />
         </div>
         <div className="w-48">

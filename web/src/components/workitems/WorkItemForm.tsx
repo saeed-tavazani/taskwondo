@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Select } from '@/components/ui/Select'
 import { UserPicker } from '@/components/ui/UserPicker'
 import { ProjectPicker } from '@/components/ui/ProjectPicker'
@@ -461,7 +462,7 @@ export function WorkItemForm({
   )
 
   const dueDateField = (
-    <Input label={t('workitems.form.dueDate')} type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} disabled={locked} />
+    <LocalizedDatePicker label={t('workitems.form.dueDate')} type="date" value={dueDate} onChange={setDueDate} disabled={locked} />
   )
 
   const milestoneField = milestones.length > 0 && (

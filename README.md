@@ -1,6 +1,8 @@
-# Montask — Self-Hosted Task & Project Management [![CI](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml/badge.svg)](https://github.com/marcoshack/taskwondo/actions/workflows/ci.yml)
+# Montask — Self-Hosted Task & Project Management [![CI](https://github.com/saeed-tavazani/taskwondo/actions/workflows/ci.yml/badge.svg)](https://github.com/saeed-tavazani/taskwondo/actions/workflows/ci.yml)
 
 A self-hosted, open-source project management and issue tracking platform. Namespaces, kanban boards, customizable workflows, semantic search, email notifications, AI integration via MCP, and 9 languages — all included out of the box. Deploy with a single Docker Compose command. No paid tiers, no strings attached. Your backlog doesn't stand a chance! 🥋
+
+> **Project origin:** Montask is a fork of [Taskwondo](https://github.com/marcoshack/taskwondo). This fork maintains its own development and releases, and its user interface and visual design have been completely redesigned.
 
 Deploy your own Montask instance using the Quick Start below.
 
@@ -110,7 +112,7 @@ See [more screenshots](docs/overview.md) for a full walkthrough of features.
 ## Quick Start
 
 ```bash
-git clone https://github.com/marcoshack/taskwondo.git montask
+git clone https://github.com/saeed-tavazani/taskwondo.git montask
 cd montask
 ./install.sh --docker    # generates .env, pulls images, starts services
 ```
@@ -132,7 +134,7 @@ For manual installation without Docker, see [MANUAL_INSTALL.md](MANUAL_INSTALL.m
 
 Montask includes an [MCP server](https://modelcontextprotocol.io/) with 50+ tools for AI/LLM integration — manage work items, comments, relations, attachments, time entries, inbox, milestones, and more from any MCP-compatible client.
 
-**Downloads** — available on the [Releases](https://github.com/marcoshack/taskwondo/releases) page:
+**Downloads** — available on this fork's [Releases](https://github.com/saeed-tavazani/taskwondo/releases) page:
 
 - `montask-mcp-linux-amd64` — MCP server binary (Linux/amd64)
 - `montask-mcp-darwin-arm64` — MCP server binary (macOS/arm64, Apple Silicon)
@@ -166,7 +168,7 @@ Verify the server is registered and reachable:
 claude mcp list
 ```
 
-For Claude Desktop, download the `montask.mcpb` bundle from the [Releases](https://github.com/marcoshack/taskwondo/releases) page and open it — Claude Desktop will prompt for the URL and API key during install.
+For Claude Desktop, download the `montask.mcpb` bundle from this fork's [Releases](https://github.com/saeed-tavazani/taskwondo/releases) page and open it — Claude Desktop will prompt for the URL and API key during install.
 
 ## Development
 

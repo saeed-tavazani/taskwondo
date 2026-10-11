@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useMembers } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Modal } from '@/components/ui/Modal'
 import { Avatar } from '@/components/ui/Avatar'
 import { Spinner } from '@/components/ui/Spinner'
@@ -137,11 +138,11 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
                 }
               }}
             />
-            <Input
+            <LocalizedDatePicker
               type="date"
               className="flex-1 min-w-0 sm:flex-none sm:shrink-0"
               value={startedAt}
-              onChange={(e) => setStartedAt(e.target.value)}
+              onChange={setStartedAt}
             />
             <Input
               className="hidden sm:block flex-1 min-w-0"
@@ -251,11 +252,11 @@ export function TimeEntryList({ projectKey, itemNumber, sortOrder = 'desc', read
                     if (e.key === 'Escape') setEditingId(null)
                   }}
                 />
-                <Input
+                <LocalizedDatePicker
                   type="date"
                   className="flex-1 min-w-0 sm:flex-none sm:shrink-0"
                   value={editStartedAt}
-                  onChange={(e) => setEditStartedAt(e.target.value)}
+                  onChange={setEditStartedAt}
                   onKeyDown={(e) => {
                     if (e.key === 'Escape') setEditingId(null)
                   }}

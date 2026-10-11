@@ -105,6 +105,67 @@ html:where(.dark) {
   display: none;
 }
 
+/* react-multi-date-picker ships a light calendar surface; use the app palette in dark mode. */
+html.dark .rmdp-wrapper {
+  background-color: var(--ui-card);
+  color: var(--ui-foreground);
+  border-color: var(--ui-border);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+}
+
+html.dark .rmdp-wrapper .rmdp-header-values,
+html.dark .rmdp-wrapper .rmdp-week-day,
+html.dark .rmdp-wrapper .rmdp-day:not(.rmdp-deactive) {
+  color: var(--ui-foreground);
+}
+
+html.dark .rmdp-wrapper .rmdp-day.rmdp-deactive,
+html.dark .rmdp-wrapper .rmdp-day.rmdp-disabled {
+  color: var(--ui-muted-foreground);
+}
+
+html.dark .rmdp-wrapper .rmdp-day:not(.rmdp-disabled):not(.rmdp-selected):hover,
+html.dark .rmdp-wrapper .rmdp-month-picker div:not(.rmdp-selected):hover,
+html.dark .rmdp-wrapper .rmdp-year-picker div:not(.rmdp-selected):hover {
+  background-color: var(--ui-muted);
+  color: var(--ui-foreground);
+}
+
+html.dark .rmdp-wrapper .rmdp-month-picker div,
+html.dark .rmdp-wrapper .rmdp-year-picker div,
+html.dark .rmdp-wrapper .rmdp-time-picker div {
+  color: var(--ui-foreground);
+}
+
+html.dark .rmdp-container .rmdp-ep-arrow,
+html.dark .rmdp-container .rmdp-ep-arrow::after {
+  background-color: var(--ui-card);
+  border-color: var(--ui-border);
+}
+
+html.dark .rmdp-wrapper .rmdp-time-picker,
+html.dark .rmdp-wrapper .rmdp-time-picker div input {
+  background-color: var(--ui-card);
+  color: var(--ui-foreground);
+  border-color: var(--ui-border);
+}
+
+html.dark .rmdp-wrapper .rmdp-analog-clock {
+  background-color: var(--ui-board);
+  border-color: #2563eb;
+}
+
+html.dark .rmdp-wrapper .rmdp-analog-clock .dial-lines,
+html.dark .rmdp-wrapper .rmdp-analog-clock .rmdp-hour,
+html.dark .rmdp-wrapper .rmdp-analog-clock .rmdp-minute,
+html.dark .rmdp-wrapper .rmdp-analog-clock .rmdp-second {
+  background-color: #60a5fa;
+}
+
+html.dark .rmdp-wrapper .rmdp-analog-clock span {
+  color: var(--ui-foreground);
+}
+
 @keyframes confirm-fade {
   0% {
     opacity: 0;

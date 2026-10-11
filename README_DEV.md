@@ -1,5 +1,7 @@
 # Montask — Development Setup
 
+Montask is maintained in this repository as a fork of [Taskwondo](https://github.com/marcoshack/taskwondo). This fork has completely redesigned the user interface and visual design; its development and release workflows are managed here.
+
 ## Prerequisites
 
 [mise](https://mise.jdx.dev) is the only development tool you install yourself. `mise.toml`

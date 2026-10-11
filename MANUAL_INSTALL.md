@@ -11,7 +11,7 @@ This guide covers installing Montask without Docker Compose. You'll need to prov
 
 ## Download
 
-Download the server bundle (`montask-server-*.tar.gz`) from the [Releases](https://github.com/marcoshack/taskwondo/releases) page. The [Dev Build](https://github.com/marcoshack/taskwondo/releases/tag/dev) release always has the latest build from `main`.
+Download the server bundle (`montask-server-*.tar.gz`) from this fork's [Releases](https://github.com/saeed-tavazani/taskwondo/releases) page. The [Dev Build](https://github.com/saeed-tavazani/taskwondo/releases/tag/dev) release always has the latest build from `main`.
 
 ## Archive Contents
 

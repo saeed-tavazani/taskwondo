@@ -313,8 +313,8 @@ export function WorkItemFilters({ filter, onFilterChange, statuses, milestones =
                 showDates ? 'bg-primary' : 'bg-muted-strong dark:bg-muted'
               }`}
             >
-              <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-surface shadow ring-0 transition-transform ${
-                showDates ? 'translate-x-5' : 'translate-x-0'
+              <span className={`pointer-events-none inline-block h-5 w-5 rounded-full shadow ring-0 transition-transform ${
+                showDates ? 'translate-x-5 rtl:-translate-x-5 bg-primary-foreground' : 'translate-x-0 bg-surface dark:bg-foreground'
               }`} />
             </button>
           </label>

@@ -14,6 +14,7 @@ import { useTeamMembers } from '@/hooks/useTeams'
 import { useMembers } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Select } from '@/components/ui/Select'
 import { Modal } from '@/components/ui/Modal'
 import { Spinner } from '@/components/ui/Spinner'
@@ -551,11 +552,11 @@ function RotationForm({
           value={rotationTime}
           onChange={(e) => setRotationTime(e.target.value)}
         />
-        <Input
+        <LocalizedDatePicker
           label={t('teams.oncall.startDate')}
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={setStartDate}
         />
       </div>
 
@@ -780,17 +781,17 @@ function CreateOverrideModal({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Input
+          <LocalizedDatePicker
             label={t('teams.oncall.override.startAt')}
             type="datetime-local"
             value={startAt}
-            onChange={(e) => setStartAt(e.target.value)}
+            onChange={setStartAt}
           />
-          <Input
+          <LocalizedDatePicker
             label={t('teams.oncall.override.endAt')}
             type="datetime-local"
             value={endAt}
-            onChange={(e) => setEndAt(e.target.value)}
+            onChange={setEndAt}
           />
         </div>
 
@@ -887,17 +888,17 @@ function EditOverrideModal({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Input
+          <LocalizedDatePicker
             label={t('teams.oncall.override.startAt')}
             type="datetime-local"
             value={startAt}
-            onChange={(e) => setStartAt(e.target.value)}
+            onChange={setStartAt}
           />
-          <Input
+          <LocalizedDatePicker
             label={t('teams.oncall.override.endAt')}
             type="datetime-local"
             value={endAt}
-            onChange={(e) => setEndAt(e.target.value)}
+            onChange={setEndAt}
           />
         </div>
 

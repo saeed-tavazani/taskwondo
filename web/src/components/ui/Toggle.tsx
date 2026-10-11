@@ -21,8 +21,8 @@ export function Toggle({ enabled, onChange, disabled = false, label }: TogglePro
       } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       <span
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-surface shadow ring-0 transition duration-200 ease-in-out ${
-          enabled ? 'translate-x-5' : 'translate-x-0'
+        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full shadow ring-0 transition duration-200 ease-in-out ${
+          enabled ? 'translate-x-5 rtl:-translate-x-5 bg-primary-foreground' : 'translate-x-0 bg-surface dark:bg-foreground'
         }`}
       />
     </button>

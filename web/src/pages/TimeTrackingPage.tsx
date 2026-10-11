@@ -5,7 +5,7 @@ import { Clock, BarChart3, AlertTriangle } from 'lucide-react'
 import { TimeEntryForm } from '@/components/TimeEntryForm'
 import { TimeEntryActions } from '@/components/TimeEntryActions'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Select } from '@/components/ui/Select'
 import { Spinner } from '@/components/ui/Spinner'
 import { useTimeProjects, useTrackedTime, useTimeReport } from '@/hooks/useTimeTracking'
@@ -64,7 +64,7 @@ function TimeTrackingContent() {
       {projectsLoading ? <Spinner /> : projectsError ? <p role="alert">{getLocalizedError(projectsError, t, 'timeTracking.error')}</p> : !canTrackTime ? <p role="alert">{t('timeTracking.noAccess')}</p> : <>
         <div className={`${panel} p-4 sm:p-5`}><TimeEntryForm key={ns} ns={ns} projects={projects} /></div>
         {!projects.length && <p className="text-sm text-muted-foreground dark:text-muted-foreground">{t('timeTracking.noProjects')}</p>}
-        <div className="grid gap-3 sm:grid-cols-3"><Input label={t('timeTracking.from')} type="date" value={from} onChange={e => { setFrom(e.target.value); resetPage() }} /><Input label={t('timeTracking.to')} type="date" value={to} onChange={e => { setTo(e.target.value); resetPage() }} /><Select label={t('timeTracking.project')} value={project} onChange={e => { setProject(e.target.value); resetPage() }}><option value="">{t('timeTracking.allProjects')}</option>{projects.map(pr => <option key={pr.id} value={pr.key}>{pr.name}</option>)}</Select></div>
+        <div className="grid gap-3 sm:grid-cols-3"><LocalizedDatePicker label={t('timeTracking.from')} type="date" value={from} onChange={value => { setFrom(value); resetPage() }} /><LocalizedDatePicker label={t('timeTracking.to')} type="date" value={to} onChange={value => { setTo(value); resetPage() }} /><Select label={t('timeTracking.project')} value={project} onChange={e => { setProject(e.target.value); resetPage() }}><option value="">{t('timeTracking.allProjects')}</option>{projects.map(pr => <option key={pr.id} value={pr.key}>{pr.name}</option>)}</Select></div>
         {!valid && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{t('timeTracking.invalidRange')}</p>}
         {list.isPending || totals.isPending ? <Spinner /> : list.error || totals.error ? <p role="alert" className="text-sm text-red-600 dark:text-red-400">{getLocalizedError(list.error ?? totals.error, t, 'timeTracking.error')}</p> : <>
           <div className="flex items-center justify-between text-sm text-muted-foreground dark:text-muted-foreground"><span>{t('timeTracking.total')}</span><span dir="ltr" className="font-mono text-lg font-semibold tabular-nums text-foreground dark:text-foreground">{formatTimeDuration(totals.data?.total_seconds ?? 0)}</span></div>

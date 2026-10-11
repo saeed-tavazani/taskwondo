@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Select } from '@/components/ui/Select'
 import { Input } from '@/components/ui/Input'
+import { LocalizedDatePicker } from '@/components/ui/LocalizedDatePicker'
 import { Button } from '@/components/ui/Button'
 import { UserPicker } from '@/components/ui/UserPicker'
 import { Tooltip } from '@/components/ui/Tooltip'
@@ -345,10 +346,10 @@ export function DetailSidebar({ item, projectKey, itemNumber, statuses, allowedT
       </div>
 
       <Field label={t('workitems.form.dueDate')}>
-        <Input
+        <LocalizedDatePicker
           type="date"
           value={item.due_date ?? ''}
-          onChange={(e) => onUpdate({ due_date: e.target.value || null })}
+          onChange={(value) => onUpdate({ due_date: value || null })}
           disabled={readOnly}
         />
       </Field>
